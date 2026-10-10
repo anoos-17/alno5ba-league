@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>دوري النخبة - Elite League</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            dark: '#070b19',
+                            card: '#111827',
+                            cardHover: '#1f2937',
+                            accent: '#1e293b',
+                            gold: '#f59e0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #070b19 0%, #111827 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .tab-btn.active {
+            background-color: #1e293b;
+            border-bottom: 3px solid #f59e0b;
+            color: #fff;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #070b19; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    </style>
+</head>
+<body class="pb-16 custom-scrollbar">
+
+    <!-- Header Navigation -->
+    <header class="bg-brand-dark/95 backdrop-blur border-b border-slate-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-slate-950 font-black text-lg sm:text-xl shadow-lg shadow-amber-500/20">
+                    🏆
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200">
+                        دوري النخبة
+                    </h1>
+                    <p class="text-[10px] sm:text-xs text-gray-400">الإحصائيات الرسمية المباشرة</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <span class="hidden md:inline-flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-800/50">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    متصل بالسحابة
+                </span>
+                <button onclick="openAdminAuth()" class="bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 border border-amber-500/30 px-3 py-1.5 rounded-xl font-bold text-xs sm:text-sm transition flex items-center gap-1.5 active:scale-95">
+                    <i class="fa-solid fa-lock text-xs"></i>
+                    <span>الأدمن</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6">
+
+        <!-- Highlights Bar -->
+        <div id="highlights-bar" class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 mb-6"></div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex overflow-x-auto gap-1.5 sm:gap-2 bg-brand-dark/80 p-1.5 rounded-2xl border border-slate-800/80 mb-6 custom-scrollbar shadow-inner">
+            <button onclick="switchTab('standings')" id="tab-standings" class="tab-btn active px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-list-ol"></i> الترتيب
+            </button>
+            <button onclick="switchTab('scorers')" id="tab-scorers" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-futbol"></i> الهدافون
+            </button>
+            <button onclick="switchTab('assists')" id="tab-assists" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-hands-clapping"></i> الصناع
+            </button>
+            <button onclick="switchTab('motm')" id="tab-motm" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-star text-amber-400"></i> رجل الأسبوع
+            </button>
+            <button onclick="switchTab('yellows')" id="tab-yellows" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                <span class="inline-block w-2.5 h-3.5 bg-yellow-400 rounded-sm"></span> كروت صفراء
+            </button>
+            <button onclick="switchTab('reds')" id="tab-reds" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                <span class="inline-block w-2.5 h-3.5 bg-red-500 rounded-sm"></span> كروت حمراء
+            </button>
+        </div>
+
+        <!-- Standings Tab -->
+        <div id="view-standings" class="tab-content">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 shadow-xl overflow-hidden">
+                <div class="p-3 sm:p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                    <h2 class="font-bold text-sm sm:text-base text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-trophy"></i> جدول الترتيب العام
+                    </h2>
+                    <span class="text-[10px] sm:text-xs text-gray-400">حسب النقاط ثم الأهداف</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right border-collapse text-xs sm:text-sm">
+                        <thead>
+                            <tr class="bg-brand-dark/90 text-gray-400 font-bold border-b border-slate-800">
+                                <th class="p-2.5 sm:p-3 text-center">المركز</th>
+                                <th class="p-2.5 sm:p-3">الفريق</th>
+                                <th class="p-2.5 sm:p-3 text-center">نقاط</th>
+                                <th class="p-2.5 sm:p-3 text-center">لعب</th>
+                                <th class="p-2.5 sm:p-3 text-center">فوز</th>
+                                <th class="p-2.5 sm:p-3 text-center">تعادل</th>
+                                <th class="p-2.5 sm:p-3 text-center">خسارة</th>
+                                <th class="p-2.5 sm:p-3 text-center">أهداف</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standings-table-body" class="divide-y divide-slate-800/60"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lists Tabs -->
+        <div id="view-scorers" class="tab-content hidden">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
+                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-futbol"></i> قائمة الهدافين</h2>
+                <div id="scorers-list" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <div id="view-assists" class="tab-content hidden">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
+                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-handshake"></i> صناع الأهداف</h2>
+                <div id="assists-list" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <div id="view-motm" class="tab-content hidden">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
+                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-star text-amber-400"></i> سجل رجل الأسبوع</h2>
+                <div id="motm-list" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <div id="view-yellows" class="tab-content hidden">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
+                <h2 class="font-bold text-base text-yellow-400 mb-4 flex items-center gap-2"><span class="w-3 h-4 bg-yellow-400 rounded-sm inline-block"></span> سجل الكروت الصفراء</h2>
+                <div id="yellows-list" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <div id="view-reds" class="tab-content hidden">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
+                <h2 class="font-bold text-base text-red-400 mb-4 flex items-center gap-2"><span class="w-3 h-4 bg-red-500 rounded-sm inline-block"></span> سجل الكروت الحمراء</h2>
+                <div id="reds-list" class="space-y-2"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ADMIN AUTH MODAL -->
+    <div id="modal-auth" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-brand-card border border-slate-800 p-6 rounded-2xl max-w-sm w-full text-center shadow-2xl">
+            <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-1 text-white">تسجيل دخول الأدمن</h3>
+            <p class="text-gray-400 text-xs mb-4">أدخل الرقم السري للتحكم بالبيانات</p>
+            <input type="password" id="admin-pass-input" placeholder="الرقم السري" class="w-full bg-brand-dark border border-slate-800 rounded-xl p-3 text-center font-bold text-base tracking-widest text-white mb-3 focus:outline-none focus:border-amber-500">
+            <div id="auth-error" class="text-red-400 text-xs font-bold mb-3 hidden">الرقم السري غير صحيح!</div>
+            <div class="flex gap-2">
+                <button onclick="submitAdminAuth()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 rounded-xl transition text-sm">دخول</button>
+                <button onclick="closeModal('modal-auth')" class="bg-slate-800 hover:bg-slate-700 text-gray-300 font-bold px-4 py-2.5 rounded-xl transition text-sm">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="modal-admin-panel" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden z-50 overflow-y-auto p-3 sm:p-6">
+        <div class="max-w-4xl mx-auto bg-brand-card border border-slate-800 rounded-2xl p-4 sm:p-6 my-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <h2 class="text-base sm:text-lg font-bold text-white">لوحة تحكم الأدمن (سحابية)</h2>
+                </div>
+                <button onclick="closeModal('modal-admin-panel')" class="text-gray-400 hover:text-white text-lg px-2">✕</button>
+            </div>
+
+            <!-- Admin Category Selector -->
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 mb-4">
+                <button onclick="switchAdminTab('teams')" id="atab-teams" class="bg-slate-900 text-amber-400 py-2 px-2 rounded-xl font-bold text-xs border border-amber-500/30">الفرق</button>
+                <button onclick="switchAdminTab('scorers')" id="atab-scorers" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">الهدافين</button>
+                <button onclick="switchAdminTab('assists')" id="atab-assists" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">الصناع</button>
+                <button onclick="switchAdminTab('motm')" id="atab-motm" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">رجل الأسبوع</button>
+                <button onclick="switchAdminTab('yellows')" id="atab-yellows" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">كروت صفراء</button>
+                <button onclick="switchAdminTab('reds')" id="atab-reds" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">كروت حمراء</button>
+            </div>
+
+            <div id="admin-sec-teams" class="admin-sec space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-xs sm:text-sm text-gray-300">تعديل ترتيب الفرق</h3>
+                    <button onclick="addNewTeam()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">+ إضافة فريق</button>
+                </div>
+                <div id="admin-teams-list" class="space-y-2.5"></div>
+            </div>
+
+            <div id="admin-sec-players" class="admin-sec hidden space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 id="admin-players-title" class="font-bold text-xs sm:text-sm text-gray-300">إدارة القائمة</h3>
+                    <button onclick="addNewPlayer()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">+ إضافة عنصر</button>
+                </div>
+                <div id="admin-players-list" class="space-y-2"></div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-4 mt-4 flex flex-wrap justify-between items-center gap-3">
+                <button onclick="resetDataToDefault()" class="text-red-400 hover:text-red-300 text-xs font-bold flex items-center gap-1">
+                    <i class="fa-solid fa-rotate-left"></i> استعادة الافتراضي
+                </button>
+                <button onclick="saveAdminChanges()" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition">
+                    حفظ ونشر التعديلات فوراً 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI & FIREBASE SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBoXiR4wwUQ5PbAhFZetg63bbil3ATaKQk",
+            authDomain: "alno5ba-league.firebaseapp.com",
+            databaseURL: "https://alno5ba-league-default-rtdb.firebaseio.com",
+            projectId: "alno5ba-league",
+            storageBucket: "alno5ba-league.firebasestorage.app",
+            messagingSenderId: "651657327045",
+            appId: "1:651657327045:web:e0558708dcd657f9989bac"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(db, 'league_data');
+
+        const DEFAULT_DATA = {
+            teams: [
+                { id: 1, name: "مشكاة", points: 13, played: 9, win: 4, draw: 1, loss: 4, goals: 9 },
+                { id: 2, name: "مدار", points: 12, played: 9, win: 3, draw: 3, loss: 3, goals: 13 },
+                { id: 3, name: "نجوم", points: 11, played: 9, win: 4, draw: 2, loss: 4, goals: 7 }
+            ],
+            scorers: [{ name: "سلمان العامودي", count: 5 }, { name: "عمر مختار", count: 5 }],
+            assists: [{ name: "محمد صالح", count: 5 }],
+            motm: [{ name: "يزن باعطوه", count: 2 }],
+            yellowCards: [{ name: "محمد صالح", count: 2 }],
+            redCards: []
+        };
+
+        window.appData = DEFAULT_DATA;
+        let activeAdminCategory = 'teams';
+
+        // Helper: حساب الترتيب مع تجميع المتساويين
+        function getRankedItems(items) {
+            if(!items || items.length === 0) return [];
+            const sorted = [...items].sort((a, b) => b.count - a.count);
+            let result = [];
+            let currentRank = 1;
+            
+            for (let i = 0; i < sorted.length; i++) {
+                if (i > 0 && sorted[i].count < sorted[i - 1].count) {
+                    currentRank = i + 1;
+                }
+                result.push({ ...sorted[i], rank: currentRank });
+            }
+            return result;
+        }
+
+        window.renderHighlights = function() {
+            const bar = document.getElementById('highlights-bar');
+            if(!bar || !window.appData) return;
+
+            const sortedTeams = [...(window.appData.teams || [])].sort((a,b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                return b.goals - a.goals;
+            });
+            const topTeam = sortedTeams.length > 0 ? sortedTeams[0].name : 'لا يوجد';
+
+            const rankedScorers = getRankedItems(window.appData.scorers);
+            const topScorers = rankedScorers.filter(s => s.rank === 1).map(s => s.name).join(' و ');
+
+            const rankedAssists = getRankedItems(window.appData.assists);
+            const topAssists = rankedAssists.filter(s => s.rank === 1).map(s => s.name).join(' و ');
+
+            const rankedYellows = getRankedItems(window.appData.yellowCards);
+            const topYellows = rankedYellows.filter(s => s.rank === 1).map(s => s.name).join(' و ');
+
+            bar.innerHTML = `
+                <div class="bg-brand-card/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3 shadow-md">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg"><i class="fa-solid fa-crown"></i></div>
+                    <div class="overflow-hidden">
+                        <div class="text-[10px] text-gray-400 font-bold">متصدر الدوري</div>
+                        <div class="text-xs sm:text-sm font-black text-amber-400 truncate">${topTeam}</div>
+                    </div>
+                </div>
+                <div class="bg-brand-card/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3 shadow-md">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg"><i class="fa-solid fa-futbol"></i></div>
+                    <div class="overflow-hidden">
+                        <div class="text-[10px] text-gray-400 font-bold">هداف الدوري</div>
+                        <div class="text-xs sm:text-sm font-black text-white truncate">${topScorers || 'لا يوجد'}</div>
+                    </div>
+                </div>
+                <div class="bg-brand-card/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3 shadow-md">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg"><i class="fa-solid fa-handshake"></i></div>
+                    <div class="overflow-hidden">
+                        <div class="text-[10px] text-gray-400 font-bold">أكثر صناعة للأهداف</div>
+                        <div class="text-xs sm:text-sm font-black text-white truncate">${topAssists || 'لا يوجد'}</div>
+                    </div>
+                </div>
+                <div class="bg-brand-card/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3 shadow-md">
+                    <div class="w-10 h-10 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-lg"><span class="w-2.5 h-3.5 bg-yellow-400 rounded-sm"></span></div>
+                    <div class="overflow-hidden">
+                        <div class="text-[10px] text-gray-400 font-bold">أكثر كروت صفراء</div>
+                        <div class="text-xs sm:text-sm font-black text-white truncate">${topYellows || 'لا يوجد'}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.renderStandings = function() {
+            const tbody = document.getElementById('standings-table-body');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            
+            const sorted = [...(window.appData.teams || [])].sort((a,b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                return b.goals - a.goals;
+            });
+
+            sorted.forEach((team, index) => {
+                const tr = document.createElement('tr');
+                tr.className = index % 2 === 0 ? 'bg-slate-900/30 hover:bg-slate-800/50 transition' : 'bg-brand-dark/20 hover:bg-slate-800/50 transition';
+                
+                let badgeClass = 'text-gray-400';
+                if(index === 0) badgeClass = 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
+                else if(index === 1) badgeClass = 'bg-slate-400/20 text-slate-300';
+                else if(index === 2) badgeClass = 'bg-amber-700/20 text-amber-600';
+
+                tr.innerHTML = `
+                    <td class="p-2.5 sm:p-3 text-center font-bold">
+                        <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg inline-flex items-center justify-center text-xs ${badgeClass}">${index + 1}</span>
+                    </td>
+                    <td class="p-2.5 sm:p-3 font-bold text-white">${team.name}</td>
+                    <td class="p-2.5 sm:p-3 text-center font-black text-amber-400 bg-amber-500/5 text-sm sm:text-base">${team.points}</td>
+                    <td class="p-2.5 sm:p-3 text-center font-semibold text-gray-300">${team.played}</td>
+                    <td class="p-2.5 sm:p-3 text-center font-semibold text-emerald-400">${team.win}</td>
+                    <td class="p-2.5 sm:p-3 text-center font-semibold text-yellow-400">${team.draw}</td>
+                    <td class="p-2.5 sm:p-3 text-center font-semibold text-red-400">${team.loss}</td>
+                    <td class="p-2.5 sm:p-3 text-center font-bold text-blue-300">${team.goals}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.renderRankedList = function(containerId, items, label) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            container.innerHTML = '';
+
+            const rankedItems = getRankedItems(items);
+
+            if(!rankedItems || rankedItems.length === 0) {
+                container.innerHTML = `<div class="text-center text-gray-500 py-6 text-xs">لا توجد سجّلات حتى الآن</div>`;
+                return;
+            }
+
+            rankedItems.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'flex items-center justify-between p-3 bg-brand-dark/50 border border-slate-800/80 rounded-xl';
+                
+                let rankBadge = `<span class="w-6 text-center text-xs font-bold text-gray-400">${item.rank}</span>`;
+                if(item.rank === 1) rankBadge = `<span class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xs font-black">1</span>`;
+                else if(item.rank === 2) rankBadge = `<span class="w-6 h-6 rounded-md bg-slate-400/20 text-slate-300 flex items-center justify-center text-xs font-black">2</span>`;
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        ${rankBadge}
+                        <span class="font-bold text-white text-xs sm:text-sm">${item.name}</span>
+                    </div>
+                    <div class="bg-slate-900 px-3 py-1 rounded-lg text-xs font-black text-amber-300 border border-slate-800">
+                        ${item.count} <span class="text-gray-400 font-normal">${label}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.renderAllViews = function() {
+            if(!window.appData) return;
+            window.renderHighlights();
+            window.renderStandings();
+            window.renderRankedList('scorers-list', window.appData.scorers, '⚽ أهداف');
+            window.renderRankedList('assists-list', window.appData.assists, '👟 تمريرات');
+            window.renderRankedList('motm-list', window.appData.motm, '⭐ مرات رجل الأسبوع');
+            window.renderRankedList('yellows-list', window.appData.yellowCards, '🟨 كروت صفراء');
+            window.renderRankedList('reds-list', window.appData.redCards, '🟥 كروت حمراء');
+        }
+
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                window.appData = { ...DEFAULT_DATA, ...data };
+            } else {
+                set(dbRef, DEFAULT_DATA);
+            }
+            window.renderAllViews();
+        });
+
+        window.saveAdminChanges = function() {
+            set(dbRef, window.appData).then(() => {
+                alert('تم حفظ التعديلات ونشرها لجميع الزوار بنجاح!');
+                window.closeModal('modal-admin-panel');
+                window.renderAllViews();
+            }).catch(err => {
+                alert('حدث خطأ أثناء الحفظ.');
+            });
+        };
+
+        window.resetDataToDefault = function() {
+            if(confirm('هل أنت متأكد من استعادة البيانات الافتراضية؟')) {
+                window.appData = DEFAULT_DATA;
+                set(dbRef, DEFAULT_DATA).then(() => {
+                    alert('تم الاستعادة بنجاح!');
+                    window.renderAdminContent();
+                    window.renderAllViews();
+                });
+            }
+        };
+
+        window.switchTab = function(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'text-white'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.add('text-gray-400'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+            const btn = document.getElementById(`tab-${tab}`);
+            const view = document.getElementById(`view-${tab}`);
+            if(btn && view) {
+                btn.classList.add('active', 'text-white');
+                btn.classList.remove('text-gray-400');
+                view.classList.remove('hidden');
+            }
+            window.renderAllViews();
+        }
+
+        window.openAdminAuth = function() {
+            document.getElementById('admin-pass-input').value = '';
+            document.getElementById('auth-error').classList.add('hidden');
+            document.getElementById('modal-auth').classList.remove('hidden');
+            document.getElementById('modal-auth').classList.add('flex');
+        }
+
+        window.closeModal = function(id) {
+            document.getElementById(id).classList.add('hidden');
+            document.getElementById(id).classList.remove('flex');
+        }
+
+        window.submitAdminAuth = function() {
+            const pass = document.getElementById('admin-pass-input').value;
+            if(pass === '121212') {
+                window.closeModal('modal-auth');
+                window.renderAdminContent();
+                document.getElementById('modal-admin-panel').classList.remove('hidden');
+            } else {
+                document.getElementById('auth-error').classList.remove('hidden');
+            }
+        }
+
+        window.switchAdminTab = function(category) {
+            activeAdminCategory = category;
+            ['teams','scorers','assists','motm','yellows','reds'].forEach(c => {
+                const btn = document.getElementById(`atab-${c}`);
+                if(btn) {
+                    btn.className = (c === category) ? 'bg-slate-900 text-amber-400 py-2 px-2 rounded-xl font-bold text-xs border border-amber-500/30' : 'bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs';
+                }
+            });
+            window.renderAdminContent();
+        }
+
+        window.renderAdminContent = function() {
+            const secTeams = document.getElementById('admin-sec-teams');
+            const secPlayers = document.getElementById('admin-sec-players');
+            const titleEl = document.getElementById('admin-players-title');
+
+            if(activeAdminCategory === 'teams') {
+                secTeams.classList.remove('hidden');
+                secPlayers.classList.add('hidden');
+                window.renderAdminTeams();
+            } else {
+                secTeams.classList.add('hidden');
+                secPlayers.classList.remove('hidden');
+                if(activeAdminCategory === 'scorers') titleEl.textContent = 'إدارة الهدافين';
+                if(activeAdminCategory === 'assists') titleEl.textContent = 'إدارة صناع الأهداف';
+                if(activeAdminCategory === 'motm') titleEl.textContent = 'إدارة رجل الأسبوع';
+                if(activeAdminCategory === 'yellows') titleEl.textContent = 'إدارة الكروت الصفراء';
+                if(activeAdminCategory === 'reds') titleEl.textContent = 'إدارة الكروت الحمراء';
+                window.renderAdminPlayers();
+            }
+        }
+
+        window.renderAdminTeams = function() {
+            const container = document.getElementById('admin-teams-list');
+            if(!container) return;
+            container.innerHTML = '';
+
+            (window.appData.teams || []).forEach((t, i) => {
+                const div = document.createElement('div');
+                div.className = 'bg-brand-dark p-3 rounded-xl border border-slate-800 grid grid-cols-2 sm:grid-cols-8 gap-2 items-center';
+                div.innerHTML = `
+                    <input type="text" value="${t.name}" onchange="window.appData.teams[${i}].name=this.value" class="col-span-2 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold">
+                    <div><label class="text-[9px] text-gray-400 block">نقاط</label><input type="number" value="${t.points}" onchange="window.appData.teams[${i}].points=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-amber-400 font-bold"></div>
+                    <div><label class="text-[9px] text-gray-400 block">لعب</label><input type="number" value="${t.played}" onchange="window.appData.teams[${i}].played=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-white"></div>
+                    <div><label class="text-[9px] text-gray-400 block">فوز</label><input type="number" value="${t.win}" onchange="window.appData.teams[${i}].win=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-emerald-400"></div>
+                    <div><label class="text-[9px] text-gray-400 block">تعادل</label><input type="number" value="${t.draw}" onchange="window.appData.teams[${i}].draw=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-yellow-400"></div>
+                    <div><label class="text-[9px] text-gray-400 block">خسارة</label><input type="number" value="${t.loss}" onchange="window.appData.teams[${i}].loss=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-red-400"></div>
+                    <div><label class="text-[9px] text-gray-400 block">أهداف</label><input type="number" value="${t.goals}" onchange="window.appData.teams[${i}].goals=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-blue-300"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.renderAdminPlayers = function() {
+            const container = document.getElementById('admin-players-list');
+            if(!container) return;
+            container.innerHTML = '';
+            
+            let listKey = 'scorers';
+            if(activeAdminCategory === 'assists') listKey = 'assists';
+            if(activeAdminCategory === 'motm') listKey = 'motm';
+            if(activeAdminCategory === 'yellows') listKey = 'yellowCards';
+            if(activeAdminCategory === 'reds') listKey = 'redCards';
+
+            const items = window.appData[listKey] || [];
+
+            items.forEach((p, i) => {
+                const div = document.createElement('div');
+                div.className = 'bg-brand-dark p-2.5 rounded-xl border border-slate-800 flex items-center justify-between gap-2';
+                div.innerHTML = `
+                    <input type="text" value="${p.name}" onchange="window.appData['${listKey}'][${i}].name=this.value" class="bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold flex-1">
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] text-gray-400">العدد:</span>
+                        <input type="number" value="${p.count}" onchange="window.appData['${listKey}'][${i}].count=+this.value" class="w-14 bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-amber-300 font-bold">
+                        <button onclick="window.removePlayer('${listKey}', ${i})" class="text-red-400 hover:text-red-300 px-2 py-1 text-xs">🗑️</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.addNewTeam = function() {
+            if(!window.appData.teams) window.appData.teams = [];
+            window.appData.teams.push({ id: Date.now(), name: "فريق جديد", points: 0, played: 0, win: 0, draw: 0, loss: 0, goals: 0 });
+            window.renderAdminTeams();
+        }
+
+        window.addNewPlayer = function() {
+            let listKey = 'scorers';
+            if(activeAdminCategory === 'assists') listKey = 'assists';
+            if(activeAdminCategory === 'motm') listKey = 'motm';
+            if(activeAdminCategory === 'yellows') listKey = 'yellowCards';
+            if(activeAdminCategory === 'reds') listKey = 'redCards';
+
+            if(!window.appData[listKey]) window.appData[listKey] = [];
+            window.appData[listKey].push({ name: "لاعب جديد", count: 1 });
+            window.renderAdminPlayers();
+        }
+
+        window.removePlayer = function(listKey, index) {
+            window.appData[listKey].splice(index, 1);
+            window.renderAdminPlayers();
+        }
+    </script>
+</body>
+</html>
