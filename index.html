@@ -308,17 +308,20 @@
         window.appData = DEFAULT_DATA;
         let activeAdminCategory = 'teams';
 
-        // دالة لحساب الترتيب الصحيح (في حال التساوي يأخذون نفس الرقم، والتالي يأخذ الترتيب الفعلي بعدهم)
+        // دالة الترتيب المضبوطة تماماً (لو تساوى شخصان في النقاط/الأهداف يأخذان نفس الرقم، والذي يليهما يأخذ الترتيب المتسلسل الصحيح بناءً على عدد العناصر السابقة)
         function getRankedItems(items) {
             if(!items || items.length === 0) return [];
             const sorted = [...items].sort((a, b) => b.count - a.count);
             let result = [];
             
             for (let i = 0; i < sorted.length; i++) {
-                let currentRank = i + 1;
-                // إذا تساوى العنصر الحالي مع الذي قبله في العدد، يأخذ نفس رقمه
-                if (i > 0 && sorted[i].count === sorted[i - 1].count) {
+                let currentRank;
+                if (i === 0) {
+                    currentRank = 1;
+                } else if (sorted[i].count === sorted[i - 1].count) {
                     currentRank = result[i - 1].rank;
+                } else {
+                    currentRank = i; // يعتمد على عدد العناصر المختلفة السابقة لضمان عدم حدوث فجوات (مثلاً 1، 1، 2، 3)
                 }
                 result.push({ ...sorted[i], rank: currentRank });
             }
@@ -428,8 +431,9 @@
                 card.className = 'flex items-center justify-between p-3 bg-brand-dark/50 border border-slate-800/80 rounded-xl';
                 
                 let rankBadge = `<span class="w-6 text-center text-xs font-bold text-gray-400">${item.rank}</span>`;
-                if(item.rank === 1) rankBadge = `<span class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xs font-black">1</span>`;
-                else if(item.rank === 2) rankBadge = `<span class="w-6 h-6 rounded-md bg-slate-400/20 text-slate-300 flex items-center justify-center text-xs font-black">2</span>`;
+                if(item.rank === 1) rankBadge = `<span class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xs font-black">${item.rank}</span>`;
+                else if(item.rank === 2) rankBadge = `<span class="w-6 h-6 rounded-md bg-slate-400/20 text-slate-300 flex items-center justify-center text-xs font-black">${item.rank}</span>`;
+                else rankBadge = `<span class="w-6 h-6 rounded-md bg-slate-800 text-gray-300 flex items-center justify-center text-xs font-bold">${item.rank}</span>`;
 
                 card.innerHTML = `
                     <div class="flex items-center gap-3">
