@@ -102,6 +102,9 @@
             <button onclick="switchTab('reds')" id="tab-reds" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
                 <span class="inline-block w-2.5 h-3.5 bg-red-500 rounded-sm"></span> كروت حمراء
             </button>
+            <button onclick="switchTab('penalties')" id="tab-penalties" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-triangle-exclamation text-red-400"></i> العقوبات
+            </button>
         </div>
 
         <!-- Standings Tab -->
@@ -169,6 +172,18 @@
             </div>
         </div>
 
+        <!-- Penalties Tab -->
+        <div id="view-penalties" class="tab-content hidden space-y-4">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
+                <h2 class="font-bold text-base text-red-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-shield-halved"></i> خصومات النقاط على الفرق</h2>
+                <div id="client-team-penalties-list" class="space-y-2.5"></div>
+            </div>
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
+                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-ban"></i> إيقافات اللاعبين</h2>
+                <div id="client-player-penalties-list" class="space-y-2.5"></div>
+            </div>
+        </div>
+
     </main>
 
     <!-- ADMIN AUTH MODAL -->
@@ -200,13 +215,14 @@
             </div>
 
             <!-- Admin Category Selector -->
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 mb-4">
-                <button onclick="switchAdminTab('teams')" id="atab-teams" class="bg-slate-900 text-amber-400 py-2 px-2 rounded-xl font-bold text-xs border border-amber-500/30">الفرق</button>
+            <div class="grid grid-cols-3 sm:grid-cols-7 gap-1.5 mb-4">
+                <button onclick="switchAdminTab('teams')" id="atab-teams" class="bg-slate-900 text-amber-400 py-2 px-2 rounded-xl font-bold text-xs border border-amber-500/35">الفرق</button>
                 <button onclick="switchAdminTab('scorers')" id="atab-scorers" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">الهدافين</button>
                 <button onclick="switchAdminTab('assists')" id="atab-assists" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">الصناع</button>
                 <button onclick="switchAdminTab('motm')" id="atab-motm" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">رجل الأسبوع</button>
                 <button onclick="switchAdminTab('yellows')" id="atab-yellows" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">كروت صفراء</button>
                 <button onclick="switchAdminTab('reds')" id="atab-reds" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">كروت حمراء</button>
+                <button onclick="switchAdminTab('penalties')" id="atab-penalties" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">العقوبات</button>
             </div>
 
             <div id="admin-sec-teams" class="admin-sec space-y-3">
@@ -223,6 +239,25 @@
                     <button onclick="addNewPlayer()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">+ إضافة عنصر</button>
                 </div>
                 <div id="admin-players-list" class="space-y-2"></div>
+            </div>
+
+            <div id="admin-sec-penalties" class="admin-sec hidden space-y-6">
+                <!-- Team Penalties Admin -->
+                <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-xs sm:text-sm text-red-400">إضافة خصم نقاط على فريق</h3>
+                        <button onclick="addTeamPenalty()" class="bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">+ إضافة خصم فريق</button>
+                    </div>
+                    <div id="admin-team-penalties-list" class="space-y-2"></div>
+                </div>
+                <!-- Player Penalties Admin -->
+                <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-xs sm:text-sm text-amber-400">إضافة إيقاف على لاعب</h3>
+                        <button onclick="addPlayerPenalty()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg">+ إضافة إيقاف لاعب</button>
+                    </div>
+                    <div id="admin-player-penalties-list" class="space-y-2"></div>
+                </div>
             </div>
 
             <div class="border-t border-slate-800 pt-4 mt-4 flex flex-wrap justify-between items-center gap-3">
@@ -265,13 +300,14 @@
             assists: [{ name: "محمد صالح", count: 5 }],
             motm: [{ name: "يزن باعطوه", count: 2 }],
             yellowCards: [{ name: "محمد صالح", count: 2 }],
-            redCards: []
+            redCards: [],
+            teamPenalties: [],
+            playerPenalties: []
         };
 
         window.appData = DEFAULT_DATA;
         let activeAdminCategory = 'teams';
 
-        // Helper: حساب الترتيب مع تجميع المتساويين
         function getRankedItems(items) {
             if(!items || items.length === 0) return [];
             const sorted = [...items].sort((a, b) => b.count - a.count);
@@ -406,6 +442,63 @@
             });
         }
 
+        window.renderPenaltiesView = function() {
+            const teamContainer = document.getElementById('client-team-penalties-list');
+            const playerContainer = document.getElementById('client-player-penalties-list');
+            
+            if(teamContainer) {
+                teamContainer.innerHTML = '';
+                const tPen = window.appData.teamPenalties || [];
+                if(tPen.length === 0) {
+                    teamContainer.innerHTML = `<div class="text-center text-gray-500 py-4 text-xs">لا توجد خصومات على الفرق</div>`;
+                } else {
+                    tPen.forEach(p => {
+                        const div = document.createElement('div');
+                        div.className = 'bg-brand-dark/60 border border-red-500/20 p-3 rounded-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 shadow-sm';
+                        div.innerHTML = `
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                <div>
+                                    <div class="text-xs sm:text-sm font-bold text-white">تم الخصم على فريق <span class="text-red-400">${p.teamName || 'غير محدد'}</span></div>
+                                    <div class="text-[11px] text-gray-400 mt-0.5"><span class="text-gray-300 font-medium">السبب:</span> ${p.reason || 'بدون سبب'}</div>
+                                </div>
+                            </div>
+                            <div class="self-start sm:self-center bg-red-950/60 border border-red-800/40 text-red-300 px-3 py-1 rounded-lg text-xs font-black whitespace-nowrap">
+                                -${p.points || 0} نقاط
+                            </div>
+                        `;
+                        teamContainer.appendChild(div);
+                    });
+                }
+            }
+
+            if(playerContainer) {
+                playerContainer.innerHTML = '';
+                const pPen = window.appData.playerPenalties || [];
+                if(pPen.length === 0) {
+                    playerContainer.innerHTML = `<div class="text-center text-gray-500 py-4 text-xs">لا توجد إيقافات على اللاعبين</div>`;
+                } else {
+                    pPen.forEach(p => {
+                        const div = document.createElement('div');
+                        div.className = 'bg-brand-dark/60 border border-amber-500/20 p-3 rounded-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 shadow-sm';
+                        div.innerHTML = `
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-ban"></i></div>
+                                <div>
+                                    <div class="text-xs sm:text-sm font-bold text-white">تم إيقاف اللاعب <span class="text-amber-400">${p.playerName || 'غير محدد'}</span></div>
+                                    <div class="text-[11px] text-gray-400 mt-0.5"><span class="text-gray-300 font-medium">السبب:</span> ${p.reason || 'بدون سبب'}</div>
+                                </div>
+                            </div>
+                            <div class="self-start sm:self-center bg-amber-950/60 border border-amber-800/40 text-amber-300 px-3 py-1 rounded-lg text-xs font-black whitespace-nowrap">
+                                مدة الإيقاف: ${p.duration || 'غير محددة'}
+                            </div>
+                        `;
+                        playerContainer.appendChild(div);
+                    });
+                }
+            }
+        }
+
         window.renderAllViews = function() {
             if(!window.appData) return;
             window.renderHighlights();
@@ -415,6 +508,7 @@
             window.renderRankedList('motm-list', window.appData.motm, '⭐ مرات رجل الأسبوع');
             window.renderRankedList('yellows-list', window.appData.yellowCards, '🟨 كروت صفراء');
             window.renderRankedList('reds-list', window.appData.redCards, '🟥 كروت حمراء');
+            window.renderPenaltiesView();
         }
 
         onValue(dbRef, (snapshot) => {
@@ -488,10 +582,10 @@
 
         window.switchAdminTab = function(category) {
             activeAdminCategory = category;
-            ['teams','scorers','assists','motm','yellows','reds'].forEach(c => {
+            ['teams','scorers','assists','motm','yellows','reds','penalties'].forEach(c => {
                 const btn = document.getElementById(`atab-${c}`);
                 if(btn) {
-                    btn.className = (c === category) ? 'bg-slate-900 text-amber-400 py-2 px-2 rounded-xl font-bold text-xs border border-amber-500/30' : 'bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs';
+                    btn.className = (c === category) ? 'bg-slate-900 text-amber-400 py-2 px-2 rounded-xl font-bold text-xs border border-amber-500/35' : 'bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs';
                 }
             });
             window.renderAdminContent();
@@ -500,14 +594,20 @@
         window.renderAdminContent = function() {
             const secTeams = document.getElementById('admin-sec-teams');
             const secPlayers = document.getElementById('admin-sec-players');
+            const secPenalties = document.getElementById('admin-sec-penalties');
             const titleEl = document.getElementById('admin-players-title');
+
+            secTeams.classList.add('hidden');
+            secPlayers.classList.add('hidden');
+            secPenalties.classList.add('hidden');
 
             if(activeAdminCategory === 'teams') {
                 secTeams.classList.remove('hidden');
-                secPlayers.classList.add('hidden');
                 window.renderAdminTeams();
+            } else if(activeAdminCategory === 'penalties') {
+                secPenalties.classList.remove('hidden');
+                window.renderAdminPenalties();
             } else {
-                secTeams.classList.add('hidden');
                 secPlayers.classList.remove('hidden');
                 if(activeAdminCategory === 'scorers') titleEl.textContent = 'إدارة الهدافين';
                 if(activeAdminCategory === 'assists') titleEl.textContent = 'إدارة صناع الأهداف';
@@ -567,6 +667,51 @@
             });
         }
 
+        window.renderAdminPenalties = function() {
+            const teamContainer = document.getElementById('admin-team-penalties-list');
+            const playerContainer = document.getElementById('admin-player-penalties-list');
+            
+            if(teamContainer) {
+                teamContainer.innerHTML = '';
+                const tPen = window.appData.teamPenalties || [];
+                if(tPen.length === 0) {
+                    teamContainer.innerHTML = `<div class="text-gray-500 text-xs py-2">لا توجد خصومات مضافة</div>`;
+                } else {
+                    tPen.forEach((p, i) => {
+                        const div = document.createElement('div');
+                        div.className = 'bg-brand-dark p-2.5 rounded-xl border border-slate-800 grid grid-cols-1 sm:grid-cols-12 gap-2 items-center';
+                        div.innerHTML = `
+                            <div class="sm:col-span-4"><label class="text-[9px] text-gray-400 block">اسم الفريق</label><input type="text" value="${p.teamName || ''}" onchange="window.appData.teamPenalties[${i}].teamName=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold"></div>
+                            <div class="sm:col-span-2"><label class="text-[9px] text-gray-400 block">النقاط المخصومة</label><input type="number" value="${p.points || 0}" onchange="window.appData.teamPenalties[${i}].points=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-center text-xs text-red-400 font-bold"></div>
+                            <div class="sm:col-span-5"><label class="text-[9px] text-gray-400 block">السبب</label><input type="text" value="${p.reason || ''}" onchange="window.appData.teamPenalties[${i}].reason=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-gray-200"></div>
+                            <div class="sm:col-span-1 text-center"><button onclick="window.removeTeamPenalty(${i})" class="text-red-400 hover:text-red-300 text-xs mt-3 sm:mt-0">🗑️</button></div>
+                        `;
+                        teamContainer.appendChild(div);
+                    });
+                }
+            }
+
+            if(playerContainer) {
+                playerContainer.innerHTML = '';
+                const pPen = window.appData.playerPenalties || [];
+                if(pPen.length === 0) {
+                    playerContainer.innerHTML = `<div class="text-gray-500 text-xs py-2">لا توجد إيقافات مضافة</div>`;
+                } else {
+                    pPen.forEach((p, i) => {
+                        const div = document.createElement('div');
+                        div.className = 'bg-brand-dark p-2.5 rounded-xl border border-slate-800 grid grid-cols-1 sm:grid-cols-12 gap-2 items-center';
+                        div.innerHTML = `
+                            <div class="sm:col-span-4"><label class="text-[9px] text-gray-400 block">اسم اللاعب</label><input type="text" value="${p.playerName || ''}" onchange="window.appData.playerPenalties[${i}].playerName=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold"></div>
+                            <div class="sm:col-span-2"><label class="text-[9px] text-gray-400 block">مدة الإيقاف</label><input type="text" value="${p.duration || ''}" onchange="window.appData.playerPenalties[${i}].duration=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-center text-xs text-amber-300 font-bold"></div>
+                            <div class="sm:col-span-5"><label class="text-[9px] text-gray-400 block">السبب</label><input type="text" value="${p.reason || ''}" onchange="window.appData.playerPenalties[${i}].reason=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-gray-200"></div>
+                            <div class="sm:col-span-1 text-center"><button onclick="window.removePlayerPenalty(${i})" class="text-red-400 hover:text-red-300 text-xs mt-3 sm:mt-0">🗑️</button></div>
+                        `;
+                        playerContainer.appendChild(div);
+                    });
+                }
+            }
+        }
+
         window.addNewTeam = function() {
             if(!window.appData.teams) window.appData.teams = [];
             window.appData.teams.push({ id: Date.now(), name: "فريق جديد", points: 0, played: 0, win: 0, draw: 0, loss: 0, goals: 0 });
@@ -588,6 +733,28 @@
         window.removePlayer = function(listKey, index) {
             window.appData[listKey].splice(index, 1);
             window.renderAdminPlayers();
+        }
+
+        window.addTeamPenalty = function() {
+            if(!window.appData.teamPenalties) window.appData.teamPenalties = [];
+            window.appData.teamPenalties.push({ teamName: "اسم الفريق", points: 3, reason: "سبب الخصم" });
+            window.renderAdminPenalties();
+        }
+
+        window.removeTeamPenalty = function(index) {
+            window.appData.teamPenalties.splice(index, 1);
+            window.renderAdminPenalties();
+        }
+
+        window.addPlayerPenalty = function() {
+            if(!window.appData.playerPenalties) window.appData.playerPenalties = [];
+            window.appData.playerPenalties.push({ playerName: "اسم اللاعب", duration: "مباراتين", reason: "سبب الإيقاف" });
+            window.renderAdminPenalties();
+        }
+
+        window.removePlayerPenalty = function(index) {
+            window.appData.playerPenalties.splice(index, 1);
+            window.renderAdminPenalties();
         }
     </script>
 </body>
