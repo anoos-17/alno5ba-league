@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>دوري النخبة - Elite League</title>
+    <!-- PWA Manifest مع أيقونة التطبيق المخصصة -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22%D8%AF%D9%88%D8%B1%D9%8A%20%D8%A7%D9%84%D9%86%D8%AE%D8%A8%D8%A9%22%2C%22short_name%22%3A%22%D8%AF%D9%88%D8%B1%D9%8A%20%D8%A7%D9%84%D9%86%D8%AE%D8%A8%D8%A9%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23070b19%22%2C%22theme_color%22%3A%22%23070b19%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F1165%2F1165187.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+    <meta name="theme-color" content="#070b19">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -52,8 +55,8 @@
     <header class="bg-brand-dark/95 backdrop-blur border-b border-slate-800 sticky top-0 z-50 shadow-md">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-slate-950 font-black text-lg sm:text-xl shadow-lg shadow-amber-500/20">
-                    🏆
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-slate-950 font-black text-lg sm:text-xl shadow-lg shadow-amber-500/20 overflow-hidden">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1165/1165187.png" alt="شعار" class="w-full h-full object-cover">
                 </div>
                 <div>
                     <h1 class="text-base sm:text-xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200">
@@ -342,6 +345,12 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('data:text/javascript;base64,LyogU2VydmljZSBXb3JrZXIgKi8Kc2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJ35zZWY9Pls/XSk;').catch(() => {});
+            });
+        }
 
         const firebaseConfig = {
             apiKey: "AIzaSyBoXiR4wwUQ5PbAhFZetg63bbil3ATaKQk",
@@ -760,7 +769,6 @@
         });
 
         window.saveAdminChanges = function() {
-            // جلب أحدث نسخة سحابية مباشرة قبل الحفظ لضمان دقة النسخ الاحتياطي للتراجع
             get(dbRef).then((snapshot) => {
                 const currentCloudData = snapshot.val();
                 if (currentCloudData) {
@@ -777,7 +785,6 @@
                     alert('حدث خطأ أثناء الحفظ.');
                 });
             }).catch(() => {
-                // في حال عدم توفر الاتصال الفوري يتم أخذ النسخة المحلية
                 lastBackupData = JSON.parse(JSON.stringify(window.appData));
                 set(dbRef, window.appData).then(() => {
                     alert('تم حفظ التعديلات بنجاح!');
