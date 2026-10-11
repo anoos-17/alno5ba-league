@@ -87,6 +87,9 @@
             <button onclick="switchTab('standings')" id="tab-standings" class="tab-btn active px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fa-solid fa-list-ol"></i> الترتيب
             </button>
+            <button onclick="switchTab('matches')" id="tab-matches" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-calendar-days text-amber-400"></i> المباريات
+            </button>
             <button onclick="switchTab('scorers')" id="tab-scorers" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fa-solid fa-futbol"></i> الهدافون
             </button>
@@ -104,6 +107,9 @@
             </button>
             <button onclick="switchTab('penalties')" id="tab-penalties" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fa-solid fa-triangle-exclamation text-red-400"></i> العقوبات
+            </button>
+            <button onclick="switchTab('feedback')" id="tab-feedback" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-comments text-amber-400"></i> الشكاوى والمقترحات
             </button>
         </div>
 
@@ -133,6 +139,16 @@
                         <tbody id="standings-table-body" class="divide-y divide-slate-800/60"></tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <!-- Matches Tab -->
+        <div id="view-matches" class="tab-content hidden">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
+                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-days"></i> جدول المباريات والتفاصيل
+                </h2>
+                <div id="matches-list" class="space-y-3"></div>
             </div>
         </div>
 
@@ -184,6 +200,34 @@
             </div>
         </div>
 
+        <!-- Feedback Tab -->
+        <div id="view-feedback" class="tab-content hidden space-y-4">
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 sm:p-6 shadow-xl">
+                <h2 class="font-bold text-base sm:text-lg text-amber-400 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-comment-dots"></i> أرسل مقترحك أو شكواك
+                </h2>
+                <p class="text-xs text-gray-400 mb-4">نرحب بجميع ملاحظاتكم لتطوير البطولة (يجب كتابة الاسم الثنائي)</p>
+                <form id="feedback-form" onsubmit="submitFeedback(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">الاسم الثنائي *</label>
+                        <input type="text" id="feedback-name" required placeholder="مثال: محمد أحمد" class="w-full bg-brand-dark border border-slate-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">الملاحظة أو المقترح *</label>
+                        <textarea id="feedback-text" required rows="3" placeholder="اكتب شكواك أو مقترحك هنا..." class="w-full bg-brand-dark border border-slate-700 rounded-xl p-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-500"></textarea>
+                    </div>
+                    <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition">إرسال الملاحظة 🚀</button>
+                </form>
+            </div>
+
+            <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 sm:p-6 shadow-xl">
+                <h3 class="font-bold text-sm sm:text-base text-white mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-list"></i> المقترحات والشكاوى المرسلة
+                </h3>
+                <div id="client-feedback-list" class="space-y-3"></div>
+            </div>
+        </div>
+
     </main>
 
     <!-- ADMIN AUTH MODAL -->
@@ -215,24 +259,37 @@
             </div>
 
             <!-- Admin Category Selector -->
-            <div class="grid grid-cols-3 sm:grid-cols-7 gap-1.5 mb-4">
+            <div class="grid grid-cols-3 sm:grid-cols-9 gap-1.5 mb-4">
                 <button onclick="switchAdminTab('teams')" id="atab-teams" class="bg-slate-900 text-amber-400 py-2 px-2 rounded-xl font-bold text-xs border border-amber-500/35">الفرق</button>
+                <button onclick="switchAdminTab('matches')" id="atab-matches" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">المباريات</button>
                 <button onclick="switchAdminTab('scorers')" id="atab-scorers" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">الهدافين</button>
                 <button onclick="switchAdminTab('assists')" id="atab-assists" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">الصناع</button>
                 <button onclick="switchAdminTab('motm')" id="atab-motm" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">رجل الأسبوع</button>
                 <button onclick="switchAdminTab('yellows')" id="atab-yellows" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">كروت صفراء</button>
                 <button onclick="switchAdminTab('reds')" id="atab-reds" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">كروت حمراء</button>
                 <button onclick="switchAdminTab('penalties')" id="atab-penalties" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">العقوبات</button>
+                <button onclick="switchAdminTab('feedback')" id="atab-feedback" class="bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs">الشكاوى</button>
             </div>
 
+            <!-- Admin Teams -->
             <div id="admin-sec-teams" class="admin-sec space-y-3">
                 <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-xs sm:text-sm text-gray-300">تعديل ترتيب الفرق</h3>
+                    <h3 class="font-bold text-xs sm:text-sm text-gray-300">تعديل ترتيب الفرق والنتائج يدوياً</h3>
                     <button onclick="addNewTeam()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">+ إضافة فريق</button>
                 </div>
                 <div id="admin-teams-list" class="space-y-2.5"></div>
             </div>
 
+            <!-- Admin Matches -->
+            <div id="admin-sec-matches" class="admin-sec hidden space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-xs sm:text-sm text-gray-300">إدارة جدول المباريات والتفاصيل (الأهداف والأسيست والكروت)</h3>
+                    <button onclick="addNewMatch()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">+ إضافة مباراة</button>
+                </div>
+                <div id="admin-matches-list" class="space-y-3"></div>
+            </div>
+
+            <!-- Admin Players -->
             <div id="admin-sec-players" class="admin-sec hidden space-y-3">
                 <div class="flex justify-between items-center">
                     <h3 id="admin-players-title" class="font-bold text-xs sm:text-sm text-gray-300">إدارة القائمة</h3>
@@ -241,8 +298,8 @@
                 <div id="admin-players-list" class="space-y-2"></div>
             </div>
 
+            <!-- Admin Penalties -->
             <div id="admin-sec-penalties" class="admin-sec hidden space-y-6">
-                <!-- Team Penalties Admin -->
                 <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-3">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-xs sm:text-sm text-red-400">إضافة خصم نقاط على فريق</h3>
@@ -250,7 +307,6 @@
                     </div>
                     <div id="admin-team-penalties-list" class="space-y-2"></div>
                 </div>
-                <!-- Player Penalties Admin -->
                 <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 space-y-3">
                     <div class="flex justify-between items-center">
                         <h3 class="font-bold text-xs sm:text-sm text-amber-400">إضافة إيقاف على لاعب</h3>
@@ -260,10 +316,21 @@
                 </div>
             </div>
 
+            <!-- Admin Feedback -->
+            <div id="admin-sec-feedback" class="admin-sec hidden space-y-3">
+                <h3 class="font-bold text-xs sm:text-sm text-gray-300">إدارة ومراجعة المقترحات والشكاوى</h3>
+                <div id="admin-feedback-list" class="space-y-2"></div>
+            </div>
+
             <div class="border-t border-slate-800 pt-4 mt-4 flex flex-wrap justify-between items-center gap-3">
-                <button onclick="resetDataToDefault()" class="text-red-400 hover:text-red-300 text-xs font-bold flex items-center gap-1">
-                    <i class="fa-solid fa-rotate-left"></i> استعادة الافتراضي
-                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="resetDataToDefault()" class="text-red-400 hover:text-red-300 text-xs font-bold flex items-center gap-1">
+                        <i class="fa-solid fa-rotate-left"></i> استعادة الافتراضي
+                    </button>
+                    <button onclick="undoLastSave()" class="text-amber-400 hover:text-amber-300 text-xs font-bold flex items-center gap-1 border-r border-slate-700 pr-2">
+                        <i class="fa-solid fa-rotate-right"></i> تراجع عن آخر حفظ
+                    </button>
+                </div>
                 <button onclick="saveAdminChanges()" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition">
                     حفظ ونشر التعديلات فوراً 🚀
                 </button>
@@ -274,7 +341,7 @@
     <!-- UI & FIREBASE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBoXiR4wwUQ5PbAhFZetg63bbil3ATaKQk",
@@ -296,32 +363,45 @@
                 { id: 2, name: "مدار", points: 12, played: 9, win: 3, draw: 3, loss: 3, goals: 13 },
                 { id: 3, name: "نجوم", points: 11, played: 9, win: 4, draw: 2, loss: 4, goals: 7 }
             ],
+            matches: [
+                { 
+                    id: 101, 
+                    homeTeam: "مشكاة", 
+                    awayTeam: "مدار", 
+                    homeScore: 2, 
+                    awayScore: 1, 
+                    status: "finished",
+                    events: [
+                        { type: 'goal', team: 'home', player: 'سلمان العامودي', assist: 'محمد صالح' },
+                        { type: 'goal', team: 'home', player: 'عمر مختار', assist: '' },
+                        { type: 'goal', team: 'away', player: 'يزن باعطوه', assist: 'صالح أحمد' },
+                        { type: 'card', team: 'home', player: 'محمد صالح', cardType: 'yellow' }
+                    ]
+                }
+            ],
             scorers: [{ name: "سلمان العامودي", count: 5 }, { name: "عمر مختار", count: 5 }],
             assists: [{ name: "محمد صالح", count: 5 }],
             motm: [{ name: "يزن باعطوه", count: 2 }],
             yellowCards: [{ name: "محمد صالح", count: 2 }],
             redCards: [],
             teamPenalties: [],
-            playerPenalties: []
+            playerPenalties: [],
+            feedback: []
         };
 
         window.appData = DEFAULT_DATA;
+        let lastBackupData = null;
         let activeAdminCategory = 'teams';
 
-        // دالة الترتيب المضبوطة تماماً (لو تساوى شخصان في النقاط/الأهداف يأخذان نفس الرقم، والذي يليهما يأخذ الترتيب المتسلسل الصحيح بناءً على عدد العناصر السابقة)
         function getRankedItems(items) {
             if(!items || items.length === 0) return [];
             const sorted = [...items].sort((a, b) => b.count - a.count);
             let result = [];
             
             for (let i = 0; i < sorted.length; i++) {
-                let currentRank;
-                if (i === 0) {
-                    currentRank = 1;
-                } else if (sorted[i].count === sorted[i - 1].count) {
+                let currentRank = i + 1;
+                if (i > 0 && sorted[i].count === sorted[i - 1].count) {
                     currentRank = result[i - 1].rank;
-                } else {
-                    currentRank = i; // يعتمد على عدد العناصر المختلفة السابقة لضمان عدم حدوث فجوات (مثلاً 1، 1، 2، 3)
                 }
                 result.push({ ...sorted[i], rank: currentRank });
             }
@@ -414,6 +494,157 @@
             });
         }
 
+        window.renderMatchesView = function() {
+            const container = document.getElementById('matches-list');
+            if(!container) return;
+            container.innerHTML = '';
+
+            const matches = window.appData.matches || [];
+            if(matches.length === 0) {
+                container.innerHTML = `<div class="text-center text-gray-500 py-6 text-xs">لا توجد مباريات مجدولة حالياً</div>`;
+                return;
+            }
+
+            matches.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'bg-brand-dark/60 border border-slate-800 p-3 sm:p-4 rounded-xl shadow-sm space-y-3';
+                
+                const isFinished = m.status === 'finished';
+                const statusBadge = isFinished 
+                    ? `<span class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 text-[10px] px-2.5 py-0.5 rounded-full">منتهية</span>`
+                    : `<span class="bg-amber-950/60 text-amber-400 border border-amber-800/40 text-[10px] px-2.5 py-0.5 rounded-full">قادمة</span>`;
+
+                const scoreDisplay = isFinished
+                    ? `<span class="text-base sm:text-lg font-black text-amber-400 bg-slate-900 px-3 py-1 rounded-lg border border-slate-800">${m.homeScore} - ${m.awayScore}</span>`
+                    : `<span class="text-xs font-bold text-gray-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">VS</span>`;
+
+                let homeEventsHtml = '';
+                let awayEventsHtml = '';
+
+                if (m.events && Array.isArray(m.events)) {
+                    m.events.forEach(ev => {
+                        if (ev.team === 'home') {
+                            if (ev.type === 'goal') {
+                                homeEventsHtml += `
+                                    <div class="text-xs text-gray-200 flex flex-col">
+                                        <div class="flex items-center gap-1.5 font-bold">
+                                            <i class="fa-solid fa-futbol text-amber-400"></i> 
+                                            <span>${ev.player || 'لاعب'}</span>
+                                        </div>
+                                        ${ev.assist ? `<span class="text-[10px] text-gray-400 pr-5">صناعة: ${ev.assist}</span>` : ''}
+                                    </div>
+                                `;
+                            } else if (ev.type === 'card') {
+                                const cardColor = ev.cardType === 'red' ? 'bg-red-500' : 'bg-yellow-400';
+                                homeEventsHtml += `
+                                    <div class="text-xs text-gray-300 flex items-center gap-1.5">
+                                        <span class="inline-block w-2 h-3 ${cardColor} rounded-sm"></span>
+                                        <span>${ev.player || 'لاعب'}</span>
+                                    </div>
+                                `;
+                            }
+                        } else if (ev.team === 'away') {
+                            if (ev.type === 'goal') {
+                                awayEventsHtml += `
+                                    <div class="text-xs text-gray-200 flex flex-col items-end text-left">
+                                        <div class="flex items-center gap-1.5 font-bold">
+                                            <span>${ev.player || 'لاعب'}</span>
+                                            <i class="fa-solid fa-futbol text-amber-400"></i>
+                                        </div>
+                                        ${ev.assist ? `<span class="text-[10px] text-gray-400 pl-5">صناعة: ${ev.assist}</span>` : ''}
+                                    </div>
+                                `;
+                            } else if (ev.type === 'card') {
+                                const cardColor = ev.cardType === 'red' ? 'bg-red-500' : 'bg-yellow-400';
+                                awayEventsHtml += `
+                                    <div class="text-xs text-gray-300 flex items-center justify-end gap-1.5 text-left">
+                                        <span>${ev.player || 'لاعب'}</span>
+                                        <span class="inline-block w-2 h-3 ${cardColor} rounded-sm"></span>
+                                    </div>
+                                `;
+                            }
+                        }
+                    });
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex-1 text-right font-extrabold text-white text-xs sm:text-sm truncate">${m.homeTeam}</div>
+                        <div class="flex flex-col items-center gap-1 shrink-0 px-2">
+                            ${scoreDisplay}
+                            ${statusBadge}
+                        </div>
+                        <div class="flex-1 text-left font-extrabold text-white text-xs sm:text-sm truncate">${m.awayTeam}</div>
+                    </div>
+                    ${isFinished && (homeEventsHtml || awayEventsHtml) ? `
+                        <div class="border-t border-slate-800/80 pt-2.5 mt-2 grid grid-cols-2 gap-4">
+                            <div class="space-y-1.5">${homeEventsHtml}</div>
+                            <div class="space-y-1.5 text-left">${awayEventsHtml}</div>
+                        </div>
+                    ` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.renderFeedbackView = function() {
+            const container = document.getElementById('client-feedback-list');
+            if(!container) return;
+            container.innerHTML = '';
+
+            const feedbackList = window.appData.feedback || [];
+            if(feedbackList.length === 0) {
+                container.innerHTML = `<div class="text-center text-gray-500 py-4 text-xs">لا توجد مقترحات أو شكاوى مرسلة حتى الآن</div>`;
+                return;
+            }
+
+            feedbackList.forEach(f => {
+                const div = document.createElement('div');
+                div.className = 'bg-brand-dark/60 border border-slate-800 p-3 rounded-xl space-y-1.5';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-amber-400 text-xs sm:text-sm"><i class="fa-solid fa-user"></i> ${f.name}</span>
+                        <span class="text-[10px] text-gray-500">${f.date || ''}</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-300">${f.text}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.submitFeedback = function(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('feedback-name').value.trim();
+            const textInput = document.getElementById('feedback-text').value.trim();
+
+            if(!nameInput || !textInput) {
+                alert('الرجاء تعبئة الاسم الثنائي ونص الملاحظة');
+                return;
+            }
+
+            const nameParts = nameInput.split(/\s+/);
+            if(nameParts.length < 2) {
+                alert('الرجاء إدخال الاسم الثنائي بشكل صحيح (الاسم واسم العائلة)');
+                return;
+            }
+
+            if(!window.appData.feedback) window.appData.feedback = [];
+            window.appData.feedback.unshift({
+                id: Date.now(),
+                name: nameInput,
+                text: textInput,
+                date: new Date().toLocaleDateString('ar-SA')
+            });
+
+            set(dbRef, window.appData).then(() => {
+                alert('تم إرسال مقترحك بنجاح، شكراً لك!');
+                document.getElementById('feedback-form').reset();
+                window.renderFeedbackView();
+            }).catch(() => {
+                alert('حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.');
+            });
+        }
+
         window.renderRankedList = function(containerId, items, label) {
             const container = document.getElementById(containerId);
             if(!container) return;
@@ -431,9 +662,8 @@
                 card.className = 'flex items-center justify-between p-3 bg-brand-dark/50 border border-slate-800/80 rounded-xl';
                 
                 let rankBadge = `<span class="w-6 text-center text-xs font-bold text-gray-400">${item.rank}</span>`;
-                if(item.rank === 1) rankBadge = `<span class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xs font-black">${item.rank}</span>`;
-                else if(item.rank === 2) rankBadge = `<span class="w-6 h-6 rounded-md bg-slate-400/20 text-slate-300 flex items-center justify-center text-xs font-black">${item.rank}</span>`;
-                else rankBadge = `<span class="w-6 h-6 rounded-md bg-slate-800 text-gray-300 flex items-center justify-center text-xs font-bold">${item.rank}</span>`;
+                if(item.rank === 1) rankBadge = `<span class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xs font-black">1</span>`;
+                else if(item.rank === 2) rankBadge = `<span class="w-6 h-6 rounded-md bg-slate-400/20 text-slate-300 flex items-center justify-center text-xs font-black">2</span>`;
 
                 card.innerHTML = `
                     <div class="flex items-center gap-3">
@@ -509,6 +739,8 @@
             if(!window.appData) return;
             window.renderHighlights();
             window.renderStandings();
+            window.renderMatchesView();
+            window.renderFeedbackView();
             window.renderRankedList('scorers-list', window.appData.scorers, '⚽ أهداف');
             window.renderRankedList('assists-list', window.appData.assists, '👟 تمريرات');
             window.renderRankedList('motm-list', window.appData.motm, '⭐ مرات رجل الأسبوع');
@@ -528,13 +760,48 @@
         });
 
         window.saveAdminChanges = function() {
-            set(dbRef, window.appData).then(() => {
-                alert('تم حفظ التعديلات ونشرها لجميع الزوار بنجاح!');
-                window.closeModal('modal-admin-panel');
-                window.renderAllViews();
-            }).catch(err => {
-                alert('حدث خطأ أثناء الحفظ.');
+            // جلب أحدث نسخة سحابية مباشرة قبل الحفظ لضمان دقة النسخ الاحتياطي للتراجع
+            get(dbRef).then((snapshot) => {
+                const currentCloudData = snapshot.val();
+                if (currentCloudData) {
+                    lastBackupData = JSON.parse(JSON.stringify(currentCloudData));
+                } else {
+                    lastBackupData = JSON.parse(JSON.stringify(window.appData));
+                }
+
+                set(dbRef, window.appData).then(() => {
+                    alert('تم حفظ التعديلات ونشرها لجميع الزوار بنجاح!');
+                    window.closeModal('modal-admin-panel');
+                    window.renderAllViews();
+                }).catch(() => {
+                    alert('حدث خطأ أثناء الحفظ.');
+                });
+            }).catch(() => {
+                // في حال عدم توفر الاتصال الفوري يتم أخذ النسخة المحلية
+                lastBackupData = JSON.parse(JSON.stringify(window.appData));
+                set(dbRef, window.appData).then(() => {
+                    alert('تم حفظ التعديلات بنجاح!');
+                    window.closeModal('modal-admin-panel');
+                    window.renderAllViews();
+                });
             });
+        };
+
+        window.undoLastSave = function() {
+            if(!lastBackupData) {
+                alert('لا توجد نسخة سابقة مسجلة للتراجع إليها في هذه الجلسة.');
+                return;
+            }
+            if(confirm('هل أنت متأكد من التراجع عن آخر حفظ والرجوع للنسخة السابقة؟')) {
+                window.appData = JSON.parse(JSON.stringify(lastBackupData));
+                set(dbRef, window.appData).then(() => {
+                    alert('تم التراجع واستعادة النسخة السابقة بنجاح!');
+                    window.renderAdminContent();
+                    window.renderAllViews();
+                }).catch(() => {
+                    alert('حدث خطأ أثناء تنفيذ عملية التراجع.');
+                });
+            }
         };
 
         window.resetDataToDefault = function() {
@@ -588,7 +855,7 @@
 
         window.switchAdminTab = function(category) {
             activeAdminCategory = category;
-            ['teams','scorers','assists','motm','yellows','reds','penalties'].forEach(c => {
+            ['teams','matches','scorers','assists','motm','yellows','reds','penalties','feedback'].forEach(c => {
                 const btn = document.getElementById(`atab-${c}`);
                 if(btn) {
                     btn.className = (c === category) ? 'bg-slate-900 text-amber-400 py-2 px-2 rounded-xl font-bold text-xs border border-amber-500/35' : 'bg-slate-900 text-gray-300 py-2 px-2 rounded-xl font-bold text-xs';
@@ -599,20 +866,30 @@
 
         window.renderAdminContent = function() {
             const secTeams = document.getElementById('admin-sec-teams');
+            const secMatches = document.getElementById('admin-sec-matches');
             const secPlayers = document.getElementById('admin-sec-players');
             const secPenalties = document.getElementById('admin-sec-penalties');
+            const secFeedback = document.getElementById('admin-sec-feedback');
             const titleEl = document.getElementById('admin-players-title');
 
             secTeams.classList.add('hidden');
+            secMatches.classList.add('hidden');
             secPlayers.classList.add('hidden');
             secPenalties.classList.add('hidden');
+            secFeedback.classList.add('hidden');
 
             if(activeAdminCategory === 'teams') {
                 secTeams.classList.remove('hidden');
                 window.renderAdminTeams();
+            } else if(activeAdminCategory === 'matches') {
+                secMatches.classList.remove('hidden');
+                window.renderAdminMatches();
             } else if(activeAdminCategory === 'penalties') {
                 secPenalties.classList.remove('hidden');
                 window.renderAdminPenalties();
+            } else if(activeAdminCategory === 'feedback') {
+                secFeedback.classList.remove('hidden');
+                window.renderAdminFeedback();
             } else {
                 secPlayers.classList.remove('hidden');
                 if(activeAdminCategory === 'scorers') titleEl.textContent = 'إدارة الهدافين';
@@ -633,16 +910,163 @@
                 const div = document.createElement('div');
                 div.className = 'bg-brand-dark p-3 rounded-xl border border-slate-800 grid grid-cols-2 sm:grid-cols-8 gap-2 items-center';
                 div.innerHTML = `
-                    <input type="text" value="${t.name}" onchange="window.appData.teams[${i}].name=this.value" class="col-span-2 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold">
+                    <input type="text" value="${t.name}" onchange="window.appData.teams[${i}].name=this.value" class="col-span-2 bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold" placeholder="اسم الفريق">
                     <div><label class="text-[9px] text-gray-400 block">نقاط</label><input type="number" value="${t.points}" onchange="window.appData.teams[${i}].points=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-amber-400 font-bold"></div>
                     <div><label class="text-[9px] text-gray-400 block">لعب</label><input type="number" value="${t.played}" onchange="window.appData.teams[${i}].played=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-white"></div>
                     <div><label class="text-[9px] text-gray-400 block">فوز</label><input type="number" value="${t.win}" onchange="window.appData.teams[${i}].win=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-emerald-400"></div>
                     <div><label class="text-[9px] text-gray-400 block">تعادل</label><input type="number" value="${t.draw}" onchange="window.appData.teams[${i}].draw=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-yellow-400"></div>
                     <div><label class="text-[9px] text-gray-400 block">خسارة</label><input type="number" value="${t.loss}" onchange="window.appData.teams[${i}].loss=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-red-400"></div>
                     <div><label class="text-[9px] text-gray-400 block">أهداف</label><input type="number" value="${t.goals}" onchange="window.appData.teams[${i}].goals=+this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-blue-300"></div>
+                    <div class="col-span-2 sm:col-span-8 text-left">
+                        <button onclick="window.removeTeam(${i})" class="text-red-400 hover:text-red-300 text-xs mt-1">🗑️ حذف الفريق</button>
+                    </div>
                 `;
                 container.appendChild(div);
             });
+        }
+
+        window.renderAdminMatches = function() {
+            const container = document.getElementById('admin-matches-list');
+            if(!container) return;
+            container.innerHTML = '';
+
+            const teams = window.appData.teams || [];
+            const matches = window.appData.matches || [];
+
+            if(matches.length === 0) {
+                container.innerHTML = `<div class="text-gray-500 text-xs py-2">لا توجد مباريات مضافة</div>`;
+                return;
+            }
+
+            matches.forEach((m, mi) => {
+                const optionsHome = teams.map(t => `<option value="${t.name}" ${t.name === m.homeTeam ? 'selected' : ''}>${t.name}</option>`).join('');
+                const optionsAway = teams.map(t => `<option value="${t.name}" ${t.name === m.awayTeam ? 'selected' : ''}>${t.name}</option>`).join('');
+
+                let eventsHtml = '';
+                if (m.events && Array.isArray(m.events)) {
+                    m.events.forEach((ev, ei) => {
+                        eventsHtml += `
+                            <div class="bg-slate-900 p-2 rounded-lg border border-slate-800 flex flex-wrap items-center gap-2">
+                                <select onchange="window.appData.matches[${mi}].events[${ei}].type=this.value; window.renderAdminMatches();" class="bg-brand-dark border border-slate-700 rounded p-1 text-[11px] text-white">
+                                    <option value="goal" ${ev.type==='goal'?'selected':''}>هدف ⚽</option>
+                                    <option value="card" ${ev.type==='card'?'selected':''}>بطاقة 🟨🟥</option>
+                                </select>
+                                <select onchange="window.appData.matches[${mi}].events[${ei}].team=this.value" class="bg-brand-dark border border-slate-700 rounded p-1 text-[11px] text-white">
+                                    <option value="home" ${ev.team==='home'?'selected':''}>${m.homeTeam || 'الفريق الأول'}</option>
+                                    <option value="away" ${ev.team==='away'?'selected':''}>${m.awayTeam || 'الفريق الثاني'}</option>
+                                </select>
+                                <input type="text" placeholder="اسم اللاعب" value="${ev.player || ''}" onchange="window.appData.matches[${mi}].events[${ei}].player=this.value" class="bg-brand-dark border border-slate-700 rounded p-1 text-[11px] text-white flex-1 min-w-[100px]">
+                                ${ev.type === 'goal' ? `
+                                    <input type="text" placeholder="صانع الأسيست (اختياري)" value="${ev.assist || ''}" onchange="window.appData.matches[${mi}].events[${ei}].assist=this.value" class="bg-brand-dark border border-slate-700 rounded p-1 text-[11px] text-amber-300 flex-1 min-w-[100px]">
+                                ` : `
+                                    <select onchange="window.appData.matches[${mi}].events[${ei}].cardType=this.value" class="bg-brand-dark border border-slate-700 rounded p-1 text-[11px] text-white">
+                                        <option value="yellow" ${ev.cardType==='yellow'?'selected':''}>صفراء</option>
+                                        <option value="red" ${ev.cardType==='red'?'selected':''}>حمراء</option>
+                                    </select>
+                                `}
+                                <button onclick="window.removeMatchEvent(${mi}, ${ei})" class="text-red-400 hover:text-red-300 text-xs px-1">🗑️</button>
+                            </div>
+                        `;
+                    });
+                }
+
+                const div = document.createElement('div');
+                div.className = 'bg-brand-dark p-3 rounded-xl border border-slate-800 space-y-3';
+                div.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-7 gap-2 items-center">
+                        <div class="sm:col-span-2">
+                            <label class="text-[9px] text-gray-400 block">الفريق الأول</label>
+                            <select onchange="window.appData.matches[${mi}].homeTeam=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold">
+                                ${optionsHome}
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <div>
+                                <label class="text-[9px] text-gray-400 block text-center">أهدافه</label>
+                                <input type="number" value="${m.homeScore ?? 0}" onchange="window.appData.matches[${mi}].homeScore=+this.value" class="w-12 bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-amber-400 font-bold">
+                            </div>
+                            <span class="text-gray-500 font-bold mt-3">:</span>
+                            <div>
+                                <label class="text-[9px] text-gray-400 block text-center">أهدافه</label>
+                                <input type="number" value="${m.awayScore ?? 0}" onchange="window.appData.matches[${mi}].awayScore=+this.value" class="w-12 bg-slate-900 border border-slate-700 rounded p-1 text-center text-xs text-amber-400 font-bold">
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="text-[9px] text-gray-400 block">الفريق الثاني</label>
+                            <select onchange="window.appData.matches[${mi}].awayTeam=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold">
+                                ${optionsAway}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-gray-400 block">الحالة</label>
+                            <select onchange="window.appData.matches[${mi}].status=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs font-bold ${m.status==='finished'?'text-emerald-400':'text-amber-400'}">
+                                <option value="scheduled" ${m.status === 'scheduled' ? 'selected' : ''}>قادمة</option>
+                                <option value="finished" ${m.status === 'finished' ? 'selected' : ''}>منتهية</option>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <button onclick="window.removeMatch(${mi})" class="text-red-400 hover:text-red-300 text-xs mt-2 sm:mt-0">حذف 🗑️</button>
+                        </div>
+                    </div>
+                    <!-- Match Events -->
+                    <div class="border-t border-slate-800 pt-2 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[11px] text-amber-400 font-bold">أحداث المباراة (مسجلو الأهداف، الأسيست، والبطاقات):</span>
+                            <button onclick="window.addMatchEvent(${mi})" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-2 py-1 rounded">+ إضافة حدث</button>
+                        </div>
+                        <div class="space-y-1.5">${eventsHtml}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.addMatchEvent = function(matchIndex) {
+            if(!window.appData.matches[matchIndex].events) {
+                window.appData.matches[matchIndex].events = [];
+            }
+            window.appData.matches[matchIndex].events.push({
+                type: 'goal',
+                team: 'home',
+                player: '',
+                assist: ''
+            });
+            window.renderAdminMatches();
+        }
+
+        window.removeMatchEvent = function(matchIndex, eventIndex) {
+            window.appData.matches[matchIndex].events.splice(eventIndex, 1);
+            window.renderAdminMatches();
+        }
+
+        window.renderAdminFeedback = function() {
+            const container = document.getElementById('admin-feedback-list');
+            if(!container) return;
+            container.innerHTML = '';
+
+            const feedbackList = window.appData.feedback || [];
+            if(feedbackList.length === 0) {
+                container.innerHTML = `<div class="text-gray-500 text-xs py-2">لا توجد مقترحات أو شكاوى مرسلة</div>`;
+                return;
+            }
+
+            feedbackList.forEach((f, i) => {
+                const div = document.createElement('div');
+                div.className = 'bg-brand-dark p-3 rounded-xl border border-slate-800 flex justify-between items-start gap-2';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold text-amber-400 text-xs"><i class="fa-solid fa-user"></i> ${f.name} <span class="text-[10px] text-gray-500 font-normal">(${f.date || ''})</span></div>
+                        <p class="text-xs text-gray-300 mt-1">${f.text}</p>
+                    </div>
+                    <button onclick="window.removeFeedback(${i})" class="text-red-400 hover:text-red-300 text-xs">🗑️</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.removeFeedback = function(index) {
+            window.appData.feedback.splice(index, 1);
+            window.renderAdminFeedback();
         }
 
         window.renderAdminPlayers = function() {
@@ -722,6 +1146,32 @@
             if(!window.appData.teams) window.appData.teams = [];
             window.appData.teams.push({ id: Date.now(), name: "فريق جديد", points: 0, played: 0, win: 0, draw: 0, loss: 0, goals: 0 });
             window.renderAdminTeams();
+        }
+
+        window.removeTeam = function(index) {
+            window.appData.teams.splice(index, 1);
+            window.renderAdminTeams();
+        }
+
+        window.addNewMatch = function() {
+            if(!window.appData.matches) window.appData.matches = [];
+            const defaultHome = window.appData.teams?.[0]?.name || "فريق 1";
+            const defaultAway = window.appData.teams?.[1]?.name || "فريق 2";
+            window.appData.matches.push({
+                id: Date.now(),
+                homeTeam: defaultHome,
+                awayTeam: defaultAway,
+                homeScore: 0,
+                awayScore: 0,
+                status: "scheduled",
+                events: []
+            });
+            window.renderAdminMatches();
+        }
+
+        window.removeMatch = function(index) {
+            window.appData.matches.splice(index, 1);
+            window.renderAdminMatches();
         }
 
         window.addNewPlayer = function() {
