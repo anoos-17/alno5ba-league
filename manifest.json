@@ -1,1 +1,12 @@
+<!-- ربط ملف الـ Manifest للأندرويد ومتصفح كروم -->
+<link rel="manifest" href="/manifest.json">
 
+<!-- ربط أيقونة الآيفون (iOS Safari) -->
+<link rel="apple-touch-icon" href="/icon-180.png">
+
+<!-- تحديد لون شريط النظام العلوي في الهواتف -->
+<meta name="theme-color" content="#0b1924">
+
+<!-- جعل تطبيق الآيفون يعمل بالوضع الكامل (بدون شريط متصفح) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
