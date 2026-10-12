@@ -1,12 +1,21 @@
-<!-- ربط ملف الـ Manifest للأندرويد ومتصفح كروم -->
-<link rel="manifest" href="/manifest.json">
-
-<!-- ربط أيقونة الآيفون (iOS Safari) -->
-<link rel="apple-touch-icon" href="/icon-180.png">
-
-<!-- تحديد لون شريط النظام العلوي في الهواتف -->
-<meta name="theme-color" content="#0b1924">
-
-<!-- جعل تطبيق الآيفون يعمل بالوضع الكامل (بدون شريط متصفح) -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+{
+  "name": "دوري النخبة",
+  "short_name": "دوري النخبة",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070b19",
+  "theme_color": "#070b19",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
