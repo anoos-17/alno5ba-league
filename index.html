@@ -38,18 +38,22 @@
         }
     </script>
     <style>
+        :root { color-scheme: dark; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #070b19 0%, #111827 100%);
+            background: radial-gradient(ellipse at 12% -12%, rgba(14, 116, 144, .16), transparent 34%), linear-gradient(135deg, #070b19 0%, #111827 100%);
             min-height: 100vh;
             color: #f8fafc;
             -webkit-tap-highlight-color: transparent;
         }
+        button, input, textarea, select { font: inherit; }
+        button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid rgba(56, 189, 248, .8); outline-offset: 2px; }
         .tab-btn.active {
-            background-color: rgba(245, 158, 11, .12);
+            background: linear-gradient(135deg, rgba(245, 158, 11, .16), rgba(245, 158, 11, .06));
             border: 1px solid rgba(245, 158, 11, .32);
             color: #fff;
-            box-shadow: 0 4px 14px rgba(245, 158, 11, .08);
+            box-shadow: 0 5px 18px rgba(245, 158, 11, .09), inset 0 1px 0 rgba(255,255,255,.04);
         }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #070b19; }
@@ -59,6 +63,22 @@
         .tab-btn:hover { transform: translateY(-1px); }
         .tab-content:not(.hidden) { animation: tabReveal .32s cubic-bezier(.2,.75,.25,1) both; }
         @keyframes tabReveal { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+        #highlights-bar > div, main .bg-brand-card { transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease; }
+        #highlights-bar > div:hover { border-color: rgba(148, 163, 184, .3); transform: translateY(-2px); box-shadow: 0 12px 24px rgba(2, 6, 23, .22); }
+        main .bg-brand-card { box-shadow: 0 12px 32px rgba(2, 6, 23, .16); }
+        .ranked-entry { position: relative; overflow: hidden; transition: background-color .2s ease, border-color .2s ease, transform .2s ease; }
+        .ranked-entry:hover { transform: translateY(-1px); background-color: rgba(30, 41, 59, .58); border-color: rgba(148, 163, 184, .25); }
+        .ranked-entry::before { content: ''; position: absolute; inset-block: 10px; inset-inline-start: 0; width: 2px; border-radius: 2px; background: var(--rank-accent, #38bdf8); opacity: .7; }
+        .ranked-emblem { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; border-radius: 11px; border: 1px solid rgba(148,163,184,.16); background: rgba(15,23,42,.78); color: var(--rank-accent, #38bdf8); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
+        .discipline-card { width: 13px; height: 17px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; transform: rotate(-8deg); box-shadow: 0 2px 5px rgba(0,0,0,.3), inset 1px 1px 0 rgba(255,255,255,.28); }
+        .discipline-card::after { content: ''; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.55); }
+        .discipline-card.yellow { background: linear-gradient(145deg, #fde68a, #f59e0b); }
+        .discipline-card.red { background: linear-gradient(145deg, #fda4af, #e11d48); }
+        #modal-auth > div, #modal-admin-panel > div, #welcome-modal > div { animation: modalReveal .24s cubic-bezier(.2,.75,.25,1) both; }
+        #modal-admin-panel button { transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s ease, filter .2s ease; }
+        #modal-admin-panel button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+        .admin-sec:not(.hidden) { animation: tabReveal .24s ease both; }
+        @keyframes modalReveal { from { opacity: 0; transform: translateY(8px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
         }
@@ -80,7 +100,7 @@
         .pitch-rows { position: relative; z-index: 1; min-height: 500px; display: grid; grid-template-rows: repeat(4, 1fr); padding: 22px 20px; }
         .pitch-row { display: flex; align-items: center; justify-content: center; gap: clamp(14px, 5vw, 62px); }
         .pitch-shirt { position: relative; width: clamp(82px, 12vw, 112px); flex: 0 0 auto; filter: drop-shadow(0 5px 5px rgba(0,0,0,.25)); transition: transform .22s ease, filter .22s ease; }
-        .pitch-shirt:hover { transform: translateY(-3px); filter: drop-shadow(0 8px 8px rgba(0,0,0,.3)); }
+        .pitch-shirt:hover { transform: translateY(-3px) scale(1.025); filter: drop-shadow(0 8px 8px rgba(0,0,0,.3)); }
         .pitch-shirt svg { display: block; width: 100%; height: auto; }
         .shirt-name, .shirt-number { position: absolute; left: 50%; width: 58%; transform: translateX(-50%); text-align: center; color: var(--shirt-ink); text-shadow: 0 0 2px rgba(255,255,255,.28); pointer-events: none; }
         .shirt-name { top: 42%; max-height: 2.2em; overflow: hidden; font-size: clamp(7px, 1vw, 9px); font-weight: 800; line-height: 1.08; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
@@ -152,19 +172,19 @@
             <button onclick="switchTab('ads')" id="tab-ads" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-bullhorn text-amber-400"></i> الإعلانات</button>
             <button onclick="switchTab('feedback')" id="tab-feedback" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-comments text-amber-400"></i> الشكاوى والمقترحات</button>
             <button onclick="switchTab('scorers')" id="tab-scorers" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-futbol"></i> الهدافون
+                <i class="fa-solid fa-bullseye text-amber-400"></i> الهدافون
             </button>
             <button onclick="switchTab('assists')" id="tab-assists" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
-                <i class="fa-solid fa-hands-clapping"></i> الصناع
+                <i class="fa-solid fa-wand-magic-sparkles text-cyan-300"></i> الصناع
             </button>
             <button onclick="switchTab('motm')" id="tab-motm" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fa-solid fa-star text-amber-400"></i> رجل الأسبوع
             </button>
             <button onclick="switchTab('yellows')" id="tab-yellows" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
-                <span class="inline-block w-2.5 h-3.5 bg-yellow-400 rounded-sm"></span> كروت صفراء
+                <span class="discipline-card yellow"></span> كروت صفراء
             </button>
             <button onclick="switchTab('reds')" id="tab-reds" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
-                <span class="inline-block w-2.5 h-3.5 bg-red-500 rounded-sm"></span> كروت حمراء
+                <span class="discipline-card red"></span> كروت حمراء
             </button>
             <button onclick="switchTab('penalties')" id="tab-penalties" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fa-solid fa-triangle-exclamation text-red-400"></i> العقوبات
@@ -225,14 +245,14 @@
         <!-- Lists Tabs -->
         <div id="view-scorers" class="tab-content hidden">
             <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
-                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-futbol"></i> قائمة الهدافين</h2>
+                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-bullseye"></i> قائمة الهدافين</h2>
                 <div id="scorers-list" class="space-y-2"></div>
             </div>
         </div>
 
         <div id="view-assists" class="tab-content hidden">
             <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
-                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-handshake"></i> صناع الأهداف</h2>
+                <h2 class="font-bold text-base text-amber-400 mb-4 flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i> صناع الأهداف</h2>
                 <div id="assists-list" class="space-y-2"></div>
             </div>
         </div>
@@ -246,14 +266,14 @@
 
         <div id="view-yellows" class="tab-content hidden">
             <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
-                <h2 class="font-bold text-base text-yellow-400 mb-4 flex items-center gap-2"><span class="w-3 h-4 bg-yellow-400 rounded-sm inline-block"></span> سجل الكروت الصفراء</h2>
+                <h2 class="font-bold text-base text-yellow-400 mb-4 flex items-center gap-2"><span class="discipline-card yellow"></span> سجل الكروت الصفراء</h2>
                 <div id="yellows-list" class="space-y-2"></div>
             </div>
         </div>
 
         <div id="view-reds" class="tab-content hidden">
             <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 shadow-xl">
-                <h2 class="font-bold text-base text-red-400 mb-4 flex items-center gap-2"><span class="w-3 h-4 bg-red-500 rounded-sm inline-block"></span> سجل الكروت الحمراء</h2>
+                <h2 class="font-bold text-base text-red-400 mb-4 flex items-center gap-2"><span class="discipline-card red"></span> سجل الكروت الحمراء</h2>
                 <div id="reds-list" class="space-y-2"></div>
             </div>
         </div>
@@ -550,17 +570,17 @@
         ];
         const LINEUP_ROWS = [[7, 8], [4, 5, 6], [1, 2, 3], [0]];
         const TEAM_KIT_PALETTE = [
-            { color: '#7c3aed', ink: '#ffffff' }, { color: '#059669', ink: '#ffffff' },
-            { color: '#db2777', ink: '#ffffff' }, { color: '#d97706', ink: '#111827' },
-            { color: '#0891b2', ink: '#ffffff' }, { color: '#4f46e5', ink: '#ffffff' },
-            { color: '#65a30d', ink: '#111827' }, { color: '#be123c', ink: '#ffffff' }
+            { color: '#7c3aed', ink: '#ffffff', accent: '#c4b5fd' }, { color: '#059669', ink: '#ffffff', accent: '#a7f3d0' },
+            { color: '#db2777', ink: '#ffffff', accent: '#fbcfe8' }, { color: '#d97706', ink: '#111827', accent: '#fde68a' },
+            { color: '#0891b2', ink: '#ffffff', accent: '#a5f3fc' }, { color: '#4f46e5', ink: '#ffffff', accent: '#c7d2fe' },
+            { color: '#65a30d', ink: '#111827', accent: '#d9f99d' }, { color: '#be123c', ink: '#ffffff', accent: '#fecdd3' }
         ];
 
         function getTeamKit(team) {
             const normalizedName = String(team?.name || '').replace(/\s+/g, '').trim();
-            if(normalizedName === 'مشكاة') return { color: '#f8fafc', ink: '#0f172a' };
-            if(normalizedName === 'مدار') return { color: '#2563eb', ink: '#ffffff' };
-            if(normalizedName === 'نجوم') return { color: '#111827', ink: '#ffffff' };
+            if(normalizedName === 'مشكاة') return { color: '#f8fafc', ink: '#0f172a', accent: '#d6a84f' };
+            if(normalizedName === 'مدار') return { color: '#2563eb', ink: '#ffffff', accent: '#93c5fd' };
+            if(normalizedName === 'نجوم') return { color: '#111827', ink: '#ffffff', accent: '#c4b5fd' };
             const savedKit = TEAM_KIT_PALETTE.find(kit => kit.color.toLowerCase() === String(team?.kitColor || '').toLowerCase());
             if(savedKit) return savedKit;
             const idText = String(team?.id || team?.name || 'team');
@@ -631,28 +651,28 @@
                     <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg"><i class="fa-solid fa-crown"></i></div>
                     <div class="overflow-hidden">
                         <div class="text-[10px] text-gray-400 font-bold">متصدر الدوري</div>
-                        <div class="text-xs sm:text-sm font-black text-amber-400 truncate">${topTeam}</div>
+                        <div class="text-xs sm:text-sm font-black text-amber-400 truncate">${escapeHtml(topTeam)}</div>
                     </div>
                 </div>
                 <div class="bg-brand-card/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3 shadow-md">
-                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg"><i class="fa-solid fa-futbol"></i></div>
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg"><i class="fa-solid fa-bullseye"></i></div>
                     <div class="overflow-hidden">
                         <div class="text-[10px] text-gray-400 font-bold">هداف الدوري</div>
-                        <div class="text-xs sm:text-sm font-black text-white truncate">${topScorers || 'لا يوجد'}</div>
+                        <div class="text-xs sm:text-sm font-black text-white truncate">${escapeHtml(topScorers || 'لا يوجد')}</div>
                     </div>
                 </div>
                 <div class="bg-brand-card/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3 shadow-md">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg"><i class="fa-solid fa-handshake"></i></div>
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
                     <div class="overflow-hidden">
                         <div class="text-[10px] text-gray-400 font-bold">أكثر صناعة للأهداف</div>
-                        <div class="text-xs sm:text-sm font-black text-white truncate">${topAssists || 'لا يوجد'}</div>
+                        <div class="text-xs sm:text-sm font-black text-white truncate">${escapeHtml(topAssists || 'لا يوجد')}</div>
                     </div>
                 </div>
                 <div class="bg-brand-card/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3 shadow-md">
-                    <div class="w-10 h-10 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-lg"><span class="w-2.5 h-3.5 bg-yellow-400 rounded-sm"></span></div>
+                    <div class="w-10 h-10 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-lg"><span class="discipline-card yellow"></span></div>
                     <div class="overflow-hidden">
                         <div class="text-[10px] text-gray-400 font-bold">أكثر كروت صفراء</div>
-                        <div class="text-xs sm:text-sm font-black text-white truncate">${topYellows || 'لا يوجد'}</div>
+                        <div class="text-xs sm:text-sm font-black text-white truncate">${escapeHtml(topYellows || 'لا يوجد')}</div>
                     </div>
                 </div>
             `;
@@ -807,7 +827,7 @@
                 button.type = 'button';
                 button.setAttribute('aria-pressed', String(String(team.id) === String(activeFormationTeamId)));
                 button.className = `text-right bg-brand-dark/75 border ${String(team.id) === String(activeFormationTeamId) ? 'border-amber-300/60 shadow-lg shadow-amber-950/20' : 'border-slate-800 hover:border-slate-600'} rounded-2xl p-3 transition-all duration-300 hover:-translate-y-0.5`;
-                button.innerHTML = `<div class="flex items-center justify-between gap-3"><div class="flex items-center gap-3 min-w-0"><span class="w-8 h-8 rounded-xl border border-white/10" style="background:${kit.color}"></span><span class="font-bold text-white truncate">${escapeHtml(team.name)}</span></div><i class="fa-solid fa-chevron-left text-[10px] text-gray-500"></i></div><div class="mt-2 text-[10px] text-gray-400">${playerCount} من 9 لاعبين</div>`;
+                button.innerHTML = `<div class="flex items-center justify-between gap-3"><div class="flex items-center gap-3 min-w-0"><span class="w-8 h-8 rounded-xl border border-white/10 shadow-inner" style="background:linear-gradient(145deg,${kit.color} 0 76%,${kit.accent} 76% 100%)"></span><span class="font-bold text-white truncate">${escapeHtml(team.name)}</span></div><i class="fa-solid fa-chevron-left text-[10px] text-gray-500"></i></div><div class="mt-2 text-[10px] text-gray-400">${playerCount} من 9 لاعبين</div>`;
                 button.addEventListener('click', () => { activeFormationTeamId = String(team.id); window.renderFormationsView(); });
                 teamsContainer.appendChild(button);
             });
@@ -822,7 +842,7 @@
                 const name = String(player.name || '').trim();
                 const number = String(player.number ?? '').trim();
                 const label = [name, number].filter(Boolean).join(' — ') || LINEUP_SLOTS[index].label;
-                return `<div class="pitch-shirt" role="img" aria-label="${escapeHtml(label)}" style="--shirt-color:${kit.color};--shirt-ink:${kit.ink}"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M39 8 Q60 17 81 8 L114 27 L101 52 L88 45 L88 111 L32 111 L32 45 L19 52 L6 27 Z" fill="${kit.color}" stroke="${kit.color === '#f8fafc' ? '#94a3b8' : 'rgba(255,255,255,.78)'}" stroke-width="2.5" stroke-linejoin="round"/><path d="M47 12 Q60 29 73 12" fill="none" stroke="${kit.ink}" stroke-opacity=".45" stroke-width="3" stroke-linecap="round"/></svg><span class="shirt-name">${escapeHtml(name)}</span><span class="shirt-number">${escapeHtml(number)}</span></div>`;
+                return `<div class="pitch-shirt" role="img" aria-label="${escapeHtml(label)}" style="--shirt-color:${kit.color};--shirt-ink:${kit.ink}"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M39 8 Q60 17 81 8 L114 27 L101 52 L88 45 L88 111 L32 111 L32 45 L19 52 L6 27 Z" fill="${kit.color}" stroke="${kit.color === '#f8fafc' ? '#94a3b8' : 'rgba(255,255,255,.78)'}" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 30 L15 27 L21 39 L15 43 Z M112 30 L105 27 L99 39 L105 43 Z" fill="${kit.accent}" opacity=".96"/><path d="M43 10 Q60 31 77 10" fill="none" stroke="${kit.accent}" stroke-width="6" stroke-linecap="round"/><path d="M46 11 Q60 26 74 11" fill="none" stroke="${kit.ink}" stroke-opacity=".54" stroke-width="2.2" stroke-linecap="round"/><path d="M28 47 L32 49 L32 91 M92 47 L88 49 L88 91" fill="none" stroke="${kit.accent}" stroke-opacity=".62" stroke-width="2.5" stroke-linecap="round"/></svg><span class="shirt-name">${escapeHtml(name)}</span><span class="shirt-number">${escapeHtml(number)}</span></div>`;
             };
             const rowsHtml = LINEUP_ROWS.map((row, index) => `<div class="pitch-row" aria-label="${index === 0 ? 'خط الهجوم' : index === 1 ? 'خط الوسط' : index === 2 ? 'خط الدفاع' : 'حارس المرمى'}">${row.map(renderShirt).join('')}</div>`).join('');
             pitchContainer.innerHTML = `<div class="mb-3 flex flex-wrap items-center justify-between gap-2"><div><h3 class="font-extrabold text-white">${escapeHtml(selectedTeam.name)}</h3><p class="text-[11px] text-gray-400 mt-0.5">التشكيلة الأساسية • 9 لاعبين</p></div><span class="rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1 text-[10px] text-gray-300">حارس + 3 دفاع + 3 وسط + 2 هجوم</span></div><div class="football-pitch" role="group" aria-label="ملعب وتشكيلة ${escapeHtml(selectedTeam.name)}"><div class="pitch-center-circle" aria-hidden="true"></div><div class="pitch-rows">${rowsHtml}</div></div>`;
@@ -926,6 +946,14 @@
             container.innerHTML = '';
 
             const rankedItems = getRankedItems(items);
+            const visuals = {
+                'scorers-list': { icon: 'fa-bullseye', accent: '#fbbf24', unit: 'أهداف' },
+                'assists-list': { icon: 'fa-wand-magic-sparkles', accent: '#67e8f9', unit: 'تمريرات حاسمة' },
+                'motm-list': { icon: 'fa-crown', accent: '#c4b5fd', unit: 'مرة' },
+                'yellows-list': { card: 'yellow', accent: '#fbbf24', unit: 'بطاقات صفراء' },
+                'reds-list': { card: 'red', accent: '#fb7185', unit: 'بطاقات حمراء' }
+            };
+            const visual = visuals[containerId] || { icon: 'fa-chart-simple', accent: '#38bdf8', unit: label || '' };
 
             if(!rankedItems || rankedItems.length === 0) {
                 container.innerHTML = `<div class="text-center text-gray-500 py-6 text-xs">لا توجد سجّلات حتى الآن</div>`;
@@ -934,19 +962,22 @@
 
             rankedItems.forEach((item) => {
                 const card = document.createElement('div');
-                card.className = 'flex items-center justify-between p-3 bg-brand-dark/50 border border-slate-800/80 rounded-xl';
+                card.className = 'ranked-entry flex items-center justify-between gap-3 p-3 bg-brand-dark/50 border border-slate-800/80 rounded-xl';
+                card.style.setProperty('--rank-accent', visual.accent);
                 
-                let rankBadge = `<span class="w-6 text-center text-xs font-bold text-gray-400">${item.rank}</span>`;
-                if(item.rank === 1) rankBadge = `<span class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xs font-black">1</span>`;
-                else if(item.rank === 2) rankBadge = `<span class="w-6 h-6 rounded-md bg-slate-400/20 text-slate-300 flex items-center justify-center text-xs font-black">2</span>`;
+                const emblem = visual.card
+                    ? `<span class="discipline-card ${visual.card}" aria-hidden="true"></span>`
+                    : `<i class="fa-solid ${visual.icon}" aria-hidden="true"></i>`;
+                const rankTone = item.rank === 1 ? 'bg-amber-500/15 text-amber-300 border-amber-400/25' : item.rank === 2 ? 'bg-slate-400/10 text-slate-300 border-slate-400/15' : 'bg-slate-800/70 text-gray-400 border-slate-700';
 
                 card.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        ${rankBadge}
-                        <span class="font-bold text-white text-xs sm:text-sm">${item.name}</span>
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="ranked-emblem">${emblem}</span>
+                        <span class="w-7 h-7 rounded-lg border ${rankTone} flex items-center justify-center text-[11px] font-black shrink-0">${item.rank}</span>
+                        <span class="font-bold text-white text-xs sm:text-sm truncate">${escapeHtml(item.name)}</span>
                     </div>
-                    <div class="bg-slate-900 px-3 py-1 rounded-lg text-xs font-black text-amber-300 border border-slate-800">
-                        ${item.count} <span class="text-gray-400 font-normal">${label}</span>
+                    <div class="bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-black text-white border border-slate-800 whitespace-nowrap shadow-inner">
+                        <span class="text-amber-300">${escapeHtml(item.count)}</span> <span class="text-gray-400 font-normal">${visual.unit}</span>
                     </div>
                 `;
                 container.appendChild(card);
@@ -1018,11 +1049,11 @@
             window.renderFeedbackView();
             window.renderFormationsView();
             window.renderAdvertisements();
-            window.renderRankedList('scorers-list', window.appData.scorers, '⚽ أهداف');
-            window.renderRankedList('assists-list', window.appData.assists, '👟 تمريرات');
-            window.renderRankedList('motm-list', window.appData.motm, '⭐ مرات رجل الأسبوع');
-            window.renderRankedList('yellows-list', window.appData.yellowCards, '🟨 كروت صفراء');
-            window.renderRankedList('reds-list', window.appData.redCards, '🟥 كروت حمراء');
+            window.renderRankedList('scorers-list', window.appData.scorers, 'أهداف');
+            window.renderRankedList('assists-list', window.appData.assists, 'تمريرات حاسمة');
+            window.renderRankedList('motm-list', window.appData.motm, 'مرات رجل الأسبوع');
+            window.renderRankedList('yellows-list', window.appData.yellowCards, 'بطاقات صفراء');
+            window.renderRankedList('reds-list', window.appData.redCards, 'بطاقات حمراء');
             window.renderPenaltiesView();
         }
 
