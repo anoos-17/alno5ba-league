@@ -727,7 +727,7 @@
                 return;
             }
 
-            matches.forEach(m => {
+            [...matches].reverse().forEach(m => {
                 const card = document.createElement('div');
                 card.className = 'bg-brand-dark/60 border border-slate-800 p-3 sm:p-4 rounded-xl shadow-sm space-y-3';
                 
