@@ -69,17 +69,31 @@
         #highlights-bar > div, main .bg-brand-card { transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease; }
         #highlights-bar > div:hover { border-color: rgba(148, 163, 184, .3); transform: translateY(-2px); box-shadow: 0 12px 24px rgba(2, 6, 23, .22); }
         main .bg-brand-card { box-shadow: 0 12px 32px rgba(2, 6, 23, .16); }
-        .ranked-entry { position: relative; overflow: hidden; transition: background-color .2s ease, border-color .2s ease, transform .2s ease; }
-        .ranked-entry:hover { transform: translateY(-1px); background-color: rgba(30, 41, 59, .58); border-color: rgba(148, 163, 184, .25); }
-        .ranked-entry::before { content: ''; position: absolute; inset-block: 10px; inset-inline-start: 0; width: 2px; border-radius: 2px; background: var(--rank-accent, #38bdf8); opacity: .7; }
-        .ranked-emblem { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; border-radius: 11px; border: 1px solid rgba(148,163,184,.16); background: rgba(15,23,42,.78); color: var(--rank-accent, #38bdf8); box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
-        .discipline-card { width: 13px; height: 17px; border-radius: 3px; display: inline-flex; align-items: center; justify-content: center; transform: rotate(-8deg); box-shadow: 0 2px 5px rgba(0,0,0,.3), inset 1px 1px 0 rgba(255,255,255,.28); }
-        .discipline-card::after { content: ''; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.55); }
-        .discipline-card.yellow { background: linear-gradient(145deg, #fde68a, #f59e0b); }
-        .discipline-card.red { background: linear-gradient(145deg, #fda4af, #e11d48); }
+        .ranked-entry { position: relative; overflow: hidden; min-height: 66px; border-color: rgba(190, 150, 91, .18); background: linear-gradient(110deg, rgba(12, 24, 36, .96), rgba(17, 31, 45, .82)); transition: background-color .2s ease, border-color .2s ease, transform .2s ease; }
+        .ranked-entry:hover { transform: translateY(-1px); background-color: rgba(30, 41, 59, .58); border-color: rgba(210, 170, 105, .42); }
+        .ranked-entry::before { content: ''; position: absolute; inset-block: 9px; inset-inline-start: 0; width: 3px; border-radius: 3px; background: var(--rank-accent, #38bdf8); opacity: .85; }
+        .ranked-entry--scorer::after, .ranked-entry--assist::after { content: ''; position: absolute; inset-block-start: -28px; inset-inline-start: -24px; width: 76px; height: 76px; border: 1px solid rgba(201, 162, 93, .09); border-radius: 50%; pointer-events: none; }
+        .ranked-entry--rank-1 { border-color: rgba(232, 190, 105, .38); }
+        .ranked-entry--rank-2 { border-color: rgba(190, 202, 211, .28); }
+        .ranked-entry--rank-3 { border-color: rgba(190, 126, 86, .3); }
+        .ranked-emblem { position: relative; z-index: 1; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; border-radius: 11px; border: 1px solid rgba(190, 150, 91, .22); background: rgba(8, 18, 29, .9); color: var(--rank-accent, #38bdf8); }
+        .ranked-place { position: relative; z-index: 1; width: 29px; height: 32px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; border: 1px solid rgba(148, 163, 184, .2); border-radius: 8px; background: rgba(15, 23, 42, .76); color: #cbd5e1; font: 900 10px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .02em; }
+        .ranked-place.rank-1 { color: #f6d98b; border-color: rgba(232, 190, 105, .52); background: rgba(122, 86, 33, .2); }
+        .ranked-place.rank-2 { color: #d6dee5; border-color: rgba(190, 202, 211, .38); background: rgba(100, 116, 139, .16); }
+        .ranked-place.rank-3 { color: #e0ad8b; border-color: rgba(190, 126, 86, .4); background: rgba(124, 65, 38, .18); }
+        .ranked-player { position: relative; z-index: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+        .ranked-role { color: #bda875; font-size: 9px; font-weight: 800; line-height: 1; letter-spacing: .02em; }
+        .ranked-name { color: #f8fafc; font-size: 12px; font-weight: 800; line-height: 1.35; }
+        .ranked-stat { position: relative; z-index: 1; min-width: 74px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 5px 9px; border: 1px solid rgba(190, 150, 91, .2); border-radius: 10px; background: rgba(7, 16, 26, .72); white-space: nowrap; }
+        .ranked-stat-number { color: #f4cf79; font-size: 18px; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
+        .ranked-stat-unit { color: #aeb9c5; font-size: 9px; font-weight: 600; }
+        .discipline-card { width: 13px; height: 17px; border-radius: 2px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+        .discipline-card::after { content: none; display: none; }
+        .discipline-card.yellow { background: #facc15; }
+        .discipline-card.red { background: #ef4444; }
         #modal-auth > div, #modal-admin-panel > div, #welcome-modal > div { animation: modalReveal .24s cubic-bezier(.2,.75,.25,1) both; }
         #modal-admin-panel button { transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s ease, filter .2s ease; }
-        #modal-admin-panel button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+        #modal-admin-panel button:not(:disabled):hover { transform: translateY(-1px); filter: brightness(1.08); }
         .admin-sec:not(.hidden) { animation: tabReveal .24s ease both; }
         @keyframes modalReveal { from { opacity: 0; transform: translateY(8px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @media (prefers-reduced-motion: reduce) {
@@ -105,6 +119,13 @@
         .pitch-shirt { position: relative; width: clamp(82px, 12vw, 112px); flex: 0 0 auto; filter: drop-shadow(0 5px 5px rgba(0,0,0,.25)); transition: transform .22s ease, filter .22s ease; }
         .pitch-shirt:hover { transform: translateY(-3px) scale(1.025); filter: drop-shadow(0 8px 8px rgba(0,0,0,.3)); }
         .pitch-shirt svg { display: block; width: 100%; height: auto; }
+        .pitch-player { display: flex; flex: 0 0 auto; flex-direction: column; align-items: center; }
+        .captain-marker { height: 15px; margin-top: -1px; display: inline-flex; align-items: center; justify-content: center; }
+        .captain-marker.is-hidden { visibility: hidden; }
+        .captain-medallion { width: 13px; height: 13px; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid #fbbf24; border-radius: 50%; color: #fbbf24; font: 900 8px/1 Arial, sans-serif; text-shadow: 0 1px 2px rgba(0,0,0,.55); box-shadow: 0 0 7px rgba(251,191,36,.16); }
+        .captain-choice { width: 100%; min-height: 28px; display: flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid rgba(148,163,184,.17); border-radius: 9px; background: rgba(15,23,42,.72); color: #aeb9c9; font-size: 10px; font-weight: 800; transition: .2s ease; }
+        .captain-choice.selected { border-color: rgba(251,191,36,.42); background: rgba(245,158,11,.12); color: #fcd34d; }
+        .captain-choice:disabled { opacity: .4; cursor: not-allowed; }
         .shirt-name, .shirt-number { position: absolute; left: 50%; width: 58%; transform: translateX(-50%); text-align: center; color: var(--shirt-ink); text-shadow: 0 0 2px rgba(255,255,255,.28); pointer-events: none; }
         .shirt-name { top: 42%; max-height: 2.2em; overflow: hidden; font-size: clamp(7px, 1vw, 9px); font-weight: 800; line-height: 1.08; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere; }
         .shirt-number { top: 63%; font-size: clamp(13px, 1.8vw, 17px); font-weight: 900; line-height: 1; }
@@ -844,8 +865,11 @@
                 const player = players[index] || {};
                 const name = String(player.name || '').trim();
                 const number = String(player.number ?? '').trim();
-                const label = [name, number].filter(Boolean).join(' — ') || LINEUP_SLOTS[index].label;
-                return `<div class="pitch-shirt" role="img" aria-label="${escapeHtml(label)}" style="--shirt-color:${kit.color};--shirt-ink:${kit.ink}"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M39 8 Q60 17 81 8 L114 27 L101 52 L88 45 L88 111 L32 111 L32 45 L19 52 L6 27 Z" fill="${kit.color}" stroke="${kit.color === '#f8fafc' ? '#94a3b8' : 'rgba(255,255,255,.78)'}" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 30 L15 27 L21 39 L15 43 Z M112 30 L105 27 L99 39 L105 43 Z" fill="${kit.accent}" opacity=".96"/><path d="M43 10 Q60 31 77 10" fill="none" stroke="${kit.accent}" stroke-width="6" stroke-linecap="round"/><path d="M46 11 Q60 26 74 11" fill="none" stroke="${kit.ink}" stroke-opacity=".54" stroke-width="2.2" stroke-linecap="round"/><path d="M28 47 L32 49 L32 91 M92 47 L88 49 L88 91" fill="none" stroke="${kit.accent}" stroke-opacity=".62" stroke-width="2.5" stroke-linecap="round"/></svg><span class="shirt-name">${escapeHtml(name)}</span><span class="shirt-number">${escapeHtml(number)}</span></div>`;
+                const isCaptain = Boolean(name) && formation?.captainSlot != null && Number(formation.captainSlot) === index;
+                const playerLabel = [name, number].filter(Boolean).join(' — ') || LINEUP_SLOTS[index].label;
+                const accessibleLabel = `${isCaptain ? 'الكابتن، ' : ''}${playerLabel}`;
+                const captainArmband = isCaptain ? `<g transform="rotate(24 97 37)"><rect x="89" y="29.5" width="17" height="15" rx="3" fill="#facc15" stroke="#111827" stroke-width="1.8"/><path d="M91 32.5 H104 M91 41.5 H104" fill="none" stroke="#111827" stroke-width="1.7" stroke-linecap="round"/><text x="97.5" y="39.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" font-weight="900" fill="#111827">C</text></g>` : '';
+                return `<div class="pitch-player"><div class="pitch-shirt" role="img" aria-label="${escapeHtml(accessibleLabel)}" style="--shirt-color:${kit.color};--shirt-ink:${kit.ink}"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M39 8 Q60 17 81 8 L114 27 L101 52 L88 45 L88 111 L32 111 L32 45 L19 52 L6 27 Z" fill="${kit.color}" stroke="${kit.color === '#f8fafc' ? '#94a3b8' : 'rgba(255,255,255,.78)'}" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 30 L15 27 L21 39 L15 43 Z M112 30 L105 27 L99 39 L105 43 Z" fill="${kit.accent}" opacity=".96"/><path d="M43 10 Q60 31 77 10" fill="none" stroke="${kit.accent}" stroke-width="6" stroke-linecap="round"/><path d="M46 11 Q60 26 74 11" fill="none" stroke="${kit.ink}" stroke-opacity=".54" stroke-width="2.2" stroke-linecap="round"/><path d="M28 47 L32 49 L32 91 M92 47 L88 49 L88 91" fill="none" stroke="${kit.accent}" stroke-opacity=".62" stroke-width="2.5" stroke-linecap="round"/>${captainArmband}</svg><span class="shirt-name">${escapeHtml(name)}</span><span class="shirt-number">${escapeHtml(number)}</span></div><span class="captain-marker ${isCaptain ? '' : 'is-hidden'}" ${isCaptain ? 'aria-label="شارة الكابتن"' : 'aria-hidden="true"'}><span class="captain-medallion">C</span></span></div>`;
             };
             const rowsHtml = LINEUP_ROWS.map((row, index) => `<div class="pitch-row" aria-label="${index === 0 ? 'خط الهجوم' : index === 1 ? 'خط الوسط' : index === 2 ? 'خط الدفاع' : 'حارس المرمى'}">${row.map(renderShirt).join('')}</div>`).join('');
             pitchContainer.innerHTML = `<div class="mb-3 flex flex-wrap items-center justify-between gap-2"><div><h3 class="font-extrabold text-white">${escapeHtml(selectedTeam.name)}</h3><p class="text-[11px] text-gray-400 mt-0.5">التشكيلة الأساسية • 9 لاعبين</p></div><span class="rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1 text-[10px] text-gray-300">حارس + 3 دفاع + 3 وسط + 2 هجوم</span></div><div class="football-pitch" role="group" aria-label="ملعب وتشكيلة ${escapeHtml(selectedTeam.name)}"><div class="pitch-center-circle" aria-hidden="true"></div><div class="pitch-rows">${rowsHtml}</div></div>`;
@@ -950,11 +974,11 @@
 
             const rankedItems = getRankedItems(items);
             const visuals = {
-                'scorers-list': { icon: 'fa-bullseye', accent: '#fbbf24', unit: 'أهداف' },
-                'assists-list': { icon: 'fa-wand-magic-sparkles', accent: '#67e8f9', unit: 'تمريرات حاسمة' },
-                'motm-list': { icon: 'fa-crown', accent: '#c4b5fd', unit: 'مرة' },
-                'yellows-list': { card: 'yellow', accent: '#fbbf24', unit: 'بطاقات صفراء' },
-                'reds-list': { card: 'red', accent: '#fb7185', unit: 'بطاقات حمراء' }
+                'scorers-list': { icon: 'fa-futbol', accent: '#d8b66e', unit: 'أهداف', kind: 'scorer', role: 'هداف الدوري' },
+                'assists-list': { icon: 'fa-shoe-prints', accent: '#8ec5c0', unit: 'تمريرات حاسمة', kind: 'assist', role: 'صانع أهداف' },
+                'motm-list': { icon: 'fa-crown', accent: '#c4b5fd', unit: 'مرة', role: 'رجل المباراة' },
+                'yellows-list': { card: 'yellow', accent: '#fbbf24', unit: 'بطاقات صفراء', role: 'إنذارات' },
+                'reds-list': { card: 'red', accent: '#ef4444', unit: 'بطاقات حمراء', role: 'بطاقات حمراء' }
             };
             const visual = visuals[containerId] || { icon: 'fa-chart-simple', accent: '#38bdf8', unit: label || '' };
 
@@ -965,22 +989,30 @@
 
             rankedItems.forEach((item) => {
                 const card = document.createElement('div');
-                card.className = 'ranked-entry flex items-center justify-between gap-3 p-3 bg-brand-dark/50 border border-slate-800/80 rounded-xl';
+                const rankValue = Math.max(0, Number(item.rank) || 0);
+                const rankClass = rankValue > 0 && rankValue <= 3 ? `rank-${rankValue}` : 'rank-other';
+                const kindClass = visual.kind ? `ranked-entry--${visual.kind}` : '';
+                card.className = `ranked-entry ${kindClass} ranked-entry--${rankValue > 0 && rankValue <= 3 ? `rank-${rankValue}` : 'rank-other'} flex items-center justify-between gap-2.5 p-3 bg-brand-dark/50 border border-slate-800/80 rounded-xl`;
                 card.style.setProperty('--rank-accent', visual.accent);
                 
                 const emblem = visual.card
                     ? `<span class="discipline-card ${visual.card}" aria-hidden="true"></span>`
                     : `<i class="fa-solid ${visual.icon}" aria-hidden="true"></i>`;
-                const rankTone = item.rank === 1 ? 'bg-amber-500/15 text-amber-300 border-amber-400/25' : item.rank === 2 ? 'bg-slate-400/10 text-slate-300 border-slate-400/15' : 'bg-slate-800/70 text-gray-400 border-slate-700';
+                const role = visual.role || label || '';
+                const rankLabel = String(rankValue).padStart(2, '0');
 
                 card.innerHTML = `
                     <div class="flex items-center gap-2.5 min-w-0">
                         <span class="ranked-emblem">${emblem}</span>
-                        <span class="w-7 h-7 rounded-lg border ${rankTone} flex items-center justify-center text-[11px] font-black shrink-0">${item.rank}</span>
-                        <span class="font-bold text-white text-xs sm:text-sm truncate">${escapeHtml(item.name)}</span>
+                        <span class="ranked-place ${rankClass}" aria-label="المركز ${rankValue}">${rankLabel}</span>
+                        <span class="ranked-player">
+                            <span class="ranked-role">${escapeHtml(role)}</span>
+                            <span class="ranked-name truncate">${escapeHtml(item.name)}</span>
+                        </span>
                     </div>
-                    <div class="bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-black text-white border border-slate-800 whitespace-nowrap shadow-inner">
-                        <span class="text-amber-300">${escapeHtml(item.count)}</span> <span class="text-gray-400 font-normal">${visual.unit}</span>
+                    <div class="ranked-stat">
+                        <span class="ranked-stat-number">${escapeHtml(item.count)}</span>
+                        <span class="ranked-stat-unit">${escapeHtml(visual.unit)}</span>
                     </div>
                 `;
                 container.appendChild(card);
@@ -1415,6 +1447,11 @@
                 if(!formation.players[index] || typeof formation.players[index] !== 'object') formation.players[index] = { name: '', number: '' };
                 formation.players[index].slotIndex = index;
             }
+            if(formation.captainSlot != null) {
+                const captainIndex = Number(formation.captainSlot);
+                if(!Number.isInteger(captainIndex) || captainIndex < 0 || captainIndex > 8 || !String(formation.players[captainIndex]?.name || '').trim()) formation.captainSlot = null;
+                else formation.captainSlot = captainIndex;
+            }
             LINEUP_ROWS.forEach(indices => {
                 const row = document.createElement('div');
                 row.className = 'admin-lineup-row';
@@ -1423,12 +1460,28 @@
                     const slot = LINEUP_SLOTS[index];
                     const card = document.createElement('div');
                     card.className = 'rounded-xl border border-slate-800 bg-brand-dark/80 p-2.5 space-y-2';
-                    card.innerHTML = `<div class="text-[10px] font-bold text-cyan-300">${slot.label}</div><div class="grid grid-cols-[1fr_64px] gap-2"><div><label class="block text-[9px] text-gray-400 mb-1">الاسم الثنائي</label><input type="text" maxlength="32" aria-label="اسم ${slot.label}" placeholder="الاسم الكامل" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white"></div><div><label class="block text-[9px] text-gray-400 mb-1">الرقم</label><input type="number" min="0" max="99" aria-label="رقم ${slot.label}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-center text-xs text-white font-bold"></div></div>`;
+                    const isCaptain = formation.captainSlot != null && Number(formation.captainSlot) === index;
+                    card.innerHTML = `<div class="text-[10px] font-bold text-cyan-300">${slot.label}</div><div class="grid grid-cols-[1fr_64px] gap-2"><div><label class="block text-[9px] text-gray-400 mb-1">الاسم الثنائي</label><input type="text" maxlength="32" aria-label="اسم ${slot.label}" placeholder="الاسم الكامل" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white"></div><div><label class="block text-[9px] text-gray-400 mb-1">الرقم</label><input type="number" min="0" max="99" aria-label="رقم ${slot.label}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-center text-xs text-white font-bold"></div></div><button type="button" class="captain-choice ${isCaptain ? 'selected' : ''}" aria-pressed="${isCaptain}" ${!String(player.name || '').trim() && !isCaptain ? 'disabled' : ''}><i class="fa-solid fa-crown"></i>${isCaptain ? 'الكابتن المحدد' : 'اختيار الكابتن'}</button>`;
                     const inputs = card.querySelectorAll('input');
                     inputs[0].value = player.name || '';
                     inputs[1].value = player.number ?? '';
-                    inputs[0].addEventListener('input', event => { player.name = event.target.value; });
+                    const captainButton = card.querySelector('.captain-choice');
+                    const syncCaptainButton = () => {
+                        const selected = formation.captainSlot != null && Number(formation.captainSlot) === index;
+                        if(!String(player.name || '').trim() && selected) formation.captainSlot = null;
+                        const isSelected = String(player.name || '').trim() && formation.captainSlot != null && Number(formation.captainSlot) === index;
+                        captainButton.disabled = !String(player.name || '').trim() && !isSelected;
+                        captainButton.classList.toggle('selected', Boolean(isSelected));
+                        captainButton.setAttribute('aria-pressed', String(Boolean(isSelected)));
+                        captainButton.innerHTML = `<i class="fa-solid fa-crown"></i>${isSelected ? 'الكابتن المحدد' : 'اختيار الكابتن'}`;
+                    };
+                    inputs[0].addEventListener('input', event => { player.name = event.target.value; syncCaptainButton(); });
                     inputs[1].addEventListener('input', event => { player.number = event.target.value; });
+                    captainButton.addEventListener('click', () => {
+                        if(!String(player.name || '').trim()) return;
+                        formation.captainSlot = formation.captainSlot != null && Number(formation.captainSlot) === index ? null : index;
+                        window.renderAdminFormations();
+                    });
                     row.appendChild(card);
                 });
                 container.appendChild(row);
