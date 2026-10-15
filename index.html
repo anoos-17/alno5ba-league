@@ -15,6 +15,32 @@
     <meta name="theme-color" content="#070b19">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <script>
+        (() => {
+            const themeKey = 'eliteLeagueTheme_v1';
+            const root = document.documentElement;
+            try { root.dataset.theme = localStorage.getItem(themeKey) === 'day' ? 'day' : 'night'; }
+            catch (_) { root.dataset.theme = 'night'; }
+            const syncThemeControl = () => {
+                const isDay = root.dataset.theme === 'day';
+                const button = document.getElementById('theme-toggle');
+                if(button) {
+                    button.setAttribute('aria-pressed', String(isDay));
+                    button.setAttribute('aria-label', isDay ? 'الوضع النهاري' : 'الوضع الليلي');
+                    button.title = isDay ? 'الوضع النهاري — اضغط للتبديل إلى الليلي' : 'الوضع الليلي — اضغط للتبديل إلى النهاري';
+                }
+                const colorMeta = document.querySelector('meta[name="theme-color"]');
+                if(colorMeta) colorMeta.content = isDay ? '#f7f9fc' : '#070b19';
+            };
+            window.toggleAppTheme = () => {
+                const nextTheme = root.dataset.theme === 'day' ? 'night' : 'day';
+                root.dataset.theme = nextTheme;
+                try { localStorage.setItem(themeKey, nextTheme); } catch (_) {}
+                syncThemeControl();
+            };
+            document.addEventListener('DOMContentLoaded', syncThemeControl, { once: true });
+        })();
+    </script>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -49,6 +75,7 @@
             min-height: 100vh;
             color: #f8fafc;
             -webkit-tap-highlight-color: transparent;
+            transition: background .32s ease, color .25s ease;
         }
         button, input, textarea, select { font: inherit; }
         button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid rgba(56, 189, 248, .8); outline-offset: 2px; }
@@ -132,6 +159,91 @@
         .admin-lineup-row { display: grid; grid-template-columns: 1fr; gap: 8px; }
         @media (min-width: 640px) { .admin-lineup-row { grid-template-columns: repeat(3, minmax(0,1fr)); } }
         @media (max-width: 480px) { .football-pitch, .pitch-rows { min-height: 410px; } .pitch-rows { padding: 18px 8px; } .pitch-shirt { width: clamp(72px, 22vw, 90px); } .pitch-row { gap: 8px; } }
+
+        .theme-toggle { width: 60px; height: 34px; padding: 0; border: 1px solid rgba(245, 190, 86, .3); border-radius: 999px; background: rgba(15, 23, 42, .85); color: #fbbf24; flex: 0 0 auto; transition: border-color .25s ease, background-color .25s ease, transform .2s ease; }
+        .theme-toggle:hover { border-color: rgba(245, 190, 86, .62); transform: translateY(-1px); }
+        .theme-toggle-track { position: relative; display: block; width: 100%; height: 100%; }
+        .theme-toggle-icon { position: absolute; top: 50%; z-index: 1; transform: translateY(-50%); font-size: 13px; transition: color .25s ease, opacity .25s ease; }
+        .theme-toggle-moon { left: 9px; color: #fbbf24; }
+        .theme-toggle-sun { right: 9px; color: #718096; }
+        .theme-toggle-thumb { position: absolute; top: 4px; left: 4px; z-index: 0; width: 24px; height: 24px; border-radius: 50%; background: #263346; box-shadow: 0 1px 4px rgba(0,0,0,.28); transition: transform .3s cubic-bezier(.2,.75,.25,1), background-color .25s ease; }
+        html[data-theme="day"] { color-scheme: light; }
+        html[data-theme="day"] body { color: #293746; background: radial-gradient(ellipse at 12% -12%, rgba(37, 75, 106, .08), transparent 34%), linear-gradient(135deg, #fbfcfd 0%, #f1f4f7 100%); }
+        html[data-theme="day"] header { background-color: rgba(255,255,255,.96) !important; border-color: #e0e1e3 !important; box-shadow: 0 5px 20px rgba(48, 44, 35, .07); }
+        html[data-theme="day"] [class*="bg-brand-dark/"] { background-color: rgba(242, 243, 245, .96) !important; }
+        html[data-theme="day"] [class~="bg-brand-dark"] { background-color: #f2f3f5 !important; }
+        html[data-theme="day"] [class*="bg-brand-card/"] { background-color: rgba(255, 255, 255, .98) !important; }
+        html[data-theme="day"] [class~="bg-brand-card"] { background-color: #ffffff !important; }
+        html[data-theme="day"] [class*="bg-slate-950/"] { background-color: rgba(244, 245, 247, .96) !important; }
+        html[data-theme="day"] [class~="bg-slate-950"] { background-color: #f4f5f7 !important; }
+        html[data-theme="day"] [class*="bg-slate-900/"] { background-color: rgba(239, 240, 242, .92) !important; }
+        html[data-theme="day"] [class~="bg-slate-900"] { background-color: #eff0f2 !important; }
+        html[data-theme="day"] [class*="bg-slate-800/"] { background-color: rgba(230, 231, 233, .8) !important; }
+        html[data-theme="day"] [class~="bg-slate-800"] { background-color: #e6e7e9 !important; }
+        html[data-theme="day"] [class*="bg-slate-700/"] { background-color: rgba(215, 216, 218, .76) !important; }
+        html[data-theme="day"] [class~="bg-slate-700"] { background-color: #d7d8da !important; }
+        html[data-theme="day"] [class~="text-white"], html[data-theme="day"] .text-white { color: #293746 !important; }
+        html[data-theme="day"] [class~="text-gray-200"] { color: #3b4b59 !important; }
+        html[data-theme="day"] [class~="text-gray-300"] { color: #506170 !important; }
+        html[data-theme="day"] [class~="text-gray-400"] { color: #647584 !important; }
+        html[data-theme="day"] [class~="text-gray-500"] { color: #788896 !important; }
+        html[data-theme="day"] [class~="text-slate-300"] { color: #506170 !important; }
+        html[data-theme="day"] [class~="text-slate-400"] { color: #647584 !important; }
+        html[data-theme="day"] [class~="border-slate-900"], html[data-theme="day"] [class*="border-slate-900/"] { border-color: #e5e6e8 !important; }
+        html[data-theme="day"] [class~="border-slate-800"], html[data-theme="day"] [class*="border-slate-800/"] { border-color: #dedfe1 !important; }
+        html[data-theme="day"] [class~="border-slate-700"], html[data-theme="day"] [class*="border-slate-700/"] { border-color: #ceced1 !important; }
+        html[data-theme="day"] [class~="border-slate-600"], html[data-theme="day"] [class*="border-slate-600/"] { border-color: #bfc0c3 !important; }
+        html[data-theme="day"] [class~="text-amber-300"], html[data-theme="day"] [class~="text-amber-400"], html[data-theme="day"] [class~="text-amber-600"], html[data-theme="day"] [class~="text-yellow-400"], html[data-theme="day"] [class~="text-cyan-300"], html[data-theme="day"] [class~="text-blue-300"], html[data-theme="day"] [class~="text-blue-400"], html[data-theme="day"] [class~="text-purple-300"], html[data-theme="day"] [class~="text-violet-300"] { color: #173b57 !important; }
+        html[data-theme="day"] [class~="text-emerald-400"], html[data-theme="day"] [class~="text-green-400"] { color: #496b59 !important; }
+        html[data-theme="day"] [class~="text-red-300"], html[data-theme="day"] [class~="text-red-400"] { color: #9b4a49 !important; }
+        html[data-theme="day"] [class*="bg-amber-500/"] { background-color: rgba(49, 88, 118, .1) !important; }
+        html[data-theme="day"] [class*="bg-emerald-950/"] { background-color: rgba(73, 107, 89, .1) !important; }
+        html[data-theme="day"] [class*="border-emerald-800/"] { border-color: rgba(73, 107, 89, .24) !important; }
+        html[data-theme="day"] [class*="border-amber-"] { border-color: rgba(23, 59, 87, .28) !important; }
+        html[data-theme="day"] [class~="bg-emerald-600"][class~="text-white"], html[data-theme="day"] [class~="bg-red-600"][class~="text-white"], html[data-theme="day"] [class~="bg-blue-600"][class~="text-white"] { color: #ffffff !important; }
+        html[data-theme="day"] .tab-btn { color: #686e75; }
+        html[data-theme="day"] .tab-btn:hover { color: #173b57; }
+        html[data-theme="day"] .tab-btn.active { background: #eaf0f5; border-color: rgba(23, 59, 87, .26); color: #173b57 !important; box-shadow: 0 4px 14px rgba(28, 62, 88, .08); }
+        html[data-theme="day"] button:focus-visible, html[data-theme="day"] input:focus-visible, html[data-theme="day"] textarea:focus-visible, html[data-theme="day"] select:focus-visible { outline-color: rgba(23, 59, 87, .58); }
+        html[data-theme="day"] .custom-scrollbar::-webkit-scrollbar-track { background: #f0f1f3; }
+        html[data-theme="day"] .custom-scrollbar::-webkit-scrollbar-thumb { background: #c4c5c8; }
+        html[data-theme="day"] .ranked-entry { background: linear-gradient(110deg, rgba(255,255,255,.99), rgba(247,249,251,.99)); border-color: rgba(23, 59, 87, .18); }
+        html[data-theme="day"] .ranked-entry--scorer, html[data-theme="day"] .ranked-entry--assist, html[data-theme="day"] .ranked-entry--motm { --rank-accent: #315a78 !important; }
+        html[data-theme="day"] .ranked-entry--rank-1 { border-color: rgba(23, 59, 87, .38); }
+        html[data-theme="day"] .ranked-entry--rank-2 { border-color: rgba(105, 121, 135, .3); }
+        html[data-theme="day"] .ranked-entry--rank-3 { border-color: rgba(71, 99, 122, .28); }
+        html[data-theme="day"] .ranked-emblem { background: #edf2f6; border-color: rgba(23, 59, 87, .2); }
+        html[data-theme="day"] .ranked-place { background: #eef2f5; color: #506170; border-color: #d5dfe6; }
+        html[data-theme="day"] .ranked-place.rank-1 { color: #173b57; background: #e5edf3; border-color: rgba(23, 59, 87, .38); }
+        html[data-theme="day"] .ranked-place.rank-2 { color: #566777; background: #eff2f4; border-color: rgba(105, 121, 135, .32); }
+        html[data-theme="day"] .ranked-place.rank-3 { color: #47637a; background: #eaf0f4; border-color: rgba(71, 99, 122, .3); }
+        html[data-theme="day"] .ranked-role { color: #315a78; }
+        html[data-theme="day"] .ranked-name { color: #293746; }
+        html[data-theme="day"] .ranked-stat { background: #eef2f5; border-color: rgba(23, 59, 87, .18); }
+        html[data-theme="day"] .ranked-stat-number { color: #173b57; }
+        html[data-theme="day"] .ranked-stat-unit { color: #647584; }
+        html[data-theme="day"] .theme-toggle { background: #fff; border-color: rgba(23, 59, 87, .3); color: #173b57; }
+        html[data-theme="day"] .theme-toggle-moon { color: #a5a5a3; }
+        html[data-theme="day"] .theme-toggle-sun { color: #173b57; }
+        html[data-theme="day"] .theme-toggle-thumb { transform: translateX(28px); background: #173b57; }
+        html[data-theme="day"] header h1 { color: #173b57 !important; -webkit-text-fill-color: #173b57; background: none !important; }
+        html[data-theme="day"] .captain-medallion { border-color: #173b57; color: #173b57; text-shadow: none; box-shadow: 0 0 0 2px rgba(23, 59, 87, .08); }
+        html[data-theme="day"] #league-logo-svg .brand-logo-background { fill: #f1f4f7 !important; }
+        html[data-theme="day"] #league-logo-svg [fill="url(#bronzeGrad2)"] { fill: #173b57 !important; }
+        html[data-theme="day"] #league-logo-svg [stroke="url(#bronzeGrad2)"] { stroke: #173b57 !important; }
+        html[data-theme="day"] #league-logo-svg [fill="url(#textGrad2)"] { fill: #173b57 !important; }
+        html[data-theme="day"] #league-logo-svg .brand-logo-core { fill: #ffffff !important; stroke: #56748b !important; }
+        html[data-theme="day"] #league-logo-svg .brand-logo-ball { fill: #173b57 !important; }
+        html[data-theme="day"] #league-logo-svg .brand-logo-plaque { fill: #e4ebf1 !important; stroke: #173b57 !important; }
+        @media (max-width: 380px) {
+            header .max-w-6xl { padding-left: 10px; padding-right: 10px; }
+            header .max-w-6xl > div { gap: 6px; }
+            header .max-w-6xl > div:last-child { gap: 4px; }
+            header .max-w-6xl > div:last-child > button:not(.theme-toggle) { padding-left: 8px; padding-right: 8px; }
+            .theme-toggle { width: 54px; height: 32px; }
+            .theme-toggle-thumb { width: 22px; height: 22px; }
+            html[data-theme="day"] .theme-toggle-thumb { transform: translateX(24px); }
+        }
     </style>
 </head>
 <body class="pb-16 custom-scrollbar">
@@ -141,18 +253,18 @@
         <div class="max-w-6xl mx-auto px-4 py-2.5 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden shadow-lg shadow-amber-500/10 border border-slate-700/60 shrink-0 bg-slate-900 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-full h-full object-cover">
+                    <svg id="league-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-full h-full object-cover">
                         <defs>
                             <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d2232"/><stop offset="100%" stop-color="#040710"/></linearGradient>
                             <linearGradient id="bronzeGrad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f3a97b"/><stop offset="100%" stop-color="#6e3e26"/></linearGradient>
                             <linearGradient id="textGrad2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient>
                         </defs>
-                        <rect width="512" height="512" fill="url(#bgGrad2)"/>
+                        <rect class="brand-logo-background" width="512" height="512" fill="url(#bgGrad2)"/>
                         <circle cx="256" cy="190" r="120" fill="none" stroke="url(#bronzeGrad2)" stroke-width="5"/>
                         <path d="M190 120 H322 L300 225 C300 250 280 270 256 270 C232 270 212 250 212 225 Z" fill="url(#bronzeGrad2)"/>
-                        <circle cx="256" cy="180" r="28" fill="#081325" stroke="#38bdf8" stroke-width="3"/>
-                        <polygon points="256,158 268,168 263,184 249,184 244,168" fill="#ffffff"/>
-                        <rect x="206" y="288" width="100" height="18" rx="4" fill="#1e293b" stroke="url(#bronzeGrad2)" stroke-width="3"/>
+                        <circle class="brand-logo-core" cx="256" cy="180" r="28" fill="#081325" stroke="#38bdf8" stroke-width="3"/>
+                        <polygon class="brand-logo-ball" points="256,158 268,168 263,184 249,184 244,168" fill="#ffffff"/>
+                        <rect class="brand-logo-plaque" x="206" y="288" width="100" height="18" rx="4" fill="#1e293b" stroke="url(#bronzeGrad2)" stroke-width="3"/>
                         <text x="256" y="365" font-family="Cairo, sans-serif" font-size="48" font-weight="900" fill="url(#textGrad2)" text-anchor="middle">دوري</text>
                         <text x="256" y="430" font-family="Cairo, sans-serif" font-size="58" font-weight="900" fill="url(#textGrad2)" text-anchor="middle">النخبة</text>
                     </svg>
@@ -173,6 +285,10 @@
                 <button onclick="openAdminAuth()" class="bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 border border-amber-500/30 px-3 py-1.5 rounded-xl font-bold text-xs sm:text-sm transition flex items-center gap-1.5 active:scale-95">
                     <i class="fa-solid fa-lock text-xs"></i>
                     <span>الأدمن</span>
+                </button>
+                <button id="theme-toggle" type="button" onclick="window.toggleAppTheme()" class="theme-toggle" aria-label="الوضع الليلي" aria-pressed="false" title="تبديل الوضع اللوني">
+                    <span class="theme-toggle-track" aria-hidden="true"><i class="theme-toggle-icon theme-toggle-moon fa-solid fa-moon"></i><i class="theme-toggle-icon theme-toggle-sun fa-solid fa-sun"></i><span class="theme-toggle-thumb"></span></span>
+                    <span class="sr-only">تبديل الوضع اللوني</span>
                 </button>
             </div>
         </div>
@@ -868,8 +984,7 @@
                 const isCaptain = Boolean(name) && formation?.captainSlot != null && Number(formation.captainSlot) === index;
                 const playerLabel = [name, number].filter(Boolean).join(' — ') || LINEUP_SLOTS[index].label;
                 const accessibleLabel = `${isCaptain ? 'الكابتن، ' : ''}${playerLabel}`;
-                const captainArmband = isCaptain ? `<g transform="rotate(24 97 37)"><rect x="89" y="29.5" width="17" height="15" rx="3" fill="#facc15" stroke="#111827" stroke-width="1.8"/><path d="M91 32.5 H104 M91 41.5 H104" fill="none" stroke="#111827" stroke-width="1.7" stroke-linecap="round"/><text x="97.5" y="39.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="8.5" font-weight="900" fill="#111827">C</text></g>` : '';
-                return `<div class="pitch-player"><div class="pitch-shirt" role="img" aria-label="${escapeHtml(accessibleLabel)}" style="--shirt-color:${kit.color};--shirt-ink:${kit.ink}"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M39 8 Q60 17 81 8 L114 27 L101 52 L88 45 L88 111 L32 111 L32 45 L19 52 L6 27 Z" fill="${kit.color}" stroke="${kit.color === '#f8fafc' ? '#94a3b8' : 'rgba(255,255,255,.78)'}" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 30 L15 27 L21 39 L15 43 Z M112 30 L105 27 L99 39 L105 43 Z" fill="${kit.accent}" opacity=".96"/><path d="M43 10 Q60 31 77 10" fill="none" stroke="${kit.accent}" stroke-width="6" stroke-linecap="round"/><path d="M46 11 Q60 26 74 11" fill="none" stroke="${kit.ink}" stroke-opacity=".54" stroke-width="2.2" stroke-linecap="round"/><path d="M28 47 L32 49 L32 91 M92 47 L88 49 L88 91" fill="none" stroke="${kit.accent}" stroke-opacity=".62" stroke-width="2.5" stroke-linecap="round"/>${captainArmband}</svg><span class="shirt-name">${escapeHtml(name)}</span><span class="shirt-number">${escapeHtml(number)}</span></div><span class="captain-marker ${isCaptain ? '' : 'is-hidden'}" ${isCaptain ? 'aria-label="شارة الكابتن"' : 'aria-hidden="true"'}><span class="captain-medallion">C</span></span></div>`;
+                return `<div class="pitch-player"><div class="pitch-shirt" role="img" aria-label="${escapeHtml(accessibleLabel)}" style="--shirt-color:${kit.color};--shirt-ink:${kit.ink}"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M39 8 Q60 17 81 8 L114 27 L101 52 L88 45 L88 111 L32 111 L32 45 L19 52 L6 27 Z" fill="${kit.color}" stroke="${kit.color === '#f8fafc' ? '#94a3b8' : 'rgba(255,255,255,.78)'}" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 30 L15 27 L21 39 L15 43 Z M112 30 L105 27 L99 39 L105 43 Z" fill="${kit.accent}" opacity=".96"/><path d="M43 10 Q60 31 77 10" fill="none" stroke="${kit.accent}" stroke-width="6" stroke-linecap="round"/><path d="M46 11 Q60 26 74 11" fill="none" stroke="${kit.ink}" stroke-opacity=".54" stroke-width="2.2" stroke-linecap="round"/><path d="M28 47 L32 49 L32 91 M92 47 L88 49 L88 91" fill="none" stroke="${kit.accent}" stroke-opacity=".62" stroke-width="2.5" stroke-linecap="round"/></svg><span class="shirt-name">${escapeHtml(name)}</span><span class="shirt-number">${escapeHtml(number)}</span></div><span class="captain-marker ${isCaptain ? '' : 'is-hidden'}" ${isCaptain ? 'aria-label="علامة الكابتن"' : 'aria-hidden="true"'}><span class="captain-medallion">C</span></span></div>`;
             };
             const rowsHtml = LINEUP_ROWS.map((row, index) => `<div class="pitch-row" aria-label="${index === 0 ? 'خط الهجوم' : index === 1 ? 'خط الوسط' : index === 2 ? 'خط الدفاع' : 'حارس المرمى'}">${row.map(renderShirt).join('')}</div>`).join('');
             pitchContainer.innerHTML = `<div class="mb-3 flex flex-wrap items-center justify-between gap-2"><div><h3 class="font-extrabold text-white">${escapeHtml(selectedTeam.name)}</h3><p class="text-[11px] text-gray-400 mt-0.5">التشكيلة الأساسية • 9 لاعبين</p></div><span class="rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1 text-[10px] text-gray-300">حارس + 3 دفاع + 3 وسط + 2 هجوم</span></div><div class="football-pitch" role="group" aria-label="ملعب وتشكيلة ${escapeHtml(selectedTeam.name)}"><div class="pitch-center-circle" aria-hidden="true"></div><div class="pitch-rows">${rowsHtml}</div></div>`;
@@ -976,7 +1091,7 @@
             const visuals = {
                 'scorers-list': { icon: 'fa-futbol', accent: '#d8b66e', unit: 'أهداف', kind: 'scorer', role: 'هداف الدوري' },
                 'assists-list': { icon: 'fa-shoe-prints', accent: '#8ec5c0', unit: 'تمريرات حاسمة', kind: 'assist', role: 'صانع أهداف' },
-                'motm-list': { icon: 'fa-crown', accent: '#c4b5fd', unit: 'مرة', role: 'رجل المباراة' },
+                'motm-list': { icon: 'fa-crown', accent: '#c4b5fd', unit: 'مرة', kind: 'motm', role: 'رجل المباراة' },
                 'yellows-list': { card: 'yellow', accent: '#fbbf24', unit: 'بطاقات صفراء', role: 'إنذارات' },
                 'reds-list': { card: 'red', accent: '#ef4444', unit: 'بطاقات حمراء', role: 'بطاقات حمراء' }
             };
