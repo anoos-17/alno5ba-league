@@ -160,13 +160,55 @@
         @media (min-width: 640px) { .admin-lineup-row { grid-template-columns: repeat(3, minmax(0,1fr)); } }
         @media (max-width: 480px) { .football-pitch, .pitch-rows { min-height: 410px; } .pitch-rows { padding: 18px 8px; } .pitch-shirt { width: clamp(72px, 22vw, 90px); } .pitch-row { gap: 8px; } }
 
-        .theme-toggle { width: 60px; height: 34px; padding: 0; border: 1px solid rgba(245, 190, 86, .3); border-radius: 999px; background: rgba(15, 23, 42, .85); color: #fbbf24; flex: 0 0 auto; transition: border-color .25s ease, background-color .25s ease, transform .2s ease; }
-        .theme-toggle:hover { border-color: rgba(245, 190, 86, .62); transform: translateY(-1px); }
-        .theme-toggle-track { position: relative; display: block; width: 100%; height: 100%; }
-        .theme-toggle-icon { position: absolute; top: 50%; z-index: 1; transform: translateY(-50%); font-size: 13px; transition: color .25s ease, opacity .25s ease; }
-        .theme-toggle-moon { left: 9px; color: #fbbf24; }
-        .theme-toggle-sun { right: 9px; color: #718096; }
-        .theme-toggle-thumb { position: absolute; top: 4px; left: 4px; z-index: 0; width: 24px; height: 24px; border-radius: 50%; background: #263346; box-shadow: 0 1px 4px rgba(0,0,0,.28); transition: transform .3s cubic-bezier(.2,.75,.25,1), background-color .25s ease; }
+        .theme-toggle { width: 68px; height: 34px; padding: 0; overflow: hidden; border: 1px solid #748093; border-radius: 999px; background: linear-gradient(180deg, #252c3b, #111722); flex: 0 0 auto; transition: border-color .25s ease, background .25s ease, transform .2s ease; }
+        .theme-toggle:hover { border-color: #a6b2c1; transform: translateY(-1px); }
+        .theme-toggle-track { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
+        .theme-toggle-stars { position: absolute; inset: 0; transition: opacity .25s ease; }
+        .theme-toggle-stars i { position: absolute; display: block; width: 4px; height: 4px; background: #f6f8ff; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); filter: drop-shadow(0 0 2px rgba(220,232,255,.8)); animation: starTwinkle 2.4s ease-in-out infinite alternate; }
+        .theme-toggle-stars i:nth-child(1) { left: 8px; top: 7px; width: 5px; height: 5px; }
+        .theme-toggle-stars i:nth-child(2) { left: 21px; top: 20px; width: 4px; height: 4px; animation-delay: .7s; }
+        .theme-toggle-stars i:nth-child(3) { left: 33px; top: 6px; width: 4px; height: 4px; animation-delay: 1.2s; }
+        .theme-toggle-stars i:nth-child(4) { left: 42px; top: 19px; width: 3px; height: 3px; animation-delay: .35s; }
+        .theme-toggle-stars i:nth-child(5) { left: 57px; top: 6px; width: 5px; height: 5px; animation-delay: 1.6s; }
+        .theme-toggle-sun-rays { position: absolute; z-index: 0; top: 1px; left: 1px; width: 30px; height: 30px; opacity: 0; transition: opacity .2s ease; }
+        .theme-toggle-sun-rays i { position: absolute; top: 50%; left: 50%; width: 2px; height: 4px; border-radius: 2px; background: #f2c33c; transform-origin: center 15px; }
+        .theme-toggle-sun-rays i:nth-child(1) { transform: translate(-50%,-50%) rotate(0deg) translateY(-14px); }
+        .theme-toggle-sun-rays i:nth-child(2) { transform: translate(-50%,-50%) rotate(45deg) translateY(-14px); }
+        .theme-toggle-sun-rays i:nth-child(3) { transform: translate(-50%,-50%) rotate(90deg) translateY(-14px); }
+        .theme-toggle-sun-rays i:nth-child(4) { transform: translate(-50%,-50%) rotate(135deg) translateY(-14px); }
+        .theme-toggle-sun-rays i:nth-child(5) { transform: translate(-50%,-50%) rotate(180deg) translateY(-14px); }
+        .theme-toggle-sun-rays i:nth-child(6) { transform: translate(-50%,-50%) rotate(225deg) translateY(-14px); }
+        .theme-toggle-sun-rays i:nth-child(7) { transform: translate(-50%,-50%) rotate(270deg) translateY(-14px); }
+        .theme-toggle-sun-rays i:nth-child(8) { transform: translate(-50%,-50%) rotate(315deg) translateY(-14px); }
+        .theme-toggle-clouds { position: absolute; inset: 0; opacity: 0; transition: opacity .25s ease; }
+        .theme-toggle-cloud { position: absolute; display: block; border-radius: 8px; background: linear-gradient(180deg, #ffffff, #e4f3f8); box-shadow: 0 1px 2px rgba(75,126,148,.2); }
+        .theme-toggle-cloud::before, .theme-toggle-cloud::after { content: ''; position: absolute; display: block; border-radius: 50%; background: inherit; }
+        .theme-toggle-cloud.cloud-small { top: 7px; right: 9px; width: 10px; height: 5px; opacity: .9; }
+        .theme-toggle-cloud.cloud-small::before { left: 2px; top: -3px; width: 5px; height: 5px; }
+        .theme-toggle-cloud.cloud-small::after { right: 1px; top: -2px; width: 4px; height: 4px; }
+        .theme-toggle-cloud.cloud-large { right: 3px; bottom: 5px; width: 14px; height: 6px; }
+        .theme-toggle-cloud.cloud-large::before { left: 2px; top: -4px; width: 7px; height: 7px; }
+        .theme-toggle-cloud.cloud-large::after { right: 1px; top: -3px; width: 6px; height: 6px; }
+        .theme-toggle-thumb { position: absolute; top: 4px; left: 4px; z-index: 1; width: 24px; height: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,.7); border-radius: 50%; background: radial-gradient(circle at 31% 25%, #f4f6fa 0 4%, transparent 5%), linear-gradient(145deg, #d9e0e9, #a7b2c2); box-shadow: inset -3px -3px 5px rgba(73,84,103,.2), 0 1px 3px rgba(0,0,0,.28); transform: translateX(36px); transition: transform .3s cubic-bezier(.2,.75,.25,1), background .25s ease, box-shadow .25s ease; }
+        .theme-toggle-thumb::after { content: ''; position: absolute; top: 5px; left: 5px; width: 5px; height: 5px; border-radius: 50%; background: rgba(104,116,136,.6); box-shadow: 7px 4px 0 -1px rgba(104,116,136,.72), 4px -2px 0 -1px rgba(104,116,136,.62), 9px 10px 0 -2px rgba(104,116,136,.68); }
+        @keyframes starTwinkle { from { opacity: .58; transform: scale(.78); } to { opacity: 1; transform: scale(1); } }
+        .latest-updates { margin: 0; }
+        .latest-updates-heading { margin: 0; color: #c6a04b; font-size: 19px; line-height: 1.4; font-weight: 900; }
+        .latest-updates-list { display: grid; gap: 4px; margin: 8px 0 0; padding: 0; text-align: right; list-style: none; }
+        .latest-updates-list li { display: flex; align-items: baseline; gap: 8px; color: #d2d9e2; font-size: 13px; line-height: 1.8; }
+        .latest-updates-list li::before { content: '•'; color: #c6a04b; font-size: 19px; font-weight: 900; line-height: 1; }
+        .list-batch { overflow: hidden; border: 1px solid rgba(148,163,184,.16); border-radius: 14px; background: rgba(15,23,42,.24); }
+        .list-batch-summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; cursor: pointer; color: #d7dee8; font-size: 11px; font-weight: 800; list-style: none; transition: background .2s ease, color .2s ease; }
+        .list-batch-summary::-webkit-details-marker { display: none; }
+        .list-batch-summary:hover { background: rgba(148,163,184,.07); color: #fff; }
+        .list-batch-meta { display: inline-flex; align-items: center; gap: 8px; color: #94a3b8; font-size: 10px; font-weight: 700; }
+        .list-batch-chevron { color: #c6a04b; transition: transform .2s ease; }
+        .list-batch[open] .list-batch-chevron { transform: rotate(-90deg); }
+        .list-batch-content { padding: 0 9px 9px; }
+        html[data-theme="day"] .list-batch { border-color: rgba(23,59,87,.14); background: rgba(255,255,255,.76); }
+        html[data-theme="day"] .list-batch-summary { color: #31495c; }
+        html[data-theme="day"] .list-batch-summary:hover { background: rgba(23,59,87,.05); color: #173b57; }
+        html[data-theme="day"] .list-batch-meta { color: #718091; }
         html[data-theme="day"] { color-scheme: light; }
         html[data-theme="day"] body { color: #293746; background: radial-gradient(ellipse at 12% -12%, rgba(37, 75, 106, .08), transparent 34%), linear-gradient(135deg, #fbfcfd 0%, #f1f4f7 100%); }
         html[data-theme="day"] header { background-color: rgba(255,255,255,.96) !important; border-color: #e0e1e3 !important; box-shadow: 0 5px 20px rgba(48, 44, 35, .07); }
@@ -222,10 +264,12 @@
         html[data-theme="day"] .ranked-stat { background: #eef2f5; border-color: rgba(23, 59, 87, .18); }
         html[data-theme="day"] .ranked-stat-number { color: #173b57; }
         html[data-theme="day"] .ranked-stat-unit { color: #647584; }
-        html[data-theme="day"] .theme-toggle { background: #fff; border-color: rgba(23, 59, 87, .3); color: #173b57; }
-        html[data-theme="day"] .theme-toggle-moon { color: #a5a5a3; }
-        html[data-theme="day"] .theme-toggle-sun { color: #173b57; }
-        html[data-theme="day"] .theme-toggle-thumb { transform: translateX(28px); background: #173b57; }
+        html[data-theme="day"] .theme-toggle { background: linear-gradient(180deg, #f6fdff, #dceef5); border-color: #b6d0dc; }
+        html[data-theme="day"] .theme-toggle-stars { opacity: 0; }
+        html[data-theme="day"] .theme-toggle-sun-rays { opacity: 1; }
+        html[data-theme="day"] .theme-toggle-clouds { opacity: 1; }
+        html[data-theme="day"] .theme-toggle-thumb { transform: translateX(0); border-color: #fff8cf; background: radial-gradient(circle at 32% 27%, #fff7c5 0 10%, transparent 11%), radial-gradient(circle at 50% 50%, #ffe87a 0%, #f1c63d 66%, #dfaa24 100%); box-shadow: 0 0 0 2px rgba(255,220,91,.18), 0 0 9px rgba(255,216,72,.35), 0 1px 3px rgba(80,95,106,.25); }
+        html[data-theme="day"] .theme-toggle-thumb::after { content: none; }
         html[data-theme="day"] header h1 { color: #173b57 !important; -webkit-text-fill-color: #173b57; background: none !important; }
         html[data-theme="day"] .captain-medallion { border-color: #173b57; color: #173b57; text-shadow: none; box-shadow: 0 0 0 2px rgba(23, 59, 87, .08); }
         html[data-theme="day"] #league-logo-svg .brand-logo-background { fill: #f1f4f7 !important; }
@@ -235,14 +279,19 @@
         html[data-theme="day"] #league-logo-svg .brand-logo-core { fill: #ffffff !important; stroke: #56748b !important; }
         html[data-theme="day"] #league-logo-svg .brand-logo-ball { fill: #173b57 !important; }
         html[data-theme="day"] #league-logo-svg .brand-logo-plaque { fill: #e4ebf1 !important; stroke: #173b57 !important; }
+        html[data-theme="day"] #welcome-modal > div { border-color: rgba(23, 59, 87, .2) !important; background: linear-gradient(145deg, #ffffff, #f1f5f8) !important; }
+        html[data-theme="day"] #welcome-modal { background-color: rgba(25, 41, 55, .48) !important; }
+        html[data-theme="day"] .latest-updates-heading { color: #8a6b23; }
+        html[data-theme="day"] .latest-updates-list li { color: #506170; }
+        html[data-theme="day"] .welcome-accept { background: #173b57 !important; color: #ffffff !important; }
+        html[data-theme="day"] .welcome-accept:hover { background: #244d6b !important; }
         @media (max-width: 380px) {
             header .max-w-6xl { padding-left: 10px; padding-right: 10px; }
             header .max-w-6xl > div { gap: 6px; }
             header .max-w-6xl > div:last-child { gap: 4px; }
             header .max-w-6xl > div:last-child > button:not(.theme-toggle) { padding-left: 8px; padding-right: 8px; }
             .theme-toggle { width: 54px; height: 32px; }
-            .theme-toggle-thumb { width: 22px; height: 22px; }
-            html[data-theme="day"] .theme-toggle-thumb { transform: translateX(24px); }
+            html[data-theme="night"] .theme-toggle-thumb { transform: translateX(22px); }
         }
     </style>
 </head>
@@ -287,7 +336,12 @@
                     <span>الأدمن</span>
                 </button>
                 <button id="theme-toggle" type="button" onclick="window.toggleAppTheme()" class="theme-toggle" aria-label="الوضع الليلي" aria-pressed="false" title="تبديل الوضع اللوني">
-                    <span class="theme-toggle-track" aria-hidden="true"><i class="theme-toggle-icon theme-toggle-moon fa-solid fa-moon"></i><i class="theme-toggle-icon theme-toggle-sun fa-solid fa-sun"></i><span class="theme-toggle-thumb"></span></span>
+            <span class="theme-toggle-track" aria-hidden="true">
+                <span class="theme-toggle-stars"><i></i><i></i><i></i><i></i><i></i></span>
+                <span class="theme-toggle-sun-rays"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                <span class="theme-toggle-clouds"><i class="theme-toggle-cloud cloud-small"></i><i class="theme-toggle-cloud cloud-large"></i></span>
+                <span class="theme-toggle-thumb"></span>
+            </span>
                     <span class="sr-only">تبديل الوضع اللوني</span>
                 </button>
             </div>
@@ -470,12 +524,17 @@
 
     </main>
 
-    <div id="welcome-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[60]" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+    <div id="welcome-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[60]" role="dialog" aria-modal="true" aria-labelledby="latest-updates-title">
         <div class="w-full max-w-md rounded-3xl border border-amber-300/20 bg-gradient-to-br from-slate-900 to-brand-card p-6 sm:p-8 text-center shadow-2xl shadow-black/40">
-            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-400/10 text-amber-300 text-2xl"><i class="fa-solid fa-trophy"></i></div>
-            <h2 id="welcome-title" class="text-xl sm:text-2xl font-black text-white">أهلاً بك في تطبيق دوري النخبة</h2>
-            <p class="mt-3 text-sm leading-7 text-slate-300">تابع أحدث إحصائيات الدوري، ترتيب الفرق، نتائج المباريات وتشكيلاتها في مكان واحد.</p>
-            <button type="button" onclick="window.dismissWelcome()" class="mt-6 w-full rounded-xl bg-amber-400 px-5 py-3 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300">موافق، ابدأ التصفح</button>
+            <section class="latest-updates" aria-labelledby="latest-updates-title">
+                <h2 id="latest-updates-title" class="latest-updates-heading">آخر التحديثات</h2>
+                <ul class="latest-updates-list">
+                    <li>إضافة الوضع الليلي والنهاري</li>
+                    <li>تحديث الإحصائيات</li>
+                    <li>تعديل شكل القوائم</li>
+                </ul>
+            </section>
+            <button type="button" onclick="window.dismissWelcome()" class="welcome-accept mt-6 w-full rounded-xl bg-amber-400 px-5 py-3 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300">موافق</button>
         </div>
     </div>
 
@@ -736,18 +795,15 @@
             return pool[Math.floor(Math.random() * pool.length)].color;
         }
 
-        const WELCOME_STORAGE_KEY = 'eliteLeagueWelcomeSeen_v1';
         window.dismissWelcome = function() {
-            try { localStorage.setItem(WELCOME_STORAGE_KEY, 'true'); } catch (_) {}
             const modal = document.getElementById('welcome-modal');
             modal?.classList.add('hidden');
             modal?.classList.remove('flex');
         }
 
-        function showWelcomeOnce() {
+        function showLatestUpdatesOnEntry() {
             const modal = document.getElementById('welcome-modal');
             if(!modal) return;
-            try { if(localStorage.getItem(WELCOME_STORAGE_KEY) === 'true') return; } catch (_) {}
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
@@ -765,6 +821,30 @@
                 result.push({ ...sorted[i], rank: currentRank });
             }
             return result;
+        }
+
+        const listBatchOpenState = new Map();
+        function appendGroupedBatches(container, entries, label, unit, spacingClass = 'space-y-2') {
+            const batchSize = 5;
+            for(let start = 0; start < entries.length; start += batchSize) {
+                const batch = entries.slice(start, start + batchSize);
+                const end = start + batch.length;
+                const batchKey = `${container.id}:${start}`;
+                const group = document.createElement('details');
+                group.className = 'list-batch';
+                group.open = listBatchOpenState.get(batchKey) === true;
+                group.addEventListener('toggle', () => listBatchOpenState.set(batchKey, group.open));
+
+                const summary = document.createElement('summary');
+                summary.className = 'list-batch-summary';
+                summary.innerHTML = `<span>${escapeHtml(label)} ${start + 1}–${end}</span><span class="list-batch-meta"><span>${batch.length} ${escapeHtml(unit)}</span><i class="fa-solid fa-chevron-left list-batch-chevron" aria-hidden="true"></i></span>`;
+
+                const content = document.createElement('div');
+                content.className = `list-batch-content ${spacingClass}`;
+                batch.forEach(entry => content.appendChild(entry));
+                group.append(summary, content);
+                container.appendChild(group);
+            }
         }
 
         window.renderHighlights = function() {
@@ -1382,6 +1462,7 @@
             if(!container) return;
             container.innerHTML = '';
 
+            const teamRows = [];
             (window.appData.teams || []).forEach((t, i) => {
                 const div = document.createElement('div');
                 div.className = 'bg-brand-dark p-3 rounded-xl border border-slate-800 grid grid-cols-2 sm:grid-cols-8 gap-2 items-center';
@@ -1397,8 +1478,9 @@
                         <button onclick="window.removeTeam(${i})" class="text-red-400 hover:text-red-300 text-xs mt-1">🗑️ حذف الفريق</button>
                     </div>
                 `;
-                container.appendChild(div);
+                teamRows.push(div);
             });
+            appendGroupedBatches(container, teamRows, 'الفرق', 'فرق', 'space-y-2');
         }
 
         window.renderAdminMatches = function() {
@@ -1414,6 +1496,7 @@
                 return;
             }
 
+            const matchRows = [];
             matches.forEach((m, mi) => {
                 const optionsHome = teams.map(t => `<option value="${t.name}" ${t.name === m.homeTeam ? 'selected' : ''}>${t.name}</option>`).join('');
                 const optionsAway = teams.map(t => `<option value="${t.name}" ${t.name === m.awayTeam ? 'selected' : ''}>${t.name}</option>`).join('');
@@ -1493,8 +1576,9 @@
                         <div class="space-y-1.5">${eventsHtml}</div>
                     </div>
                 `;
-                container.appendChild(div);
+                matchRows.push(div);
             });
+            appendGroupedBatches(container, matchRows, 'المباريات', 'مباريات', 'space-y-3');
         }
 
         window.addMatchEvent = function(matchIndex) {
@@ -1609,13 +1693,15 @@
             container.innerHTML = '';
             const ads = window.appData.advertisements || [];
             if(!ads.length) { container.innerHTML = '<div class="text-gray-500 text-xs py-2">لا توجد إعلانات منشورة</div>'; return; }
+            const adRows = [];
             ads.forEach((ad, index) => {
                 const row = document.createElement('div');
                 row.className = 'bg-brand-dark p-3 rounded-xl border border-slate-800 flex items-start justify-between gap-3';
                 row.innerHTML = `<div class="min-w-0"><div class="font-bold text-amber-300 text-xs truncate">${escapeHtml(ad.title || 'بدون عنوان')}</div><p class="text-[10px] text-gray-400 mt-1">${ad.type === 'image' ? 'صورة' : ad.type === 'video' ? 'فيديو' : 'خبر'}${ad.content ? ` • ${escapeHtml(ad.content.slice(0, 120))}` : ''}</p></div><button type="button" class="text-red-400 hover:text-red-300 text-xs shrink-0">حذف 🗑️</button>`;
                 row.querySelector('button').addEventListener('click', () => window.removeAdvertisement(index));
-                container.appendChild(row);
+                adRows.push(row);
             });
+            appendGroupedBatches(container, adRows, 'الإعلانات', 'إعلانات', 'space-y-2');
         }
 
         window.addAdvertisement = async function(event) {
@@ -1695,6 +1781,7 @@
                 return;
             }
 
+            const feedbackRows = [];
             feedbackList.forEach((f, i) => {
                 const div = document.createElement('div');
                 div.className = 'bg-brand-dark p-3 rounded-xl border border-slate-800 flex justify-between items-start gap-2';
@@ -1705,8 +1792,9 @@
                     </div>
                     <button onclick="window.removeFeedback(${i})" class="text-red-400 hover:text-red-300 text-xs">🗑️</button>
                 `;
-                container.appendChild(div);
+                feedbackRows.push(div);
             });
+            appendGroupedBatches(container, feedbackRows, 'الشكاوى', 'رسائل', 'space-y-2');
         }
 
         window.removeFeedback = function(index) {
@@ -1727,6 +1815,7 @@
 
             const items = window.appData[listKey] || [];
 
+            const playerRows = [];
             items.forEach((p, i) => {
                 const div = document.createElement('div');
                 div.className = 'bg-brand-dark p-2.5 rounded-xl border border-slate-800 flex items-center justify-between gap-2';
@@ -1738,8 +1827,10 @@
                         <button onclick="window.removePlayer('${listKey}', ${i})" class="text-red-400 hover:text-red-300 px-2 py-1 text-xs">🗑️</button>
                     </div>
                 `;
-                container.appendChild(div);
+                playerRows.push(div);
             });
+            const listLabel = listKey === 'scorers' ? 'الهدافون' : listKey === 'assists' ? 'الصانعون' : listKey === 'motm' ? 'رجل الأسبوع' : listKey === 'yellowCards' ? 'الكروت الصفراء' : 'الكروت الحمراء';
+            appendGroupedBatches(container, playerRows, listLabel, 'عناصر', 'space-y-2');
         }
 
         window.renderAdminPenalties = function() {
@@ -1752,6 +1843,7 @@
                 if(tPen.length === 0) {
                     teamContainer.innerHTML = `<div class="text-gray-500 text-xs py-2">لا توجد خصومات مضافة</div>`;
                 } else {
+                    const teamPenaltyRows = [];
                     tPen.forEach((p, i) => {
                         const div = document.createElement('div');
                         div.className = 'bg-brand-dark p-2.5 rounded-xl border border-slate-800 grid grid-cols-1 sm:grid-cols-12 gap-2 items-center';
@@ -1761,8 +1853,9 @@
                             <div class="sm:col-span-5"><label class="text-[9px] text-gray-400 block">السبب</label><input type="text" value="${p.reason || ''}" onchange="window.appData.teamPenalties[${i}].reason=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-gray-200"></div>
                             <div class="sm:col-span-1 text-center"><button onclick="window.removeTeamPenalty(${i})" class="text-red-400 hover:text-red-300 text-xs mt-3 sm:mt-0">🗑️</button></div>
                         `;
-                        teamContainer.appendChild(div);
+                        teamPenaltyRows.push(div);
                     });
+                    appendGroupedBatches(teamContainer, teamPenaltyRows, 'خصومات الفرق', 'خصومات', 'space-y-2');
                 }
             }
 
@@ -1772,6 +1865,7 @@
                 if(pPen.length === 0) {
                     playerContainer.innerHTML = `<div class="text-gray-500 text-xs py-2">لا توجد إيقافات مضافة</div>`;
                 } else {
+                    const playerPenaltyRows = [];
                     pPen.forEach((p, i) => {
                         const div = document.createElement('div');
                         div.className = 'bg-brand-dark p-2.5 rounded-xl border border-slate-800 grid grid-cols-1 sm:grid-cols-12 gap-2 items-center';
@@ -1781,8 +1875,9 @@
                             <div class="sm:col-span-5"><label class="text-[9px] text-gray-400 block">السبب</label><input type="text" value="${p.reason || ''}" onchange="window.appData.playerPenalties[${i}].reason=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-gray-200"></div>
                             <div class="sm:col-span-1 text-center"><button onclick="window.removePlayerPenalty(${i})" class="text-red-400 hover:text-red-300 text-xs mt-3 sm:mt-0">🗑️</button></div>
                         `;
-                        playerContainer.appendChild(div);
+                        playerPenaltyRows.push(div);
                     });
+                    appendGroupedBatches(playerContainer, playerPenaltyRows, 'إيقافات اللاعبين', 'إيقافات', 'space-y-2');
                 }
             }
         }
@@ -1858,7 +1953,7 @@
             window.renderAdminPenalties();
         }
 
-        showWelcomeOnce();
+        showLatestUpdatesOnEntry();
     </script>
 </body>
 </html>
