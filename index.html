@@ -205,10 +205,17 @@
         .list-batch-chevron { color: #c6a04b; transition: transform .2s ease; }
         .list-batch[open] .list-batch-chevron { transform: rotate(-90deg); }
         .list-batch-content { padding: 0 9px 9px; }
+        .match-round-section { display: grid; gap: 8px; }
+        .match-round-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding: 2px 4px; color: #c6a04b; font-size: 12px; line-height: 1.5; font-weight: 900; }
+        .match-round-heading span:last-child { color: #a99466; font-size: 10px; font-weight: 700; }
+        .match-round-summary { color: #c6a04b; }
+        .match-round-content { padding: 0 9px 9px; }
         html[data-theme="day"] .list-batch { border-color: rgba(23,59,87,.14); background: rgba(255,255,255,.76); }
         html[data-theme="day"] .list-batch-summary { color: #31495c; }
         html[data-theme="day"] .list-batch-summary:hover { background: rgba(23,59,87,.05); color: #173b57; }
         html[data-theme="day"] .list-batch-meta { color: #718091; }
+        html[data-theme="day"] .match-round-heading, html[data-theme="day"] .match-round-summary { color: #8a6b23; }
+        html[data-theme="day"] .match-round-heading span:last-child { color: #81704d; }
         html[data-theme="day"] { color-scheme: light; }
         html[data-theme="day"] body { color: #293746; background: radial-gradient(ellipse at 12% -12%, rgba(37, 75, 106, .08), transparent 34%), linear-gradient(135deg, #fbfcfd 0%, #f1f4f7 100%); }
         html[data-theme="day"] header { background-color: rgba(255,255,255,.96) !important; border-color: #e0e1e3 !important; box-shadow: 0 5px 20px rgba(48, 44, 35, .07); }
@@ -593,7 +600,7 @@
             <!-- Admin Matches -->
             <div id="admin-sec-matches" class="admin-sec hidden space-y-3">
                 <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-xs sm:text-sm text-gray-300">إدارة جدول المباريات والتفاصيل (الأهداف والأسيست والكروت)</h3>
+                    <h3 class="font-bold text-xs sm:text-sm text-gray-300">إدارة النتائج والأحداث، وحدّد الجولة لتجميع مبارياتها</h3>
                     <button onclick="addNewMatch()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">+ إضافة مباراة</button>
                 </div>
                 <div id="admin-matches-list" class="space-y-3"></div>
@@ -905,6 +912,59 @@
             }
         }
 
+        function getMatchRoundNumber(match) {
+            const round = Number(match?.round);
+            return Number.isInteger(round) && round > 0 ? round : null;
+        }
+
+        function getMatchRoundLabel(round) {
+            if(round === null) return 'دون تحديد الجولة';
+            const ordinals = ['الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 'السادسة', 'السابعة', 'الثامنة', 'التاسعة', 'العاشرة'];
+            return `الجولة ${ordinals[round - 1] || round}`;
+        }
+
+        function appendMatchRoundGroups(container, entries, adminMode = false) {
+            const groupsByRound = new Map();
+            entries.forEach(entry => {
+                const round = getMatchRoundNumber(entry.match);
+                const key = round === null ? 'unassigned' : String(round);
+                if(!groupsByRound.has(key)) groupsByRound.set(key, { key, round, entries: [] });
+                groupsByRound.get(key).entries.push(entry.element);
+            });
+
+            const groups = [...groupsByRound.values()].sort((a, b) => {
+                if(a.round === null) return 1;
+                if(b.round === null) return -1;
+                return a.round - b.round;
+            });
+
+            groups.forEach(groupData => {
+                const heading = getMatchRoundLabel(groupData.round);
+                const wrapper = document.createElement(adminMode ? 'details' : 'section');
+                wrapper.className = adminMode ? 'list-batch match-round-group' : 'match-round-section';
+
+                if(adminMode) {
+                    const stateKey = `matches-round:${container.id}:${groupData.key}`;
+                    wrapper.open = listBatchOpenState.has(stateKey) ? listBatchOpenState.get(stateKey) : groupData.round === null;
+                    wrapper.addEventListener('toggle', () => listBatchOpenState.set(stateKey, wrapper.open));
+                    const summary = document.createElement('summary');
+                    summary.className = 'list-batch-summary match-round-summary';
+                    summary.innerHTML = `<span>${escapeHtml(heading)}</span><span class="list-batch-meta"><span>${groupData.entries.length} مباريات</span><i class="fa-solid fa-chevron-left list-batch-chevron" aria-hidden="true"></i></span>`;
+                    const content = document.createElement('div');
+                    content.className = 'match-round-content space-y-3';
+                    groupData.entries.forEach(entry => content.appendChild(entry));
+                    wrapper.append(summary, content);
+                } else {
+                    const title = document.createElement('h3');
+                    title.className = 'match-round-heading';
+                    title.innerHTML = `<span>${escapeHtml(groupData.round === null ? 'مباريات دون تحديد الجولة' : heading)}</span><span>${groupData.entries.length} مباريات</span>`;
+                    groupData.entries.forEach(entry => wrapper.appendChild(entry));
+                    wrapper.prepend(title);
+                }
+                container.appendChild(wrapper);
+            });
+        }
+
         window.renderHighlights = function() {
             const bar = document.getElementById('highlights-bar');
             if(!bar || !window.appData) return;
@@ -1002,6 +1062,7 @@
                 return;
             }
 
+            const matchCards = [];
             [...matches].reverse().forEach(m => {
                 const card = document.createElement('div');
                 card.className = 'bg-brand-dark/60 border border-slate-800 p-3 sm:p-4 rounded-xl shadow-sm space-y-3';
@@ -1080,8 +1141,9 @@
                         </div>
                     ` : ''}
                 `;
-                container.appendChild(card);
+                matchCards.push({ match: m, element: card });
             });
+            appendMatchRoundGroups(container, matchCards);
         }
 
         window.renderFormationsView = function() {
@@ -1558,6 +1620,11 @@
             matches.forEach((m, mi) => {
                 const optionsHome = teams.map(t => `<option value="${t.name}" ${t.name === m.homeTeam ? 'selected' : ''}>${t.name}</option>`).join('');
                 const optionsAway = teams.map(t => `<option value="${t.name}" ${t.name === m.awayTeam ? 'selected' : ''}>${t.name}</option>`).join('');
+                const selectedRound = getMatchRoundNumber(m);
+                const roundOptions = Array.from({ length: 20 }, (_, index) => {
+                    const round = index + 1;
+                    return `<option value="${round}" ${selectedRound === round ? 'selected' : ''}>${escapeHtml(getMatchRoundLabel(round))}</option>`;
+                }).join('');
 
                 let eventsHtml = '';
                 if (m.events && Array.isArray(m.events)) {
@@ -1590,7 +1657,7 @@
                 const div = document.createElement('div');
                 div.className = 'bg-brand-dark p-3 rounded-xl border border-slate-800 space-y-3';
                 div.innerHTML = `
-                    <div class="grid grid-cols-1 sm:grid-cols-7 gap-2 items-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-8 gap-2 items-center">
                         <div class="sm:col-span-2">
                             <label class="text-[9px] text-gray-400 block">الفريق الأول</label>
                             <select onchange="window.appData.matches[${mi}].homeTeam=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs text-white font-bold">
@@ -1615,6 +1682,13 @@
                             </select>
                         </div>
                         <div>
+                            <label class="text-[9px] text-gray-400 block">الجولة</label>
+                            <select onchange="window.setMatchRound(${mi}, this.value)" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-[10px] text-amber-300 font-bold">
+                                <option value="" ${selectedRound === null ? 'selected' : ''}>غير محددة</option>
+                                ${roundOptions}
+                            </select>
+                        </div>
+                        <div>
                             <label class="text-[9px] text-gray-400 block">الحالة</label>
                             <select onchange="window.appData.matches[${mi}].status=this.value" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-xs font-bold ${m.status==='finished'?'text-emerald-400':'text-amber-400'}">
                                 <option value="scheduled" ${m.status === 'scheduled' ? 'selected' : ''}>قادمة</option>
@@ -1634,9 +1708,22 @@
                         <div class="space-y-1.5">${eventsHtml}</div>
                     </div>
                 `;
-                matchRows.push(div);
+                matchRows.push({ match: m, element: div });
             });
-            appendGroupedBatches(container, matchRows, 'المباريات', 'مباريات', 'space-y-3');
+            appendMatchRoundGroups(container, matchRows, true);
+        }
+
+        window.setMatchRound = function(matchIndex, value) {
+            const match = window.appData.matches?.[matchIndex];
+            if(!match) return;
+            const previousRound = getMatchRoundNumber(match);
+            const nextRound = value ? Number(value) : null;
+            const openKey = round => `matches-round:admin-matches-list:${round === null ? 'unassigned' : round}`;
+            listBatchOpenState.set(openKey(previousRound), true);
+            listBatchOpenState.set(openKey(nextRound), true);
+            match.round = Number.isInteger(nextRound) && nextRound > 0 ? nextRound : null;
+            window.renderAdminMatches();
+            window.renderMatchesView();
         }
 
         window.addMatchEvent = function(matchIndex) {
