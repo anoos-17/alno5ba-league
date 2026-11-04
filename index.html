@@ -925,11 +925,11 @@
 
             <div id="admin-sec-shorts" class="admin-sec hidden space-y-4">
  <form id="admin-short-form" class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 space-y-3">
-  <div><h3 class="font-bold text-sm text-amber-400">نشر مقطع Shorts</h3><p class="mt-1 text-[10px] leading-5 text-gray-400">فيديو MP4 أو WebM بأي مدة؛ المقاطع العمودية تظهر بشكل أفضل.</p></div>
+  <div><h3 class="font-bold text-sm text-amber-400">نشر مقطع Shorts</h3><p class="mt-1 text-[10px] leading-5 text-gray-400">فيديو MP4 أو WebM بأي مدة وحتى 1 GB؛ المقاطع العمودية تظهر بشكل أفضل.</p></div>
   <div><label for="short-video-title" class="mb-1 block text-xs font-bold text-gray-300">عنوان المقطع</label><input id="short-video-title" type="text" maxlength="90" required placeholder="عنوان قصير" class="w-full rounded-xl border border-slate-700 bg-brand-dark p-2.5 text-xs text-white"></div>
   <div><label for="short-video-description" class="mb-1 block text-xs font-bold text-gray-300">وصف (اختياري)</label><textarea id="short-video-description" maxlength="220" rows="2" placeholder="وصف المقطع" class="w-full rounded-xl border border-slate-700 bg-brand-dark p-2.5 text-xs text-white"></textarea></div>
-  <div><label for="short-video-file" class="mb-1 block text-xs font-bold text-gray-300">ملف الفيديو (أي مدة)</label><input id="short-video-file" type="file" accept="video/mp4,video/webm,.mp4,.webm" required class="w-full text-xs text-gray-300"></div>
-  <p id="short-video-upload-status" class="min-h-5 text-[10px] text-gray-400" aria-live="polite"></p><button id="short-video-submit" type="submit" class="rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-extrabold text-slate-950 transition hover:bg-amber-400">رفع ونشر المقطع</button>
+  <div><label for="short-video-file" class="mb-1 block text-xs font-bold text-gray-300">ملف الفيديو (أي مدة، حتى 1 GB)</label><input id="short-video-file" type="file" accept="video/mp4,video/webm,.mp4,.webm" required class="w-full text-xs text-gray-300"></div>
+  <p id="short-video-upload-status" class="min-h-5 text-[10px] text-gray-400" aria-live="polite"></p><div class="h-2 overflow-hidden rounded-full bg-slate-800"><div id="short-video-progress" class="h-full w-0 rounded-full bg-gradient-to-r from-amber-600 to-amber-300 transition-[width] duration-300"></div></div><div class="flex flex-wrap gap-2"><button id="short-video-cancel" type="button" class="hidden rounded-xl border border-red-500/40 px-3 py-2 text-xs font-bold text-red-300">إلغاء الرفع</button><button id="short-video-submit" type="submit" class="rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-extrabold text-slate-950 transition hover:bg-amber-400">رفع ونشر المقطع</button></div>
  </form>
  <div><h3 class="mb-2 text-sm font-bold text-gray-300">المقاطع المنشورة</h3><div id="admin-shorts-list" class="space-y-2"></div></div>
 </div>
@@ -1017,6 +1017,7 @@
         let activeFormationTeamId = null;
         let activeAdminFormationTeamId = null;
         let isAdminAuthenticated = false;
+        let adminSessionPassword = '';
         let pendingAdvertisementDeletions = [];
         const GAME_PLAYER_NAME_KEY = 'eliteLeaguePenaltyPlayerName_v1';
         let gamePlayerName = '';
@@ -2466,6 +2467,8 @@ window.renderHighlights = function() {
         const SHORTS_NAME_KEY = 'eliteLeagueShortsName_v1';
         const SHORTS_VISITOR_KEY = 'eliteLeagueShortsVisitor_v1';
         const SHORTS_LIKED_KEY = 'eliteLeagueShortsLiked_v1';
+        let activeShortUploadTask = null;
+        let shortUploadStalled = false;
         let shortsVideos = [];
         let shortsLikeCounts = {};
         let shortsObserver = null;
@@ -2580,27 +2583,79 @@ window.renderHighlights = function() {
             const title = document.getElementById('short-video-title')?.value.trim();
             const description = document.getElementById('short-video-description')?.value.trim();
             const status = document.getElementById('short-video-upload-status'), button = document.getElementById('short-video-submit');
+            const cancelButton = document.getElementById('short-video-cancel');
+            const progressBar = document.getElementById('short-video-progress');
             if (!title || !file) { status.textContent = 'أدخل عنوانًا واختر الفيديو.'; return; }
-            button.disabled = true; status.textContent = 'جارٍ بدء رفع الفيديو إلى Firebase…';
+            if (!navigator.onLine) { status.textContent = 'لا يوجد اتصال بالإنترنت. تحقق من الشبكة ثم أعد المحاولة.'; return; }
+            if (file.size > 1024 * 1024 * 1024) { status.textContent = 'حجم الفيديو يتجاوز الحد المسموح (1 GB).'; return; }
+            let watchdog = 0, uploadedRef = null;
+            button.disabled = true; shortUploadStalled = false;
+            if (progressBar) progressBar.style.width = '0%';
+            status.textContent = 'جارٍ بدء رفع ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)…';
             try {
                 const contentType = validateShortVideo(file);
                 const id = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
                 const ext = contentType === 'video/webm' ? 'webm' : 'mp4';
-                const path = `league_shorts/${id}.${ext}`;
+                const path = 'league_shorts/' + id + '.' + ext;
                 const uploadTask = uploadBytesResumable(storageRef(storage, path), file, { contentType, cacheControl: 'public,max-age=86400' });
-                const uploaded = await new Promise((resolve, reject) => uploadTask.on('state_changed', snapshot => { const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100); status.textContent = `جارٍ رفع الفيديو… ${percent}%`; }, reject, () => resolve(uploadTask.snapshot)));
-                const url = await getDownloadURL(uploaded.ref);
-                await set(ref(db, `league_shorts/videos/${id}`), { id, title, description, url, storagePath: path, size: file.size, createdAt: Date.now() });
-                form.reset(); status.textContent = 'تم نشر المقطع بنجاح.';
-            } catch (error) { status.textContent = error?.message || 'تعذر رفع المقطع. تحقق من Firebase Storage والاتصال.'; }
-            finally { button.disabled = false; }
+                activeShortUploadTask = uploadTask;
+                cancelButton?.classList.remove('hidden');
+                let lastProgressAt = Date.now(), lastBytes = 0, lastTick = performance.now();
+                watchdog = window.setInterval(() => {
+                    if (Date.now() - lastProgressAt > 180000 && activeShortUploadTask === uploadTask) {
+                        shortUploadStalled = true;
+                        status.textContent = 'توقف تقدم الرفع 3 دقائق؛ أوقفته تلقائيًا. تحقق من الاتصال وإعداد Firebase Storage.';
+                        uploadTask.cancel();
+                    }
+                }, 5000);
+                const snapshot = await new Promise((resolve, reject) => uploadTask.on('state_changed', snap => {
+                    const now = performance.now(), deltaBytes = snap.bytesTransferred - lastBytes, deltaSeconds = Math.max(.1, (now - lastTick) / 1000);
+                    if (deltaBytes > 0) { lastProgressAt = Date.now(); lastBytes = snap.bytesTransferred; lastTick = now; }
+                    const percent = Math.round((snap.bytesTransferred / Math.max(1, snap.totalBytes)) * 100);
+                    if (progressBar) progressBar.style.width = percent + '%';
+                    const transferred = (snap.bytesTransferred / 1024 / 1024).toFixed(1), total = (snap.totalBytes / 1024 / 1024).toFixed(1);
+                    const speed = deltaBytes > 0 ? (deltaBytes / deltaSeconds / 1024 / 1024).toFixed(2) : '0.00';
+                    status.textContent = 'جارٍ الرفع ' + percent + '% · ' + transferred + '/' + total + ' MB · ' + speed + ' MB/ث';
+                }, reject, () => resolve(uploadTask.snapshot)));
+                if (watchdog) { window.clearInterval(watchdog); watchdog = 0; }
+                uploadedRef = snapshot.ref;
+                status.textContent = 'اكتمل الرفع؛ جارٍ نشر المقطع للمشاهدين…';
+                const url = await getDownloadURL(snapshot.ref);
+                await set(ref(db, 'league_shorts/videos/' + id), {
+                    id, title, description, url, storagePath: path,
+                    storageProvider: 'firebase', size: file.size, createdAt: Date.now()
+                });
+                form.reset();
+                status.textContent = 'تم رفع المقطع ونشره للمشاهدين بنجاح.';
+            } catch (error) {
+                if (watchdog) window.clearInterval(watchdog);
+                if (uploadedRef) { try { await deleteObject(uploadedRef); } catch (_) {} }
+                const code = error?.code || '';
+                if (shortUploadStalled) status.textContent = 'توقف الرفع لعدم وجود تقدم. تحقق من الإنترنت ثم أعد المحاولة.';
+                else if (code === 'storage/canceled') status.textContent = 'تم إلغاء الرفع.';
+                else if (code === 'storage/unauthorized') status.textContent = 'صلاحيات Firebase Storage لا تسمح برفع الفيديو.';
+                else if (code === 'storage/quota-exceeded') status.textContent = 'مساحة التخزين المتاحة في Firebase انتهت.';
+                else if (code === 'storage/retry-limit-exceeded' || navigator.onLine === false) status.textContent = 'انقطع الاتصال أثناء الرفع. تحقق من الشبكة وحاول مرة أخرى.';
+                else status.textContent = error?.message || 'تعذر رفع الفيديو إلى Firebase Storage.';
+            } finally {
+                if (watchdog) window.clearInterval(watchdog);
+                activeShortUploadTask = null;
+                button.disabled = false;
+                cancelButton?.classList.add('hidden');
+            }
         }
         async function deleteShort(id) {
             if (!isAdminAuthenticated || !id || !confirm('حذف هذا المقطع وتعليقاته وإعجاباته؟')) return;
             const item = shortsVideos.find(video => video.id === id);
             try {
-                if (item?.storagePath) { try { await deleteObject(storageRef(storage, item.storagePath)); } catch (error) { if (error?.code !== 'storage/object-not-found') throw error; } }
-                await Promise.all(['videos','likes','likeCounts','comments'].map(key => set(ref(db, `league_shorts/${key}/${id}`), null)));
+                if (item?.storageProvider === 'vercel-blob' && item.blobPathname) {
+                    const response = await fetch('/api/shorts-delete', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminSessionPassword }, body: JSON.stringify({ pathname: item.blobPathname }) });
+                    const result = await response.json().catch(() => ({}));
+                    if (!response.ok) throw new Error(result.error || 'تعذر حذف ملف الفيديو من التخزين.');
+                } else if (item?.storagePath) {
+                    try { await deleteObject(storageRef(storage, item.storagePath)); } catch (error) { if (error?.code !== 'storage/object-not-found') throw error; }
+                }
+                await Promise.all(['videos','likes','likeCounts','comments'].map(key => set(ref(db, 'league_shorts/' + key + '/' + id), null)));
             } catch (error) { alert('تعذر حذف المقطع: ' + (error?.message || error)); }
         }
         function openShortComments(id) {
@@ -2672,6 +2727,9 @@ window.renderHighlights = function() {
                 }
             });
             document.getElementById('admin-short-form')?.addEventListener('submit', publishShort);
+            document.getElementById('short-video-cancel')?.addEventListener('click', () => {
+                if (activeShortUploadTask) { const status = document.getElementById('short-video-upload-status'); if (status) status.textContent = 'جارٍ إلغاء الرفع…'; activeShortUploadTask.cancel(); }
+            });
             document.getElementById('admin-shorts-list')?.addEventListener('click', event => { const button = event.target.closest('[data-delete-short]'); if (button) deleteShort(button.dataset.deleteShort); });
             const closeComments = () => { const modal = document.getElementById('shorts-comments-modal'); modal?.classList.add('hidden'); modal?.setAttribute('aria-hidden', 'true'); shortsCommentsVideoId = ''; if (!document.getElementById('view-shorts')?.classList.contains('hidden')) window.activateShortsView(); };
             document.getElementById('shorts-comments-close')?.addEventListener('click', closeComments);
@@ -2724,6 +2782,7 @@ window.renderHighlights = function() {
             const pass = document.getElementById('admin-pass-input').value;
             if(pass === '121212') {
                 isAdminAuthenticated = true;
+                adminSessionPassword = pass;
                 window.closeModal('modal-auth');
                 window.renderAdminContent();
                 document.getElementById('modal-admin-panel').classList.remove('hidden');
@@ -3342,3 +3401,4 @@ window.renderHighlights = function() {
     </script>
 </body>
 </html>
+
