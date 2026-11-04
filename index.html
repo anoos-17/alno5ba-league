@@ -452,7 +452,7 @@
         .shorts-gate-icon { display:grid; width:60px; height:60px; place-items:center; margin-bottom:14px; border:1px solid rgba(212,177,95,.2); border-radius:20px; background:rgba(212,177,95,.09); color:#e5cd85; font-size:23px; } .shorts-name-form { display:flex; width:min(100%,390px); gap:8px; }
         .shorts-name-form input,.shorts-comment-form textarea { min-width:0; flex:1; border:1px solid rgba(148,163,184,.2); border-radius:14px; background:rgba(4,13,26,.7); padding:12px; color:#fff; font-size:12px; outline:none; } .shorts-name-form button { display:flex; align-items:center; gap:8px; border:0; border-radius:14px; background:linear-gradient(135deg,#e4c877,#bd9945); padding:0 15px; color:#142033; font-size:12px; font-weight:900; }
         .shorts-feed-shell { display:flex; justify-content:center; } .shorts-feed { width:min(100%,460px); height:min(76dvh,780px); min-height:440px; overflow-y:auto; overscroll-behavior:contain; scroll-snap-type:y mandatory; scrollbar-width:thin; scrollbar-color:rgba(212,177,95,.3) transparent; border-radius:26px; }
-        .short-card { position:relative; isolation:isolate; width:100%; height:100%; min-height:440px; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; border:1px solid rgba(220,232,244,.13); border-radius:26px; background:#05080e; color:#fff; } .short-card-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#05080e; }
+        .short-card { position:relative; isolation:isolate; width:100%; height:100%; min-height:440px; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; border:1px solid rgba(220,232,244,.13); border-radius:26px; background:#05080e; color:#fff; } .short-card-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#05080e; } .short-buffering { display:none; position:absolute; z-index:2; inset:0; place-items:center; align-content:center; gap:10px; background:rgba(3,8,16,.36); color:#f3e5b4; font-size:11px; font-weight:800; pointer-events:none; } .short-card.is-buffering .short-buffering { display:grid; } .short-buffering-spinner { width:29px; height:29px; border:3px solid rgba(243,229,180,.25); border-top-color:#e4c877; border-radius:50%; animation:shortBufferSpin .8s linear infinite; } @keyframes shortBufferSpin { to { transform:rotate(360deg); } } .short-card-video-error { display:none; position:absolute; z-index:3; inset:auto 18px 46% ; border:1px solid rgba(248,113,113,.35); border-radius:14px; background:rgba(10,15,23,.88); padding:12px; color:#fecaca; text-align:center; font-size:11px; font-weight:800; line-height:1.7; } .short-card.has-video-error .short-card-video-error { display:block; }
         .short-card::after { content:""; position:absolute; z-index:1; inset:30% 0 0; pointer-events:none; background:linear-gradient(180deg,transparent,rgba(0,0,0,.04) 35%,rgba(0,0,0,.76)); }
         .short-card-top { position:absolute; z-index:2; top:12px; right:12px; left:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; pointer-events:none; } .short-card-index { border:1px solid rgba(255,255,255,.2); border-radius:999px; background:rgba(7,14,22,.44); padding:6px 9px; color:#fff; font-size:9px; font-weight:900; }
         .short-uploader { display:flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,.18); border-radius:999px; background:rgba(7,14,22,.5); padding:5px 10px 5px 6px; color:#fff; backdrop-filter:blur(12px); }
@@ -482,7 +482,7 @@
         .quiz-eyebrow { color:#d8bb69; font-size:9px; font-weight:900; letter-spacing:.12em; } .quiz-hero h2 { margin:2px 0 0; color:#fff; font-size:22px; font-weight:950; } .quiz-hero p { margin:4px 0 0; color:#9aa7b6; font-size:10px; line-height:1.7; }
         .quiz-setup { max-width:520px; margin:14px auto 4px; border:1px solid rgba(216,187,105,.2); border-radius:22px; background:rgba(255,255,255,.035); padding:18px; } .quiz-setup h3 { margin:0; color:#fff; font-size:15px; font-weight:900; } .quiz-setup p { margin:6px 0 14px; color:#9aa7b6; font-size:11px; line-height:1.7; }
         .quiz-layout { display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:14px; align-items:stretch; } .quiz-question-card,.quiz-ladder-card { border:1px solid rgba(220,232,244,.12); border-radius:22px; background:linear-gradient(155deg,rgba(18,39,62,.92),rgba(8,20,35,.96)); box-shadow:0 18px 44px rgba(0,0,0,.2); }
-        .quiz-question-card { min-width:0; padding:clamp(14px,3vw,24px); } .quiz-question-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:20px; } .quiz-step-pill,.quiz-prize-pill { border:1px solid rgba(216,187,105,.22); border-radius:999px; background:rgba(216,187,105,.08); padding:7px 11px; color:#e5c66e; font-size:10px; font-weight:900; }
+        .quiz-question-card { min-width:0; padding:clamp(14px,3vw,24px); } .quiz-question-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:20px; } .quiz-step-pill,.quiz-prize-pill,.quiz-timer-pill { border:1px solid rgba(216,187,105,.22); border-radius:999px; background:rgba(216,187,105,.08); padding:7px 11px; color:#e5c66e; font-size:10px; font-weight:900; white-space:nowrap; } .quiz-timer-pill { display:inline-flex; align-items:center; gap:5px; border-color:rgba(125,211,252,.24); background:rgba(56,189,248,.08); color:#bae6fd; font-variant-numeric:tabular-nums; } .quiz-timer-pill.is-urgent { border-color:rgba(248,113,113,.45); background:rgba(239,68,68,.14); color:#fecaca; animation:quizTimerPulse .75s ease-in-out infinite alternate; } @keyframes quizTimerPulse { to { transform:scale(1.04); } }
         .quiz-question-text { min-height:72px; margin:0 0 18px; color:#fff; font-size:clamp(17px,2.6vw,22px); font-weight:900; line-height:1.75; text-align:center; }
         .quiz-answers { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .quiz-answer { display:flex; min-height:58px; align-items:center; gap:10px; border:1px solid rgba(185,201,219,.17); border-radius:15px; background:rgba(7,17,30,.66); padding:10px 12px; color:#eaf0f6; text-align:right; transition:transform .16s ease,border-color .16s ease,background .16s ease; } .quiz-answer:hover:not(:disabled) { transform:translateY(-2px); border-color:rgba(216,187,105,.65); background:rgba(216,187,105,.08); } .quiz-answer:disabled { cursor:default; } .quiz-answer-letter { display:grid; width:28px; height:28px; flex:0 0 auto; place-items:center; border:1px solid rgba(216,187,105,.35); border-radius:9px; color:#e5c66e; font-size:11px; font-weight:950; } .quiz-answer-text { font-size:12px; font-weight:750; line-height:1.55; }
         .quiz-answer.is-selected { border-color:#d8bb69; background:rgba(216,187,105,.19); } .quiz-answer.is-correct { border-color:#3fc48c; background:rgba(28,149,99,.2); color:#eafff3; } .quiz-answer.is-wrong { border-color:#ef6a77; background:rgba(169,41,57,.22); color:#fff0f1; } .quiz-answer.is-removed { visibility:hidden; }
@@ -491,8 +491,8 @@
         .quiz-actions { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-top:14px; } .quiz-bank-button,.quiz-next-button,.quiz-restart-button { border:1px solid rgba(216,187,105,.3); border-radius:12px; background:linear-gradient(135deg,#e1c66f,#b08a37); padding:10px 15px; color:#122039; font-size:11px; font-weight:950; } .quiz-bank-button:disabled { opacity:.4; cursor:not-allowed; } .quiz-next-button { background:linear-gradient(135deg,#d9e7f2,#b2c6d8); border-color:rgba(255,255,255,.25); }
         .quiz-ladder-card { display:flex; flex-direction:column; padding:13px; } .quiz-ladder-heading { margin:0 0 8px; color:#d8bb69; font-size:11px; font-weight:900; } .quiz-prize-ladder { display:flex; flex-direction:column-reverse; gap:4px; overflow:auto; scrollbar-width:thin; } .quiz-prize-step { display:flex; align-items:center; justify-content:space-between; gap:8px; border:1px solid transparent; border-radius:9px; padding:5px 8px; color:#aab7c5; font-size:10px; } .quiz-prize-step span:first-child { color:#768698; font-size:9px; } .quiz-prize-step.is-current { border-color:rgba(216,187,105,.5); background:rgba(216,187,105,.13); color:#f3d77f; font-weight:950; } .quiz-prize-step.is-milestone { color:#d9c37f; }
         .quiz-userbar { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; border:1px solid rgba(220,232,244,.1); border-radius:14px; background:rgba(255,255,255,.035); padding:10px 13px; color:#aab7c5; font-size:10px; } .quiz-userbar strong { color:#f3d77f; } .quiz-result { margin:20px auto 4px; max-width:520px; border:1px solid rgba(216,187,105,.25); border-radius:22px; background:linear-gradient(145deg,#132a43,#091729); padding:25px 18px; text-align:center; animation:tabReveal .32s ease both; } .quiz-result h3 { margin:0; color:#e6c96d; font-size:22px; font-weight:950; } .quiz-result p { color:#bcc8d4; font-size:12px; line-height:1.8; } .quiz-result-prize { display:block; margin:10px 0 16px; color:#f3d77f; font-size:28px; font-weight:950; }
-        html[data-theme=day] .quiz-page { background:radial-gradient(ellipse at 50% -20%,rgba(29,72,105,.1),transparent 45%),linear-gradient(145deg,#f7fafc,#eaf0f5); } html[data-theme=day] .quiz-hero h2,html[data-theme=day] .quiz-setup h3 { color:#173b57; } html[data-theme=day] .quiz-hero p,html[data-theme=day] .quiz-setup p { color:#657585; } html[data-theme=day] .quiz-setup,html[data-theme=day] .quiz-userbar { border-color:rgba(23,59,87,.12); background:rgba(23,59,87,.035); } html[data-theme=day] .quiz-question-card,html[data-theme=day] .quiz-ladder-card { border-color:rgba(23,59,87,.12); background:linear-gradient(155deg,#fff,#f3f6f9); } html[data-theme=day] .quiz-question-text { color:#173b57; } html[data-theme=day] .quiz-answer { border-color:rgba(23,59,87,.14); background:#f7f9fb; color:#294258; } html[data-theme=day] .quiz-answer:hover:not(:disabled) { background:#edf3f7; } html[data-theme=day] .quiz-answer.is-correct { color:#185338; background:#e9f7ef; } html[data-theme=day] .quiz-answer.is-wrong { color:#7b2630; background:#fff0f1; } html[data-theme=day] .quiz-hint,html[data-theme=day] .quiz-audience,html[data-theme=day] .quiz-feedback { color:#294258; background:rgba(23,59,87,.035); border-color:rgba(23,59,87,.12); } html[data-theme=day] .quiz-userbar { color:#596d7d; } html[data-theme=day] .quiz-userbar strong { color:#745a1e; } html[data-theme=day] .quiz-result { background:linear-gradient(145deg,#fff,#edf3f8); } html[data-theme=day] .quiz-result h3 { color:#173b57; } html[data-theme=day] .quiz-result p { color:#536879; }
-        @media (max-width:700px) { .quiz-layout { grid-template-columns:1fr; } .quiz-prize-ladder { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); max-height:none; } .quiz-prize-step { justify-content:center; padding:6px 3px; } .quiz-prize-step span:first-child { display:none; } .quiz-ladder-card { order:2; } .quiz-question-card { order:1; } }
+        html[data-theme=day] .quiz-page { background:radial-gradient(ellipse at 50% -20%,rgba(29,72,105,.1),transparent 45%),linear-gradient(145deg,#f7fafc,#eaf0f5); } html[data-theme=day] .quiz-hero h2,html[data-theme=day] .quiz-setup h3 { color:#173b57; } html[data-theme=day] .quiz-hero p,html[data-theme=day] .quiz-setup p { color:#657585; } html[data-theme=day] .quiz-setup,html[data-theme=day] .quiz-userbar { border-color:rgba(23,59,87,.12); background:rgba(23,59,87,.035); } html[data-theme=day] .quiz-question-card,html[data-theme=day] .quiz-ladder-card { border-color:rgba(23,59,87,.12); background:linear-gradient(155deg,#fff,#f3f6f9); } html[data-theme=day] .quiz-question-text { color:#173b57; } html[data-theme=day] .quiz-answer { border-color:rgba(23,59,87,.14); background:#f7f9fb; color:#294258; } html[data-theme=day] .quiz-answer:hover:not(:disabled) { background:#edf3f7; } html[data-theme=day] .quiz-answer.is-correct { color:#185338; background:#e9f7ef; } html[data-theme=day] .quiz-answer.is-wrong { color:#7b2630; background:#fff0f1; } html[data-theme=day] .quiz-hint,html[data-theme=day] .quiz-audience,html[data-theme=day] .quiz-feedback { color:#294258; background:rgba(23,59,87,.035); border-color:rgba(23,59,87,.12); } html[data-theme=day] .quiz-userbar { color:#596d7d; } html[data-theme=day] .quiz-userbar strong { color:#745a1e; } html[data-theme=day] .quiz-result { background:linear-gradient(145deg,#fff,#edf3f8); } html[data-theme=day] .quiz-result h3 { color:#173b57; } html[data-theme=day] .quiz-result p { color:#536879; } html[data-theme=day] .quiz-timer-pill { border-color:rgba(29,78,121,.18); background:rgba(29,78,121,.06); color:#1d4e79; } html[data-theme=day] .quiz-timer-pill.is-urgent { color:#b42332; border-color:rgba(180,35,50,.28); background:rgba(180,35,50,.08); }
+        @media (max-width:700px) { .quiz-layout { grid-template-columns:1fr; } .quiz-prize-ladder { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); max-height:none; } .quiz-prize-step { justify-content:center; padding:6px 3px; } .quiz-prize-step span:first-child { display:none; } .quiz-ladder-card { order:2; } .quiz-question-card { order:1; } .quiz-question-head { gap:5px; } .quiz-step-pill,.quiz-prize-pill,.quiz-timer-pill { padding:6px 8px; font-size:9px; } }
         @media (max-width:767px) { .shorts-page { padding:12px!important; } .shorts-feed { height:min(72dvh,720px); min-height:400px; } .short-card { min-height:400px; } .shorts-name-gate { min-height:340px; } } @media (max-width:380px) { .shorts-feed { min-height:370px; } .short-card { min-height:370px; } .short-card-copy { left:70px; } }
 </style>
 </head>
@@ -560,7 +560,7 @@
             <button onclick="switchTab('ads')" id="tab-ads" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-bullhorn text-amber-400"></i> الإعلانات</button>
             
             <button onclick="switchTab('game')" id="tab-game" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-futbol text-emerald-400"></i> العب أنت</button>
-            <button onclick="switchTab('game-rankings')" id="tab-game-rankings" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-ranking-star text-amber-400"></i> التصنيفات</button>
+            <button onclick="switchTab('game-rankings')" id="tab-game-rankings" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-ranking-star text-amber-400"></i> ترتيبك في اللعبة</button>
             <button onclick="switchTab('scorers')" id="tab-scorers" class="tab-btn px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm text-gray-400 hover:text-white transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fa-solid fa-bullseye text-amber-400"></i> الهدافون
             </button>
@@ -711,13 +711,13 @@
 </div>
 <div id="view-game" class="tab-content hidden">
  <section class="quiz-page bg-brand-card border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl">
-  <header class="quiz-hero"><div><span class="quiz-eyebrow">دوري النخبة · تحدي المعرفة</span><h2>تحدي النخبة</h2><p>15 سؤالًا، أربع اختيارات، ومساعدات محدودة. اجمع الجوائز حتى المليون.</p></div><span class="quiz-brand-mark"><i class="fa-solid fa-trophy"></i></span></header>
-  <div id="game-player-setup" class="quiz-setup"><h3>جاهز للتحدي؟</h3><p>اكتب اسمك مرة واحدة؛ سيُحفظ على هذا المتصفح ويظهر في تصنيف اللعبة.</p><form onsubmit="window.registerPenaltyPlayer(event)" class="flex flex-col sm:flex-row gap-2"><input id="game-player-name-input" type="text" maxlength="32" required autocomplete="name" placeholder="اسم اللاعب" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white focus:border-amber-400 focus:outline-none"><button type="submit" class="rounded-xl bg-amber-400 px-5 py-2.5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300">ابدأ التحدي</button></form></div>
+  <header class="quiz-hero"><div><span class="quiz-eyebrow">دوري النخبة · تحدي المعرفة</span><h2>تحدي النخبة</h2><p>أسئلة متنوعة من بنك يتجاوز 7,500 سؤال، 15 ثانية لكل سؤال، وصعوبة تتدرج حتى المليون.</p></div><span class="quiz-brand-mark"><i class="fa-solid fa-trophy"></i></span></header>
+  <div id="game-player-setup" class="quiz-setup"><h3>جاهز للتحدي؟</h3><p>اكتب اسمك مرة واحدة؛ لك 10 جولات يوميًا، ويُحفظ تقدمك وترتيبك.</p><form onsubmit="window.registerPenaltyPlayer(event)" class="flex flex-col sm:flex-row gap-2"><input id="game-player-name-input" type="text" maxlength="32" required autocomplete="name" placeholder="اسم اللاعب" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white focus:border-amber-400 focus:outline-none"><button type="submit" class="rounded-xl bg-amber-400 px-5 py-2.5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300">ابدأ التحدي</button></form></div>
   <div id="penalty-game-shell" class="hidden">
-   <div class="quiz-userbar"><span>المتحدي: <strong id="game-player-name"></strong></span><span id="game-current-rank">ترتيبك: —</span><span>رصيدك: <strong id="game-current-points">0</strong></span></div>
+   <div class="quiz-userbar"><span>المتحدي: <strong id="game-player-name"></strong></span><span id="game-current-rank">ترتيبك في اللعبة: —</span><span id="game-daily-tries">المتبقي اليوم: 10/10</span><span>رصيدك: <strong id="game-current-points">0</strong></span></div>
    <div id="quiz-live-content" class="quiz-layout">
     <section class="quiz-question-card">
-     <div class="quiz-question-head"><span id="quiz-step-pill" class="quiz-step-pill">السؤال 1 من 15</span><span class="quiz-prize-pill"><span id="quiz-potential-prize">100</span> نقطة</span></div>
+     <div class="quiz-question-head"><span id="quiz-step-pill" class="quiz-step-pill">السؤال 1 من 15</span><span id="quiz-timer" class="quiz-timer-pill" role="timer" aria-live="off"><i class="fa-regular fa-clock"></i> 15 ث</span><span class="quiz-prize-pill"><span id="quiz-potential-prize">100</span> نقطة</span></div>
      <h3 id="quiz-question" class="quiz-question-text"></h3>
      <div id="quiz-answers" class="quiz-answers"></div>
      <div id="quiz-audience" class="quiz-audience hidden" aria-live="polite"></div>
@@ -737,7 +737,7 @@
         <div id="view-game-rankings" class="tab-content hidden">
             <div class="bg-brand-card rounded-2xl border border-slate-800 p-4 sm:p-6 shadow-xl">
                 <div class="mb-4">
-                    <h2 class="font-bold text-base sm:text-lg text-amber-400 flex items-center gap-2"><i class="fa-solid fa-ranking-star"></i> تصنيفك في اللعبة</h2>
+                    <h2 class="font-bold text-base sm:text-lg text-amber-400 flex items-center gap-2"><i class="fa-solid fa-ranking-star"></i> ترتيبك في اللعبة</h2>
                     <div class="mt-3 grid grid-cols-3 gap-1.5" role="tablist">
                         <button id="rank-tab-week" onclick="window.setRankMode('week')" class="rounded-xl border px-2 py-2 text-xs font-bold">هذا الأسبوع</button>
                         <button id="rank-tab-last" onclick="window.setRankMode('last')" class="rounded-xl border px-2 py-2 text-xs font-bold">الأسبوع الماضي</button>
@@ -756,7 +756,7 @@
   <div class="mobile-more-grid">
     <button type="button" class="mobile-more-item" data-tab="ads"><i class="fa-solid fa-bullhorn"></i><span>الإعلانات</span></button>
 <button type="button" class="mobile-more-item" data-tab="shorts"><i class="fa-solid fa-clapperboard"></i><span>Shorts</span></button>
-    <button type="button" class="mobile-more-item" data-tab="game-rankings"><i class="fa-solid fa-ranking-star"></i><span>التصنيفات</span></button>
+    <button type="button" class="mobile-more-item" data-tab="game-rankings"><i class="fa-solid fa-ranking-star"></i><span>ترتيبك في اللعبة</span></button>
     <button type="button" class="mobile-more-item" data-tab="scorers"><i class="fa-solid fa-bullseye"></i><span>الهدافون</span></button>
     <button type="button" class="mobile-more-item" data-tab="assists"><i class="fa-solid fa-wand-magic-sparkles"></i><span>الصناع</span></button>
     <button type="button" class="mobile-more-item" data-tab="motm"><i class="fa-solid fa-star"></i><span>رجل الأسبوع</span></button>
@@ -787,7 +787,7 @@
                 <h2 id="latest-updates-title" class="latest-updates-heading">تحديث التطبيق</h2>
                 <ul class="latest-updates-list">
                     <li>تحدي المعلومات في العب أنت</li>
-                    <li>تصنيفك في اللعبة</li>
+                    <li>ترتيبك في اللعبة</li>
                     <li>تعديل الأشكال في المباريات</li>
                     <li>تعديل شكل التشكيلات</li>
                     <li>إضافة مقاطع Shorts للدوري</li>
@@ -902,7 +902,7 @@
             </div>
 
             <div id="admin-sec-gamerank" class="admin-sec hidden space-y-3">
-<div class="flex items-center justify-between gap-2"><h3 class="font-bold text-sm text-amber-400">إدارة تصنيف لعبة العب أنت</h3><button onclick="window.clearGameRanks()" class="rounded-xl bg-red-600/90 px-3 py-2 text-xs font-bold text-white">مسح كل التصنيفات</button></div>
+<div class="flex items-center justify-between gap-2"><h3 class="font-bold text-sm text-amber-400">إدارة ترتيب اللعبة</h3><button onclick="window.clearGameRanks()" class="rounded-xl bg-red-600/90 px-3 py-2 text-xs font-bold text-white">تصفير كل النقاط</button></div>
 <div id="admin-gamerank-list" class="space-y-2"></div>
 </div>
 <div id="admin-sec-ads" class="admin-sec hidden space-y-4">
@@ -952,7 +952,7 @@
     <!-- UI & FIREBASE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, set, get, runTransaction, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue, set, get, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
         if ('serviceWorker' in navigator) {
@@ -1763,10 +1763,11 @@ window.renderHighlights = function() {
             if(levelEl) levelEl.textContent = `المستوى ${window.BBLevel || 1}`;
             const rankEl = document.getElementById('game-current-rank');
             if(rankEl) {
-                const entries = Object.entries(window.appData?.gameRankings || {}).sort((a, b) => (Number(b[1]?.points) || 0) - (Number(a[1]?.points) || 0) || (Number(b[1]?.bestRun) || 0) - (Number(a[1]?.bestRun) || 0));
+                const entries = Object.entries(window.appData?.gameRankings || {}).filter(([, record]) => record && record.name).sort((a, b) => (Number(b[1]?.points) || 0) - (Number(a[1]?.points) || 0) || (Number(b[1]?.bestRun) || 0) - (Number(a[1]?.bestRun) || 0));
                 const rank = entries.findIndex(([key]) => key === getGamePlayerKey(gamePlayerName));
-                rankEl.textContent = rank >= 0 ? `ترتيبك: ${rank + 1}` : 'ترتيبك: —';
+                rankEl.textContent = rank >= 0 ? `ترتيبك في اللعبة: ${rank + 1}` : 'ترتيبك في اللعبة: —';
             }
+            updateLeagueQuizDailyStatus(window.appData?.gameRankings?.[getGamePlayerKey(gamePlayerName)]);
         }
 
         function refreshPenaltyPlayerUI() {
@@ -1810,7 +1811,7 @@ window.renderHighlights = function() {
             const id = rankMode === 'week' ? gwId(0) : gwId(-1);
             const entries = Object.entries(window.appData?.gameRankings || {}).map(([key, r]) => ({ key, ...r })).filter(r => String(r.name || '').trim())
                 .map(r => { const st = rankMode === 'total' ? { p: Number(r.points) || 0, b: Number(r.bestRun) || 0 } : gwStat(r, id); return { ...r, p: st.p, b: st.b }; })
-                .filter(r => rankMode === 'total' || r.p > 0)
+                .filter(r => rankMode === 'total' ? (r.p > 0 || r.b > 0) : r.p > 0)
                 .sort((a, b) => b.p - a.p || b.b - a.b || String(a.name).localeCompare(String(b.name), 'ar'));
             if(!entries.length) {
                 container.innerHTML = `<div class="py-8 text-center text-sm text-gray-500">${rankMode === 'total' ? 'لا توجد نتائج بعد. ابدأ اللعب لتظهر هنا.' : rankMode === 'week' ? 'لا توجد نتائج هذا الأسبوع بعد. كن أول من يسجل!' : 'لا توجد نتائج مسجلة للأسبوع الماضي.'}</div>`;
@@ -1833,7 +1834,7 @@ window.renderHighlights = function() {
                 const transaction = await runTransaction(recordRef, current => {
                     const c = current || {}, wk = gwId(0); let wp = Number(c.weekPoints) || 0, wb = Number(c.weekBest) || 0, pid = c.prevWeekId || null, pp = Number(c.prevWeekPoints) || 0, pb = Number(c.prevWeekBest) || 0;
                     if (c.weekId && c.weekId !== wk) { pid = c.weekId; pp = wp; pb = wb; wp = 0; wb = 0; }
-                    return { name: gamePlayerName, number: gamePlayerNumber, points: (Number(c.points) || 0) + points, bestRun: Math.max(Number(c.bestRun) || 0, points), games: (Number(c.games) || 0) + 1, lastRun: points, lastShots: shots, updatedAt: Date.now(), weekId: wk, weekPoints: wp + points, weekBest: Math.max(wb, points), prevWeekId: pid, prevWeekPoints: pp, prevWeekBest: pb };
+                    return { ...c, name: gamePlayerName, number: gamePlayerNumber, points: (Number(c.points) || 0) + points, bestRun: Math.max(Number(c.bestRun) || 0, points), games: (Number(c.games) || 0) + 1, lastRun: points, lastShots: shots, updatedAt: Date.now(), weekId: wk, weekPoints: wp + points, weekBest: Math.max(wb, points), prevWeekId: pid, prevWeekPoints: pp, prevWeekBest: pb };
                 });
                 if(!transaction.committed) throw new Error('لم يتم حفظ نتيجة اللعبة.');
                 if(!window.appData.gameRankings || typeof window.appData.gameRankings !== 'object') window.appData.gameRankings = {};
@@ -2081,7 +2082,7 @@ window.renderHighlights = function() {
         };
         const LEAGUE_QUIZ_PRIZES = [100, 200, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000, 750000, 1000000];
         const LEAGUE_QUIZ_MILESTONES = new Set([3, 7, 10]);
-        const LEAGUE_QUIZ_QUESTIONS = [
+        const LEGACY_LEAGUE_QUIZ_QUESTIONS = [
             [
                 { id:'1a', q:'كم لاعبًا يبدأ به كل فريق داخل ملعب كرة القدم؟', choices:['11 لاعبًا','9 لاعبين','10 لاعبين','12 لاعبًا'], answer:'11 لاعبًا', hint:'عدد الفريق الكامل أكبر من عشرة بقليل.' },
                 { id:'1b', q:'أي بطاقة تعني طرد اللاعب من المباراة؟', choices:['البطاقة الحمراء','البطاقة الصفراء','البطاقة الزرقاء','البطاقة البيضاء'], answer:'البطاقة الحمراء', hint:'لونها هو لون إشارة التوقف.' }
@@ -2143,7 +2144,589 @@ window.renderHighlights = function() {
                 { id:'15b', q:'من سجل أسرع هدف في تاريخ كأس العالم للرجال، بعد نحو 11 ثانية عام 2002؟', choices:['هاكان شوكور','رونالدو','ميروسلاف كلوزه','دافور شوكر'], answer:'هاكان شوكور', hint:'كان لاعبًا تركيًا وسجل في مباراة تحديد المركز الثالث.' }
             ]
         ];
-        let leagueQuizState = { started:false, finished:false, locked:false, level:0, securedPrize:0, question:null, options:[], used:new Set(), helps:{ fifty:false, audience:false, hint:false } };
+        function makeQuizRecords(competition, rows, topFive = false) {
+            return rows.trim().split(/\n+/).filter(Boolean).map(line => {
+                const parts = line.split('|');
+                return { competition, season:parts[0].trim(), winner:parts[1].trim(), topFive, factId:competition + '|' + parts[0].trim() };
+            });
+        }
+        const LEAGUE_QUIZ_RECORDS = [
+            ...makeQuizRecords('الكرة الذهبية', `
+1956|ستانلي ماثيوز
+1957|ألفريدو دي ستيفانو
+1958|ريمون كوبا
+1959|ألفريدو دي ستيفانو
+1960|لويس سواريز
+1961|عمر سيفوري
+1962|جوزيف ماسوبوست
+1963|ليف ياشين
+1964|دينيس لو
+1965|أوزيبيو
+1966|بوبي تشارلتون
+1967|فلوريان ألبرت
+1968|جورج بست
+1969|جياني ريفيرا
+1970|غيرد مولر
+1971|يوهان كرويف
+1972|فرانز بيكنباور
+1973|يوهان كرويف
+1974|يوهان كرويف
+1975|أوليغ بلوخين
+1976|فرانز بيكنباور
+1977|آلان سيمونسن
+1978|كيفن كيغان
+1979|كيفن كيغان
+1980|كارل هاينز رومينيغه
+1981|كارل هاينز رومينيغه
+1982|باولو روسي
+1983|ميشيل بلاتيني
+1984|ميشيل بلاتيني
+1985|ميشيل بلاتيني
+1986|إيغور بيلانوف
+1987|رود خوليت
+1988|ماركو فان باستن
+1989|ماركو فان باستن
+1990|لوثار ماتيوس
+1991|جان بيير بابان
+1992|ماركو فان باستن
+1993|روبرتو باجيو
+1994|خريستو ستويتشكوف
+1995|جورج ويا
+1996|ماتياس زامر
+1997|رونالدو
+1998|زين الدين زيدان
+1999|ريفالدو
+2000|لويس فيغو
+2001|مايكل أوين
+2002|رونالدو
+2003|بافل نيدفيد
+2004|أندري شيفتشينكو
+2005|رونالدينيو
+2006|فابيو كانافارو
+2007|كاكا
+2008|كريستيانو رونالدو
+2009|ليونيل ميسي
+2010|ليونيل ميسي
+2011|ليونيل ميسي
+2012|ليونيل ميسي
+2013|كريستيانو رونالدو
+2014|كريستيانو رونالدو
+2015|ليونيل ميسي
+2016|كريستيانو رونالدو
+2017|كريستيانو رونالدو
+2018|لوكا مودريتش
+2019|ليونيل ميسي
+2020|لم تُمنح الجائزة
+2021|ليونيل ميسي
+2022|كريم بنزيما
+2023|ليونيل ميسي
+2024|رودري
+2025|عثمان ديمبيلي
+2026|هاري كين
+`),
+            ...makeQuizRecords('كأس العالم', `
+1930|أوروغواي
+1934|إيطاليا
+1938|إيطاليا
+1950|أوروغواي
+1954|ألمانيا الغربية
+1958|البرازيل
+1962|البرازيل
+1966|إنجلترا
+1970|البرازيل
+1974|ألمانيا الغربية
+1978|الأرجنتين
+1982|إيطاليا
+1986|الأرجنتين
+1990|ألمانيا الغربية
+1994|البرازيل
+1998|فرنسا
+2002|البرازيل
+2006|إيطاليا
+2010|إسبانيا
+2014|ألمانيا
+2018|فرنسا
+2022|الأرجنتين
+2026|إسبانيا
+`),
+            ...makeQuizRecords('كأس أمم أوروبا', `
+1960|الاتحاد السوفيتي
+1964|إسبانيا
+1968|إيطاليا
+1972|ألمانيا الغربية
+1976|تشيكوسلوفاكيا
+1980|ألمانيا الغربية
+1984|فرنسا
+1988|هولندا
+1992|الدنمارك
+1996|ألمانيا
+2000|فرنسا
+2004|اليونان
+2008|إسبانيا
+2012|إسبانيا
+2016|البرتغال
+2020|إيطاليا
+2024|إسبانيا
+`),
+            ...makeQuizRecords('دوري أبطال أوروبا', `
+1955/56|ريال مدريد
+1956/57|ريال مدريد
+1957/58|ريال مدريد
+1958/59|ريال مدريد
+1959/60|ريال مدريد
+1960/61|بنفيكا
+1961/62|بنفيكا
+1962/63|ميلان
+1963/64|إنتر ميلان
+1964/65|إنتر ميلان
+1965/66|ريال مدريد
+1966/67|سلتيك
+1967/68|مانشستر يونايتد
+1968/69|ميلان
+1969/70|فينورد
+1970/71|أياكس
+1971/72|أياكس
+1972/73|أياكس
+1973/74|بايرن ميونخ
+1974/75|بايرن ميونخ
+1975/76|بايرن ميونخ
+1976/77|ليفربول
+1977/78|ليفربول
+1978/79|نوتنغهام فورست
+1979/80|نوتنغهام فورست
+1980/81|ليفربول
+1981/82|أستون فيلا
+1982/83|هامبورغ
+1983/84|ليفربول
+1984/85|يوفنتوس
+1985/86|ستيوا بوخارست
+1986/87|بورتو
+1987/88|آيندهوفن
+1988/89|ميلان
+1989/90|ميلان
+1990/91|النجم الأحمر
+1991/92|برشلونة
+1992/93|مارسيليا
+1993/94|ميلان
+1994/95|أياكس
+1995/96|يوفنتوس
+1996/97|بوروسيا دورتموند
+1997/98|ريال مدريد
+1998/99|مانشستر يونايتد
+1999/00|ريال مدريد
+2000/01|بايرن ميونخ
+2001/02|ريال مدريد
+2002/03|ميلان
+2003/04|بورتو
+2004/05|ليفربول
+2005/06|برشلونة
+2006/07|ميلان
+2007/08|مانشستر يونايتد
+2008/09|برشلونة
+2009/10|إنتر ميلان
+2010/11|برشلونة
+2011/12|تشيلسي
+2012/13|بايرن ميونخ
+2013/14|ريال مدريد
+2014/15|برشلونة
+2015/16|ريال مدريد
+2016/17|ريال مدريد
+2017/18|ريال مدريد
+2018/19|ليفربول
+2019/20|بايرن ميونخ
+2020/21|تشيلسي
+2021/22|ريال مدريد
+2022/23|مانشستر سيتي
+2023/24|ريال مدريد
+2024/25|باريس سان جيرمان
+2025/26|باريس سان جيرمان
+`),
+            ...makeQuizRecords('الدوري الإنجليزي الممتاز', `
+1992/93|مانشستر يونايتد
+1993/94|مانشستر يونايتد
+1994/95|بلاكبيرن روفرز
+1995/96|مانشستر يونايتد
+1996/97|مانشستر يونايتد
+1997/98|أرسنال
+1998/99|مانشستر يونايتد
+1999/00|مانشستر يونايتد
+2000/01|مانشستر يونايتد
+2001/02|أرسنال
+2002/03|مانشستر يونايتد
+2003/04|أرسنال
+2004/05|تشيلسي
+2005/06|تشيلسي
+2006/07|مانشستر يونايتد
+2007/08|مانشستر يونايتد
+2008/09|مانشستر يونايتد
+2009/10|تشيلسي
+2010/11|مانشستر يونايتد
+2011/12|مانشستر سيتي
+2012/13|مانشستر يونايتد
+2013/14|مانشستر سيتي
+2014/15|تشيلسي
+2015/16|ليستر سيتي
+2016/17|تشيلسي
+2017/18|مانشستر سيتي
+2018/19|مانشستر سيتي
+2019/20|ليفربول
+2020/21|مانشستر سيتي
+2021/22|مانشستر سيتي
+2022/23|مانشستر سيتي
+2023/24|مانشستر سيتي
+2024/25|ليفربول
+2025/26|أرسنال
+`, true),
+            ...makeQuizRecords('الدوري الإسباني', `
+2010/11|برشلونة
+2011/12|ريال مدريد
+2012/13|برشلونة
+2013/14|أتلتيكو مدريد
+2014/15|برشلونة
+2015/16|برشلونة
+2016/17|ريال مدريد
+2017/18|برشلونة
+2018/19|برشلونة
+2019/20|ريال مدريد
+2020/21|أتلتيكو مدريد
+2021/22|ريال مدريد
+2022/23|برشلونة
+2023/24|ريال مدريد
+2024/25|برشلونة
+2025/26|برشلونة
+`, true),
+            ...makeQuizRecords('الدوري الإيطالي', `
+2010/11|ميلان
+2011/12|يوفنتوس
+2012/13|يوفنتوس
+2013/14|يوفنتوس
+2014/15|يوفنتوس
+2015/16|يوفنتوس
+2016/17|يوفنتوس
+2017/18|يوفنتوس
+2018/19|يوفنتوس
+2019/20|يوفنتوس
+2020/21|إنتر ميلان
+2021/22|ميلان
+2022/23|نابولي
+2023/24|إنتر ميلان
+2024/25|نابولي
+2025/26|إنتر ميلان
+`, true),
+            ...makeQuizRecords('الدوري الألماني', `
+2010/11|بوروسيا دورتموند
+2011/12|بوروسيا دورتموند
+2012/13|بايرن ميونخ
+2013/14|بايرن ميونخ
+2014/15|بايرن ميونخ
+2015/16|بايرن ميونخ
+2016/17|بايرن ميونخ
+2017/18|بايرن ميونخ
+2018/19|بايرن ميونخ
+2019/20|بايرن ميونخ
+2020/21|بايرن ميونخ
+2021/22|بايرن ميونخ
+2022/23|بايرن ميونخ
+2023/24|باير ليفركوزن
+2024/25|بايرن ميونخ
+2025/26|بايرن ميونخ
+`, true),
+            ...makeQuizRecords('الدوري الفرنسي', `
+2010/11|ليل
+2011/12|مونبلييه
+2012/13|باريس سان جيرمان
+2013/14|باريس سان جيرمان
+2014/15|باريس سان جيرمان
+2015/16|باريس سان جيرمان
+2016/17|موناكو
+2017/18|باريس سان جيرمان
+2018/19|باريس سان جيرمان
+2019/20|باريس سان جيرمان
+2020/21|ليل
+2021/22|باريس سان جيرمان
+2022/23|باريس سان جيرمان
+2023/24|باريس سان جيرمان
+2024/25|باريس سان جيرمان
+2025/26|باريس سان جيرمان
+`, true),
+            ...makeQuizRecords('دوري روشن السعودي', `
+2010/11|الهلال
+2011/12|الشباب
+2012/13|الفتح
+2013/14|النصر
+2014/15|النصر
+2015/16|الأهلي
+2016/17|الهلال
+2017/18|الهلال
+2018/19|النصر
+2019/20|الهلال
+2020/21|الهلال
+2021/22|الهلال
+2022/23|الاتحاد
+2023/24|الهلال
+2024/25|الاتحاد
+2025/26|النصر
+`)
+        ];
+        const QUIZ_PROMPTS = {
+            champion: [
+                'من تُوّج بلقب {competition} في موسم {season}؟','أي فريق أنهى موسم {season} بطلًا لـ{competition}؟','لمن ذهب لقب {competition} في {season}؟',
+                'من رفع كأس {competition} بعد موسم {season}؟','ما اسم بطل {competition} لموسم {season}؟','أي نادٍ تصدّر سجل أبطال {competition} في {season}؟',
+                'اختر الفريق الذي حسم لقب {competition} في موسم {season}.','عند ذكر بطل {competition} لعام {season}، ما الإجابة الصحيحة؟','من احتفل بالتتويج بـ{competition} في نهاية {season}؟',
+                'في سجل موسم {season} من {competition}، من صاحب المركز الأول؟','أي فريق أضاف لقب {competition} إلى خزائنه في {season}؟','من كتب اسمه بطلًا لـ{competition} في {season}؟',
+                'من كان بطل نسخة {season} من {competition}؟','أي نادٍ فاز ببطولة {competition} في الموسم {season}؟','من صاحب درع {competition} في موسم {season}؟'
+            ],
+            neighbor: [
+                'من بطل {competition} في الموسم السابق مباشرة لـ{season}؟','أي فريق تُوّج بـ{competition} قبل موسم {season} مباشرة؟','لمن ذهب لقب {competition} في الموسم الذي سبق {season}؟',
+                'من كان حامل لقب {competition} في الموسم السابق لـ{season}؟','إذا رجعنا موسمًا واحدًا من {season}، من نجد بطل {competition}؟','من الفريق المتوّج بـ{competition} في آخر موسم قبل {season}؟',
+                'ما النادي الذي سبق بطل {season} في سجل أبطال {competition}؟','من فاز بـ{competition} في الموسم الذي انتهى قبل {season}؟','أي فريق رفع لقب {competition} في الموسم السابق لـ{season}؟',
+                'من كان بطل {competition} قبل انطلاق موسم {season}؟','من نال لقب {competition} في العام السابق لموسم {season}؟','أي بطل يسبق {season} مباشرة في تاريخ {competition}؟',
+                'لأي نادٍ آلت بطولة {competition} قبل موسم {season}؟','من تُوّج بـ{competition} في النسخة السابقة لموسم {season}؟','ما اسم الفريق الذي فاز بلقب {competition} قبل {season}؟'
+            ],
+            following: [
+                'من بطل {competition} في الموسم التالي مباشرة لـ{season}؟','أي فريق تُوّج بـ{competition} بعد موسم {season} مباشرة؟','لمن ذهب لقب {competition} في الموسم الذي تلا {season}؟',
+                'من كان بطل {competition} في أول موسم بعد {season}؟','إذا تقدمنا موسمًا واحدًا من {season}، من نجد بطل {competition}؟','من الفريق المتوّج بـ{competition} في الموسم التالي لـ{season}؟',
+                'ما النادي الذي حلّ بطلًا بعد موسم {season} في {competition}؟','من فاز بـ{competition} في الموسم الذي بدأ بعد {season}؟','أي فريق رفع لقب {competition} في الموسم التالي لـ{season}؟',
+                'من نال لقب {competition} في العام التالي لموسم {season}؟','أي بطل يأتي بعد {season} مباشرة في تاريخ {competition}؟','لأي نادٍ آلت بطولة {competition} عقب موسم {season}؟',
+                'من تُوّج بـ{competition} في النسخة التالية لموسم {season}؟','ما اسم الفريق الذي فاز بلقب {competition} بعد {season}؟','من كتب اسمه بطلًا لـ{competition} في الموسم اللاحق لـ{season}؟'
+            ],
+            pair: [
+                'أي اقتران بين الموسم والبطل صحيح في {competition} لعام {season}؟','اختر الزوج الصحيح: بطل {competition} في {season}.','أي بطاقة تسجل البطل الصحيح لـ{competition} في {season}؟',
+                'من الخيارات التالية، أيها يطابق بطل {competition} في موسم {season}؟','حدد الربط الصحيح بين {season} وبطل {competition}.','أي سطر يطابق سجل التتويج بـ{competition} في {season}؟',
+                'اختر الإجابة التي تربط موسم {season} ببطل {competition} بشكل صحيح.','أي خيار يجمع اسم البطل والموسم الصحيحين لـ{competition} في {season}؟','ما الاقتران الصحيح في سجل أبطال {competition} لموسم {season}؟',
+                'من بين هذه الأزواج، أيها صحيح لموسم {season} في {competition}؟','أي سجل من السجلات التالية يخص بطل {competition} في {season}؟','اختر اسم النادي المقترن بشكل صحيح بلقب {competition} لعام {season}.',
+                'أي فريق وموسم يشكلان الإجابة الصحيحة عن بطل {competition} في {season}؟','حدد الزوج الصحيح الذي يوثق لقب {competition} في موسم {season}.'
+            ],
+            count: [
+                'من بداية السجل إلى موسم {season}، كم مرة تُوّج {winner} بـ{competition}؟','حتى نهاية {season}، ما عدد ألقاب {winner} في {competition} ضمن السجل؟',
+                'كم لقبًا لـ{competition} جمع {winner} من أول موسم موثق حتى {season}؟','بحساب المواسم المسجلة حتى {season}، كم مرة فاز {winner} بـ{competition}؟',
+                'ما عدد مرات ظهور {winner} بطلًا لـ{competition} حتى موسم {season}؟','كم تتويجًا حقق {winner} في {competition} بين بداية السجل و{season}؟',
+                'حتى لقب {season}، ما حصيلة {winner} من بطولات {competition} في هذه القائمة؟','كم مرة رفع {winner} لقب {competition} حتى نهاية موسم {season}؟'
+            ]
+        };
+        const SAUDI_QUIZ_GROUPS = [
+            ['الهلال','أ'],['النصر','أ'],['الأهلي','أ'],['القادسية','أ'],['الاتحاد','أ'],['التعاون','ب'],['الاتفاق','ب'],['الفتح','ب'],['الخليج','ب'],['الشباب','ب'],
+            ['نيوم','ج'],['الحزم','ج'],['الفيحاء','ج'],['الخلود','ج'],['الرياض','د'],['أبها','د'],['الفيصلي','د'],['الدرعية','د']
+        ];
+        const SAUDI_GROUP_PROMPTS = [
+            'في أي مستوى وُضع نادي {club} ضمن تصنيف جدول دوري روشن 2026/27؟','ما مستوى جدولة مباريات {club} في دوري روشن لموسم 2026/27؟',
+            'إلى أي فئة من فئات إعداد الجدول ينتمي {club} في موسم 2026/27؟','أين صُنّف {club} بين مستويات جدول دوري روشن 2026/27؟'
+        ];
+        const SAUDI_SIMPLE_FACTS = [
+            { a:'18 ناديًا', c:['18 ناديًا','16 ناديًا','20 ناديًا','22 ناديًا'], q:['كم ناديًا يشارك في دوري روشن السعودي 2026/27؟','ما عدد فرق دوري روشن في موسم 2026/27؟'] },
+            { a:'34 جولة', c:['34 جولة','30 جولة','32 جولة','38 جولة'], q:['كم جولة يتضمن جدول دوري روشن 2026/27؟','ما عدد جولات الموسم السعودي 2026/27؟'] },
+            { a:'306 مباريات', c:['306 مباريات','272 مباراة','308 مباريات','340 مباراة'], q:['كم مباراة يتضمن موسم دوري روشن 2026/27؟','ما العدد الكلي لمباريات دوري روشن في 2026/27؟'] },
+            { a:'13 أغسطس 2026', c:['13 أغسطس 2026','1 سبتمبر 2026','20 يوليو 2026','29 مايو 2027'], q:['متى يبدأ موسم دوري روشن 2026/27؟','ما موعد انطلاق دوري روشن السعودي لموسم 2026/27؟'] },
+            { a:'29 مايو 2027', c:['29 مايو 2027','13 أغسطس 2026','30 يونيو 2027','1 يناير 2027'], q:['متى ينتهي موسم دوري روشن 2026/27 حسب الجدول المعلن؟','ما موعد ختام موسم دوري روشن 2026/27؟'] },
+            { a:'النصر', c:['النصر','الهلال','الاتحاد','الأهلي'], q:['من بطل دوري روشن السعودي في موسم 2025/26؟','أي فريق فاز بلقب الدوري السعودي لموسم 2025/26؟'] },
+            { a:'ضمك', c:['ضمك','الهلال','الاتحاد','الفتح'], q:['من واجه النصر في المباراة التي حسم بها لقب 2025/26؟','أمام أي فريق حسم النصر تتويجه بدوري 2025/26؟'] },
+            { a:'4–1', c:['4–1','2–1','3–0','1–0'], q:['ما نتيجة مباراة النصر وضمك التي حسمت لقب 2025/26؟','بأي نتيجة فاز النصر على ضمك في ليلة التتويج؟'] },
+            { a:'كريستيانو رونالدو', c:['كريستيانو رونالدو','ساديو ماني','كينغسلي كومان','جواو فيليكس'], q:['من سجل هدفين للنصر في مباراة حسم لقب 2025/26؟','أي لاعب أحرز ثنائية النصر في لقاء ضمك الأخير؟'] },
+            { a:'جوليان كينونيس', c:['جوليان كينونيس','كريستيانو رونالدو','ساديو ماني','ألكسندر ميتروفيتش'], q:['من نال لقب هداف دوري روشن في موسم 2025/26؟','أي لاعب تصدر هدافي الدوري السعودي لموسم 2025/26؟'] },
+            { a:'28 هدفًا', c:['28 هدفًا','24 هدفًا','30 هدفًا','18 هدفًا'], q:['كم هدفًا سجل كريستيانو رونالدو في دوري روشن 2025/26؟','ما رصيد رونالدو التهديفي في الدوري السعودي خلال موسم 2025/26؟'] },
+            { a:'الهلال', c:['الهلال','الاتحاد','الأهلي','القادسية'], q:['أي نادٍ جاء وصيفًا للنصر في دوري 2025/26؟','من حل ثانيًا خلف النصر في ترتيب دوري روشن 2025/26؟'] },
+            { a:'سبع سنوات', c:['سبع سنوات','ثلاث سنوات','خمس سنوات','عشر سنوات'], q:['بعد كم سنة عاد النصر للتتويج بالدوري في موسم 2025/26؟','كم سنة فصلت لقب النصر في 2025/26 عن تتويجه السابق في 2018/19؟'] },
+            { a:'ذهاب وإياب', c:['ذهاب وإياب','مباراة واحدة بين كل فريقين','ثلاث مراحل','مجموعات ثم نهائي'], q:['ما النظام الذي يفسر إقامة 34 جولة بين 18 ناديًا؟','كيف يواجه كل فريق منافسيه في دوري روشن ذهابًا وإيابًا؟'] }
+        ];
+        const SAUDI_FACT_QUESTIONS = SAUDI_SIMPLE_FACTS.flatMap((fact, index) => fact.q.map((q, variant) => ({
+            id:'saudi-simple-' + index + '-' + variant, factId:'saudi-simple-' + index, q, answer:fact.a, choices:[...fact.c],
+            hint:'معلومة مبسطة من موسم دوري روشن السعودي 2025/26 أو 2026/27.', difficulty:(index + variant) % 4
+        })));
+        const LEAGUE_QUIZ_BANK_SIZE = LEAGUE_QUIZ_RECORDS.reduce((sum, record) => sum + (record.topFive ? 44 : record.winner === 'لم تُمنح الجائزة' ? 13 : 16), 0) + (SAUDI_QUIZ_GROUPS.length * SAUDI_GROUP_PROMPTS.length) + SAUDI_FACT_QUESTIONS.length;
+        let LEAGUE_QUIZ_QUESTIONS = null, LEAGUE_QUIZ_FACT_COUNT = 0;
+        function quizFillTemplate(template, record) {
+            return template.replace(/\{competition\}/g, record.competition).replace(/\{season\}/g, record.season).replace(/\{winner\}/g, record.winner);
+        }
+        function quizShuffle(values) {
+            const result = [...values];
+            for (let i = result.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [result[i], result[j]] = [result[j], result[i]]; }
+            return result;
+        }
+        function quizSample(pool, excluded, count) {
+            return quizShuffle([...new Set(pool)].filter(value => value != null && value !== excluded)).slice(0, count);
+        }
+        function quizDifficultyFor(record, type, variant) {
+            const year = Number(String(record.season).slice(0, 4)) || 2026, age = Math.max(0, 2026 - year);
+            const base = age <= 1 ? 0 : age <= 2 ? 1 : age <= 4 ? 2 : age <= 6 ? 3 : age <= 8 ? 4 : age <= 10 ? 5 : age <= 12 ? 6 : age <= 15 ? 7 : age <= 20 ? 8 : age <= 25 ? 9 : age <= 30 ? 10 : age <= 35 ? 11 : age <= 40 ? 12 : age <= 50 ? 13 : 14;
+            const bonus = type === 'neighbor' ? 1 : type === 'pair' ? 2 : type === 'count' ? 3 : 0;
+            return Math.max(0, Math.min(14, base + bonus + (variant % 3) - 1));
+        }
+        function buildLeagueQuizBank() {
+            const buckets = Array.from({ length:15 }, () => []), byCompetition = new Map(), all = [], factIndices = new Map();
+            LEAGUE_QUIZ_RECORDS.forEach(record => { const rows = byCompetition.get(record.competition) || []; rows.push(record); byCompetition.set(record.competition, rows); });
+            const add = (question, difficulty) => {
+                if (!factIndices.has(question.factId)) factIndices.set(question.factId, factIndices.size);
+                question.factIndex = factIndices.get(question.factId);
+                question.bankIndex = all.length; all.push(question); buckets[Math.max(0, Math.min(14, difficulty))].push(question);
+            };
+            LEAGUE_QUIZ_RECORDS.forEach(record => {
+                const rows = byCompetition.get(record.competition) || [], index = rows.indexOf(record), top = record.topFive;
+                const crossLeagueClubs = top ? LEAGUE_QUIZ_RECORDS.filter(item => item.topFive && item.competition !== record.competition).map(item => item.winner) : [];
+                const winnerChoices = [...rows.map(item => item.winner), ...crossLeagueClubs];
+                const counts = top ? { champion:15, neighbor:15, pair:14 } : record.winner === 'لم تُمنح الجائزة' ? { champion:6, neighbor:4, pair:3 } : { champion:6, neighbor:4, pair:3, count:3 };
+                Object.keys(counts).forEach(type => {
+                    const prompts = type === 'neighbor' ? (index > 0 ? QUIZ_PROMPTS.neighbor : QUIZ_PROMPTS.following) : QUIZ_PROMPTS[type];
+                    for (let variant = 0; variant < counts[type]; variant++) {
+                        let answer = record.winner, choices = [], hint = '', questionFactId = record.factId;
+                        if (type === 'champion') {
+                            choices = [answer, ...quizSample(winnerChoices, answer, 3)];
+                            hint = 'تذكّر سجل أبطال ' + record.competition + ' في ' + record.season + '.';
+                        } else if (type === 'neighbor') {
+                            const adjacent = rows[index > 0 ? index - 1 : index + 1];
+                            if (!adjacent) continue;
+                            answer = adjacent.winner; questionFactId = adjacent.factId; choices = [answer, ...quizSample(winnerChoices, answer, 3)];
+                            hint = 'فكّر في الموسم الملاصق لـ' + record.season + ' في سجل ' + record.competition + '.';
+                        } else if (type === 'pair') {
+                            answer = record.season + ' — ' + record.winner;
+                            choices = [answer, ...quizSample(rows.filter(item => item !== record).map(item => item.season + ' — ' + item.winner), answer, 3)];
+                            hint = 'اربط الموسم ' + record.season + ' بالبطل الصحيح.';
+                        } else {
+                            const count = rows.slice(0, index + 1).filter(item => item.winner === record.winner).length;
+                            answer = String(count) + (count === 1 ? ' مرة' : ' مرات');
+                            const alternatives = [...new Set(rows.slice(0, index + 1).map(item => rows.slice(0, rows.indexOf(item) + 1).filter(prior => prior.winner === item.winner).length))]
+                                .filter(value => value > 0 && value !== count).map(value => String(value) + (value === 1 ? ' مرة' : ' مرات'));
+                            const nearby = [count + 1, Math.max(1, count - 1), count + 2, count + 3].map(value => String(value) + (value === 1 ? ' مرة' : ' مرات'));
+                            choices = [answer, ...quizSample([...alternatives, ...nearby], answer, 3)];
+                            hint = 'احسب مرات تتويج ' + record.winner + ' حتى نهاية ' + record.season + ' ضمن سجل البطولة.';
+                        }
+                        if (choices.length < 4) continue;
+                        const q = quizFillTemplate(prompts[variant % prompts.length], record);
+                        add({ id:'quiz-' + all.length, factId:questionFactId, q, choices:quizShuffle(choices).slice(0,4), answer, hint }, quizDifficultyFor(record, type, variant));
+                    }
+                });
+            });
+            SAUDI_QUIZ_GROUPS.forEach(([club, group], clubIndex) => SAUDI_GROUP_PROMPTS.forEach((prompt, variant) => {
+                const answer = 'المستوى ' + group;
+                add({ id:'quiz-' + all.length, factId:'saudi-club-' + club, q:prompt.replace(/\{club\}/g, club),
+                    choices:quizShuffle(['المستوى أ','المستوى ب','المستوى ج','المستوى د']), answer,
+                    hint:'التصنيف يخص ترتيب إعداد جدول مباريات دوري روشن 2026/27.',
+                    difficulty:(clubIndex + variant) % 4 }, (clubIndex + variant) % 4);
+            }));
+            SAUDI_FACT_QUESTIONS.forEach(question => add({ ...question, choices:quizShuffle(question.choices) }, question.difficulty));
+            LEAGUE_QUIZ_FACT_COUNT = factIndices.size;
+            LEAGUE_QUIZ_QUESTIONS = buckets;
+            if (all.length < 7000) console.error('League quiz bank is smaller than expected:', all.length);
+            return buckets;
+        }
+        function ensureLeagueQuizBank() {
+            if (!LEAGUE_QUIZ_QUESTIONS) buildLeagueQuizBank();
+            return LEAGUE_QUIZ_QUESTIONS;
+        }
+        const LEAGUE_QUIZ_DAILY_LIMIT = 10;
+        const LEAGUE_QUIZ_SEEN_VERSION = 1;
+        let leagueQuizTimerId = 0, leagueQuizSeconds = 15, leagueQuizStartPending = false;
+        function leagueQuizTodayRiyadh() {
+            const parts = new Intl.DateTimeFormat('en-US', { timeZone:'Asia/Riyadh', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date());
+            const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+            return values.year + '-' + values.month + '-' + values.day;
+        }
+        function updateLeagueQuizDailyStatus(record) {
+            const today = leagueQuizTodayRiyadh();
+            const used = record?.quizDailyDate === today ? Math.max(0, Number(record.quizDailyGames) || 0) : 0;
+            const remaining = Math.max(0, LEAGUE_QUIZ_DAILY_LIMIT - used);
+            const element = document.getElementById('game-daily-tries');
+            if (element) element.textContent = 'المتبقي اليوم: ' + remaining + '/' + LEAGUE_QUIZ_DAILY_LIMIT;
+            return remaining;
+        }
+        function decodeLeagueQuizSeenBits(encoded, version, bitCount = LEAGUE_QUIZ_BANK_SIZE) {
+            const bytes = new Uint8Array(Math.ceil(bitCount / 8));
+            if (version !== LEAGUE_QUIZ_SEEN_VERSION || !encoded) return bytes;
+            try {
+                const binary = atob(encoded);
+                for (let i = 0; i < Math.min(binary.length, bytes.length); i++) bytes[i] = binary.charCodeAt(i);
+            } catch (_) {}
+            return bytes;
+        }
+        function encodeLeagueQuizSeenBits(bytes) {
+            let binary = '';
+            for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+            return btoa(binary);
+        }
+        function leagueQuizWasSeen(bytes, index) {
+            return Boolean(bytes[index >> 3] & (1 << (index & 7)));
+        }
+        function markLeagueQuizSeen(bytes, index) {
+            bytes[index >> 3] |= 1 << (index & 7);
+        }
+        function selectLeagueQuizRound(encoded, version, encodedFacts, factsVersion) {
+            const banks = ensureLeagueQuizBank(), bytes = decodeLeagueQuizSeenBits(encoded, version, LEAGUE_QUIZ_BANK_SIZE);
+            const factBytes = decodeLeagueQuizSeenBits(encodedFacts, factsVersion, LEAGUE_QUIZ_FACT_COUNT);
+            const questions = [], selectedFacts = new Set();
+            for (let level = 0; level < LEAGUE_QUIZ_PRIZES.length; level++) {
+                let candidates = banks[level].filter(question => !leagueQuizWasSeen(bytes, question.bankIndex) && !leagueQuizWasSeen(factBytes, question.factIndex) && !selectedFacts.has(question.factId));
+                if (!candidates.length) candidates = banks[level].filter(question => !leagueQuizWasSeen(bytes, question.bankIndex) && !selectedFacts.has(question.factId));
+                if (!candidates.length) {
+                    for (let distance = 1; distance < banks.length && !candidates.length; distance++) {
+                        const nearby = [level - distance, level + distance].filter(index => index >= 0 && index < banks.length);
+                        for (const index of nearby) {
+                            candidates = banks[index].filter(question => !leagueQuizWasSeen(bytes, question.bankIndex) && !selectedFacts.has(question.factId));
+                            if (candidates.length) break;
+                        }
+                    }
+                }
+                if (!candidates.length) candidates = banks.flat().filter(question => !leagueQuizWasSeen(bytes, question.bankIndex) && !selectedFacts.has(question.factId));
+                if (!candidates.length) candidates = banks[level].filter(question => !selectedFacts.has(question.factId));
+                if (!candidates.length) candidates = banks[level];
+                const question = candidates[Math.floor(Math.random() * candidates.length)];
+                if (!question) throw new Error('تعذر تجهيز سؤال لهذا المستوى.');
+                markLeagueQuizSeen(bytes, question.bankIndex);
+                markLeagueQuizSeen(factBytes, question.factIndex);
+                questions.push(question);
+                selectedFacts.add(question.factId);
+            }
+            return { questions, encoded:encodeLeagueQuizSeenBits(bytes), encodedFacts:encodeLeagueQuizSeenBits(factBytes) };
+        }
+        async function reserveLeagueQuizRun() {
+            const key = getGamePlayerKey(gamePlayerName), today = leagueQuizTodayRiyadh();
+            let selected = null;
+            const recordRef = ref(db, 'league_data/gameRankings/' + key);
+            const transaction = await runTransaction(recordRef, current => {
+                const record = current && typeof current === 'object' ? current : {};
+                const usedToday = record.quizDailyDate === today ? Math.max(0, Number(record.quizDailyGames) || 0) : 0;
+                if (usedToday >= LEAGUE_QUIZ_DAILY_LIMIT) { selected = null; return; }
+                selected = selectLeagueQuizRound(record.quizSeenBits, record.quizSeenVersion, record.quizSeenFactsBits, record.quizSeenFactsVersion);
+                return { ...record, quizDailyDate:today, quizDailyGames:usedToday + 1, quizSeenVersion:LEAGUE_QUIZ_SEEN_VERSION, quizSeenBits:selected.encoded, quizSeenFactsVersion:LEAGUE_QUIZ_SEEN_VERSION, quizSeenFactsBits:selected.encodedFacts };
+            });
+            const record = transaction.snapshot?.val() || window.appData?.gameRankings?.[key] || {};
+            if (!window.appData || typeof window.appData !== 'object') window.appData = {};
+            if (!window.appData.gameRankings || typeof window.appData.gameRankings !== 'object') window.appData.gameRankings = {};
+            if (transaction.committed) window.appData.gameRankings[key] = record;
+            updateLeagueQuizDailyStatus(record);
+            if (!transaction.committed) return { allowed:false, remaining:updateLeagueQuizDailyStatus(record) };
+            window.renderGameRankings();
+            return { allowed:true, questions:selected?.questions || [], remaining:updateLeagueQuizDailyStatus(record) };
+        }
+        function stopLeagueQuizTimer() {
+            if (leagueQuizTimerId) clearInterval(leagueQuizTimerId);
+            leagueQuizTimerId = 0;
+        }
+        function startLeagueQuizTimer() {
+            stopLeagueQuizTimer();
+            leagueQuizSeconds = 15;
+            const timer = document.getElementById('quiz-timer');
+            const update = () => {
+                if (!timer) return;
+                timer.innerHTML = '<i class=\"fa-regular fa-clock\"></i> ' + leagueQuizSeconds + ' ث';
+                timer.classList.toggle('is-urgent', leagueQuizSeconds <= 5);
+            };
+            update();
+            leagueQuizTimerId = window.setInterval(() => {
+                if (!leagueQuizState.started || leagueQuizState.finished || leagueQuizState.locked) { stopLeagueQuizTimer(); return; }
+                leagueQuizSeconds = Math.max(0, leagueQuizSeconds - 1);
+                update();
+                if (leagueQuizSeconds === 0) {
+                    stopLeagueQuizTimer();
+                    leagueQuizState.locked = true;
+                    document.querySelectorAll('#quiz-answers [data-quiz-answer]').forEach(button => { button.disabled = true; });
+                    document.querySelector('#quiz-answers [data-correct=\"true\"]')?.classList.add('is-correct');
+                    document.getElementById('quiz-feedback').textContent = 'انتهى الوقت؛ انتهت الجولة.';
+                    const safePrize = leagueQuizCheckpoint(leagueQuizState.level - 1);
+                    leagueQuizState.securedPrize = safePrize;
+                    setTimeout(() => finishLeagueQuiz('loss', safePrize, leagueQuizState.question.answer), 850);
+                }
+            }, 1000);
+        }
+        let leagueQuizState = { started:false, finished:false, locked:false, level:0, securedPrize:0, question:null, options:[], used:new Set(), roundQuestions:[], helps:{ fifty:false, audience:false, hint:false } };
         const leagueQuizFormat = value => Number(value || 0).toLocaleString('en-US');
         function renderLeagueQuizLadder() {
             const ladder = document.getElementById('quiz-prize-ladder');
@@ -2151,12 +2734,11 @@ window.renderHighlights = function() {
             ladder.innerHTML = LEAGUE_QUIZ_PRIZES.map((prize, index) => `<div class="quiz-prize-step ${index === leagueQuizState.level ? 'is-current' : ''} ${LEAGUE_QUIZ_MILESTONES.has(index) ? 'is-milestone' : ''}" data-quiz-level="${index}"><span>${String(index + 1).padStart(2, '0')}</span><strong>${leagueQuizFormat(prize)}</strong></div>`).join('');
         }
         function chooseLeagueQuizQuestion(level) {
-            const available = LEAGUE_QUIZ_QUESTIONS[level].filter(question => !leagueQuizState.used.has(question.id));
-            const pool = available.length ? available : LEAGUE_QUIZ_QUESTIONS[level];
-            const question = pool[Math.floor(Math.random() * pool.length)];
+            const question = leagueQuizState.roundQuestions[level];
+            if (!question) throw new Error('لم يتم حجز سؤال لهذا المستوى.');
             leagueQuizState.used.add(question.id);
             leagueQuizState.question = question;
-            leagueQuizState.options = question.choices.map((text, index) => ({ text, correct: text === question.answer })).sort(() => Math.random() - 0.5);
+            leagueQuizState.options = quizShuffle(question.choices).map(text => ({ text, correct:text === question.answer }));
         }
         function renderLeagueQuizQuestion() {
             if (!leagueQuizState.started || leagueQuizState.finished) return;
@@ -2178,6 +2760,7 @@ window.renderHighlights = function() {
             document.getElementById('quiz-bank-button').textContent = leagueQuizState.securedPrize ? `احتفظ بـ ${leagueQuizFormat(leagueQuizState.securedPrize)} نقطة` : 'احتفظ برصيدك';
             document.querySelectorAll('[data-quiz-help]').forEach(button => { button.disabled = Boolean(leagueQuizState.helps[button.dataset.quizHelp]); });
             renderLeagueQuizLadder();
+            startLeagueQuizTimer();
         }
         function updateLeagueQuizScore(points) {
             penaltyGameState.points = Number(points) || 0;
@@ -2192,25 +2775,41 @@ window.renderHighlights = function() {
         }
         async function finishLeagueQuiz(kind, prize, extra = '') {
             if (leagueQuizState.finished) return;
+            stopLeagueQuizTimer();
             leagueQuizState.finished = true;
             const live = document.getElementById('quiz-live-content'), result = document.getElementById('quiz-result');
             live?.classList.add('hidden'); result?.classList.remove('hidden');
             const title = document.getElementById('quiz-result-title'), message = document.getElementById('quiz-result-message');
-            title.textContent = kind === 'win' ? 'وصلت إلى القمة!' : kind === 'loss' ? 'انتهت الجولة' : 'جولة موفقة';
+            title.textContent = kind === 'win' ? 'وصلت إلى القمة!' : kind === 'loss' ? 'انتهت الجولة' : kind === 'interrupted' ? 'تم إنهاء الجولة' : 'جولة موفقة';
             message.textContent = kind === 'win' ? 'أجبت عن الأسئلة الخمسة عشر ووصلت إلى الجائزة الكبرى.' : kind === 'loss' ? `${extra ? `الإجابة الصحيحة: ${extra}. ` : ''}تبدأ الجولة الجديدة من السؤال الأول؛ بقي لك رصيد الأمان الذي وصلت إليه.` : 'تم حفظ رصيدك. تستطيع بدء تحدٍ جديد في أي وقت.';
+            if (kind === 'win') message.textContent = 'أجبت عن الأسئلة الخمسة عشر ووصلت إلى الجائزة الكبرى.';
+            else if (kind === 'loss') message.textContent = (extra ? 'الإجابة الصحيحة: ' + extra + '. ' : '') + 'تبدأ الجولة الجديدة من السؤال الأول؛ بقي لك رصيد الأمان الذي وصلت إليه.';
+            else if (kind === 'interrupted') message.textContent = 'أُغلقت الجولة عند مغادرة اللعب، وحُفظ رصيدك حتى آخر مستوى وصلت إليه. لا يمكن استكمال هذه الجولة.';
+            else message.textContent = 'تم حفظ رصيدك. تستطيع بدء تحدٍ جديد في أي وقت.';
             document.getElementById('quiz-final-prize').textContent = leagueQuizFormat(prize);
             updateLeagueQuizScore(prize);
             try { await savePenaltyGameResult(prize, leagueQuizState.level + 1); } catch (_) {}
             renderLeagueQuizLadder();
         }
-        window.startLeagueQuiz = function() {
+        window.startLeagueQuiz = async function() {
             try { gamePlayerName = localStorage.getItem(GAME_PLAYER_NAME_KEY) || gamePlayerName || ''; } catch (_) {}
             if (!String(gamePlayerName).trim()) { refreshPenaltyPlayerUI(); document.getElementById('game-player-name-input')?.focus(); return; }
-            leagueQuizState = { started:true, finished:false, locked:false, level:0, securedPrize:0, question:null, options:[], used:new Set(), helps:{ fifty:false, audience:false, hint:false } };
-            const shell = document.getElementById('penalty-game-shell');
-            document.getElementById('game-player-setup')?.classList.add('hidden'); shell?.classList.remove('hidden');
-            document.getElementById('game-player-name').textContent = gamePlayerName;
-            updateLeagueQuizScore(0); renderLeagueQuizQuestion();
+            if (leagueQuizState.started && !leagueQuizState.finished) return;
+            if (leagueQuizStartPending) return;
+            leagueQuizStartPending = true;
+            try {
+                ensureLeagueQuizBank();
+                const reservation = await reserveLeagueQuizRun();
+                if (!reservation.allowed) { alert('اكتملت جولاتك العشر لهذا اليوم. عُد غدًا لتحدٍ جديد.'); return; }
+                leagueQuizState = { started:true, finished:false, locked:false, level:0, securedPrize:0, question:null, options:[], used:new Set(), roundQuestions:reservation.questions, helps:{ fifty:false, audience:false, hint:false } };
+                const shell = document.getElementById('penalty-game-shell');
+                document.getElementById('game-player-setup')?.classList.add('hidden'); shell?.classList.remove('hidden');
+                document.getElementById('game-player-name').textContent = gamePlayerName;
+                updateLeagueQuizScore(0); renderLeagueQuizQuestion();
+            } catch (error) {
+                console.warn('Could not reserve the daily quiz attempt:', error);
+                alert('تعذر التحقق من جولات اليوم. تحقق من اتصال Firebase ثم حاول مرة أخرى.');
+            } finally { leagueQuizStartPending = false; }
         };
         window.activatePenaltyGame = function() {
             try { gamePlayerName = localStorage.getItem(GAME_PLAYER_NAME_KEY) || gamePlayerName || ''; } catch (_) {}
@@ -2243,6 +2842,7 @@ window.renderHighlights = function() {
             const button = event.target.closest('[data-quiz-answer]');
             if (!button || leagueQuizState.locked || leagueQuizState.finished) return;
             leagueQuizState.locked = true;
+            stopLeagueQuizTimer();
             const selected = Number(button.dataset.quizAnswer), answer = leagueQuizState.options[selected];
             const all = [...document.querySelectorAll('#quiz-answers [data-quiz-answer]')]; all.forEach(option => { option.disabled = true; });
             button.classList.add('is-selected');
@@ -2259,17 +2859,31 @@ window.renderHighlights = function() {
                 button.classList.add('is-wrong'); correctButton?.classList.add('is-correct');
                 document.getElementById('quiz-feedback').textContent = 'إجابة غير صحيحة؛ انتهت الجولة.';
                 const lastAnswered = leagueQuizState.level - 1, safePrize = leagueQuizCheckpoint(lastAnswered);
+                leagueQuizState.securedPrize = safePrize;
                 setTimeout(() => finishLeagueQuiz('loss', safePrize, leagueQuizState.question.answer), 1100);
             }
         });
         window.nextLeagueQuizQuestion = function() {
             if (!leagueQuizState.locked || leagueQuizState.finished || leagueQuizState.level >= LEAGUE_QUIZ_PRIZES.length - 1) return;
-            leagueQuizState.level += 1; leagueQuizState.locked = false; renderLeagueQuizQuestion();
+            stopLeagueQuizTimer(); leagueQuizState.level += 1; leagueQuizState.locked = false; renderLeagueQuizQuestion();
         };
         window.bankLeagueQuizPrize = function() {
             if (!leagueQuizState.securedPrize || leagueQuizState.finished) return;
             finishLeagueQuiz('bank', leagueQuizState.securedPrize);
         };
+
+        function endLeagueQuizForLeaving() {
+            if (!leagueQuizState.started || leagueQuizState.finished || leagueQuizStartPending) return;
+            stopLeagueQuizTimer();
+            leagueQuizState.locked = true;
+            document.querySelectorAll('#quiz-answers [data-quiz-answer]').forEach(button => { button.disabled = true; });
+            finishLeagueQuiz('interrupted', Number(leagueQuizState.securedPrize) || 0);
+        }
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') endLeagueQuizForLeaving(); });
+        window.addEventListener('blur', () => {
+            window.setTimeout(() => { if (document.visibilityState === 'hidden' || !document.hasFocus()) endLeagueQuizForLeaving(); }, 0);
+        });
+        window.addEventListener('pagehide', endLeagueQuizForLeaving);
 
         function bindPenaltyGameControls() {
             const cv = document.getElementById('penalty-game-canvas'); if (!cv || cv.dataset.bb) return; cv.dataset.bb = '1';
@@ -2297,8 +2911,19 @@ window.renderHighlights = function() {
             try { await set(ref(db, `league_data/gameRankings/${k}`), null); delete window.appData.gameRankings[k]; window.renderGameRankings(); window.renderAdminGameRank(); } catch (e) { alert('تعذر الحذف: ' + (e.message || e)); }
         };
         window.clearGameRanks = async function() {
-            if (!confirm('مسح كل تصنيفات اللعبة؟ لا يمكن التراجع.')) return;
-            try { await set(ref(db, 'league_data/gameRankings'), null); window.appData.gameRankings = {}; window.renderGameRankings(); window.renderAdminGameRank(); } catch (e) { alert('تعذر المسح: ' + (e.message || e)); }
+            if (!isAdminAuthenticated) { alert('يرجى تسجيل دخول الأدمن أولاً.'); return; }
+            if (!confirm('تصفير كل نقاط اللعبة؟ ستبقى أسماء اللاعبين ومحاولاتهم اليومية وسجل الأسئلة محفوظة.')) return;
+            try {
+                const current = window.appData?.gameRankings || {}, reset = {};
+                Object.entries(current).forEach(([key, record]) => {
+                    if (!record || typeof record !== 'object') return;
+                    reset[key] = { ...record, points:0, bestRun:0, games:0, lastRun:0, lastShots:0, weekId:gwId(0), weekPoints:0, weekBest:0, prevWeekId:gwId(-1), prevWeekPoints:0, prevWeekBest:0, updatedAt:Date.now() };
+                });
+                await set(ref(db, 'league_data/gameRankings'), reset);
+                window.appData.gameRankings = reset;
+                window.renderGameRankings(); window.renderAdminGameRank();
+                alert('تم تصفير نقاط جميع اللاعبين مع الحفاظ على سجل الأسئلة ومحاولات اليوم.');
+            } catch (e) { alert('تعذر تصفير النقاط: ' + (e.message || e)); }
         };
 
         window.renderAllViews = function() {
@@ -2505,6 +3130,24 @@ window.renderHighlights = function() {
             });
             document.querySelectorAll(`[data-short-likes="${CSS.escape(id)}"]`).forEach(node => node.textContent = String(Number(shortsLikeCounts[id]) || 0));
         }
+        function prepareShortVideo(video) {
+            const feed = document.getElementById('shorts-feed');
+            const cards = [...(feed?.querySelectorAll('[data-short-card]') || [])];
+            const card = video?.closest('[data-short-card]');
+            const activeIndex = cards.indexOf(card);
+            if (!feed || activeIndex < 0) return;
+            cards.forEach((item, index) => {
+                const clip = item.querySelector('[data-short-video]');
+                if (!clip) return;
+                if (index === activeIndex || index === activeIndex + 1) {
+                    clip.preload = 'auto';
+                    if (clip.readyState === 0) clip.load();
+                } else {
+                    clip.pause();
+                    clip.preload = 'none';
+                }
+            });
+        }
         function renderShortsFeed() {
             const feed = document.getElementById('shorts-feed');
             const shell = document.getElementById('shorts-feed-shell');
@@ -2525,6 +3168,7 @@ window.renderHighlights = function() {
                 if (!id || !url) return '';
                 return `<article class="short-card is-paused" data-short-card data-short-id="${escapeHtml(id)}">
                     <video class="short-card-video" src="${escapeHtml(url)}" playsinline webkit-playsinline loop muted preload="none" aria-label="${escapeHtml(item.title || 'مقطع دوري')}" data-short-video></video>
+                    <div class="short-buffering" aria-live="polite"><span class="short-buffering-spinner"></span><span>جارٍ تحميل المقطع…</span></div><div class="short-card-video-error">تعذر تشغيل هذا الفيديو. جرّب صيغة MP4 بترميز H.264 أو WebM.</div>
                     <div class="short-card-top"><div class="short-uploader"><span class="short-uploader-avatar"><i class="fa-solid fa-futbol"></i></span><span class="short-uploader-copy"><strong>elno5ba-league</strong><span>الحساب الرسمي · دوري النخبة</span></span><span class="shorts-verified" aria-label="حساب الدوري"><i class="fa-solid fa-check"></i></span></div><span class="short-card-index">${index + 1} / ${shortsVideos.length}</span></div>
                     <button type="button" class="short-play-indicator" data-short-toggle aria-label="تشغيل المقطع"><i class="fa-solid fa-play"></i></button>
                     <div class="short-card-copy"><span class="shorts-eyebrow">مقطع من دوري النخبة</span><h3>${escapeHtml(item.title || 'مقطع الدوري')}</h3>${item.description ? `<p>${escapeHtml(item.description)}</p>` : ''}</div>
@@ -2537,7 +3181,7 @@ window.renderHighlights = function() {
                     const video = entry.target.querySelector('[data-short-video]');
                     if (!video) return;
                     if (entry.isIntersecting && entry.intersectionRatio >= 0.65 && !document.getElementById('view-shorts')?.classList.contains('hidden')) {
-                        document.querySelectorAll('#shorts-feed [data-short-video]').forEach(other => { if (other !== video) other.pause(); });
+                        prepareShortVideo(video);
                         video.play().then(() => entry.target.classList.remove('is-paused')).catch(() => entry.target.classList.add('is-paused'));
                     } else { video.pause(); entry.target.classList.add('is-paused'); }
                 }), { root: feed, threshold: [0, 0.65, 1] });
@@ -2545,6 +3189,11 @@ window.renderHighlights = function() {
                     const video = card.querySelector('[data-short-video]');
                     video?.addEventListener('play', () => { card.classList.remove('is-paused'); const control = card.querySelector('[data-short-toggle]'); if (control) control.innerHTML = '<i class="fa-solid fa-pause"></i>'; });
                     video?.addEventListener('pause', () => { card.classList.add('is-paused'); const control = card.querySelector('[data-short-toggle]'); if (control) control.innerHTML = '<i class="fa-solid fa-play"></i>'; });
+                    video?.addEventListener('waiting', () => card.classList.add('is-buffering'));
+                    video?.addEventListener('stalled', () => card.classList.add('is-buffering'));
+                    video?.addEventListener('canplay', () => card.classList.remove('is-buffering'));
+                    video?.addEventListener('playing', () => card.classList.remove('is-buffering'));
+                    video?.addEventListener('error', () => { card.classList.remove('is-buffering'); card.classList.add('has-video-error'); });
                     shortsObserver.observe(card);
                 });
             }
@@ -2560,7 +3209,7 @@ window.renderHighlights = function() {
                 const bounds = feed.getBoundingClientRect();
                 const active = [...feed.querySelectorAll('[data-short-card]')].find(card => { const rect = card.getBoundingClientRect(); return Math.max(0, Math.min(rect.bottom, bounds.bottom) - Math.max(rect.top, bounds.top)) / Math.max(1, rect.height) >= 0.65; });
                 const video = active?.querySelector('[data-short-video]');
-                if (video) video.play().then(() => active.classList.remove('is-paused')).catch(() => active.classList.add('is-paused'));
+                if (video) { prepareShortVideo(video); video.play().then(() => active.classList.remove('is-paused')).catch(() => active.classList.add('is-paused')); }
             });
         };
         window.pauseShortsFeed = pauseShortsFeed;
@@ -2680,14 +3329,18 @@ window.renderHighlights = function() {
             if (!list) return;
             list.innerHTML = '<p class="py-6 text-center text-xs text-gray-400">جارٍ تحميل التعليقات…</p>';
             try {
-                const recent = query(ref(db, `league_shorts/comments/${id}`), orderByChild('createdAt'), limitToLast(50));
-                const snapshot = await get(recent);
+                const snapshot = await get(ref(db, `league_shorts/comments/${id}`));
                 if (id !== shortsCommentsVideoId) return;
-                const comments = []; snapshot.forEach(child => comments.push(child.val()));
+                const comments = []; snapshot.forEach(child => { const value = child.val(); if (value && typeof value === 'object') comments.push(value); });
                 comments.sort((a,b) => (Number(a.createdAt)||0) - (Number(b.createdAt)||0));
-                list.innerHTML = comments.length ? comments.map(comment => `<article class="short-comment"><strong>${escapeHtml(comment.name || 'مشاهد')}</strong><p>${escapeHtml(comment.text || '')}</p><time>${new Intl.DateTimeFormat('ar', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(Number(comment.createdAt)||Date.now()))}</time></article>`).join('') : '<p class="py-8 text-center text-xs text-gray-400">كن أول من يعلّق</p>';
+                const recentComments = comments.slice(-50);
+                list.innerHTML = recentComments.length ? recentComments.map(comment => `<article class="short-comment"><strong>${escapeHtml(comment.name || 'مشاهد')}</strong><p>${escapeHtml(comment.text || '')}</p><time>${new Intl.DateTimeFormat('ar', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(Number(comment.createdAt)||Date.now()))}</time></article>`).join('') : '<p class="py-8 text-center text-xs text-gray-400">كن أول من يعلّق</p>';
                 list.scrollTop = list.scrollHeight;
-            } catch (_) { list.innerHTML = '<p class="py-6 text-center text-xs text-red-300">تعذر تحميل التعليقات الآن.</p>'; }
+            } catch (error) {
+                console.error('Shorts comments read failed:', error);
+                const denied = /permission_denied|permission denied/i.test(String(error?.code || error?.message || error));
+                list.innerHTML = `<p class="py-6 text-center text-xs text-red-300">${denied ? 'Firebase يمنع قراءة التعليقات. يلزم السماح بالقراءة لمسار التعليقات.' : 'تعذر تحميل التعليقات. تحقق من الاتصال ثم أعد المحاولة.'}</p>`;
+            }
         }
         function initShortsFeature() {
             const videosRef = ref(db, 'league_shorts/videos');
@@ -2732,7 +3385,7 @@ window.renderHighlights = function() {
                 const video = toggle?.closest('[data-short-card]')?.querySelector('[data-short-video]') || event.target.closest('[data-short-video]');
                 if (video) {
                     const card = video.closest('[data-short-card]');
-                    if (video.paused) video.play().then(() => { card.classList.remove('is-paused'); toggle && (toggle.innerHTML = '<i class="fa-solid fa-pause"></i>'); }).catch(() => {});
+                    if (video.paused) { prepareShortVideo(video); video.play().then(() => { card.classList.remove('is-paused'); toggle && (toggle.innerHTML = '<i class="fa-solid fa-pause"></i>'); }).catch(() => {}); }
                     else { video.pause(); card.classList.add('is-paused'); if (toggle) toggle.innerHTML = '<i class="fa-solid fa-play"></i>'; }
                 }
             });
@@ -2750,7 +3403,11 @@ window.renderHighlights = function() {
                 if (!name || !text || !shortsCommentsVideoId) return;
                 const button = event.currentTarget.querySelector('button'); button.disabled = true;
                 try { const id = shortsCommentsVideoId; const commentId = 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); await set(ref(db, `league_shorts/comments/${id}/${commentId}`), { name, text: text.slice(0,280), createdAt: Date.now() }); input.value = ''; await loadShortComments(id); }
-                catch (_) { alert('تعذر إرسال التعليق. حاول مرة أخرى.'); }
+                catch (error) {
+                    console.error('Shorts comment write failed:', error);
+                    const denied = /permission_denied|permission denied/i.test(String(error?.code || error?.message || error));
+                    alert(denied ? 'Firebase يمنع نشر التعليقات. يلزم السماح بالقراءة والكتابة لمسار league_shorts/comments.' : 'تعذر إرسال التعليق. تحقق من الاتصال ثم حاول مرة أخرى.');
+                }
                 finally { button.disabled = false; }
             });
             window.addEventListener('pagehide', pauseShortsFeed);
@@ -2758,6 +3415,7 @@ window.renderHighlights = function() {
         initShortsFeature();
 
         window.switchTab = function(tab) {
+            if (tab !== 'game') endLeagueQuizForLeaving();
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'text-white'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.add('text-gray-400'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
