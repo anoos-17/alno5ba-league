@@ -26,8 +26,8 @@
                 const button = document.getElementById('theme-toggle');
                 if(button) {
                     button.setAttribute('aria-pressed', String(isDay));
-                    button.setAttribute('aria-label', isDay ? 'الوضع النهاري' : 'الوضع الليلي');
-                    button.title = isDay ? 'الوضع النهاري — اضغط للتبديل إلى الليلي' : 'الوضع الليلي — اضغط للتبديل إلى النهاري';
+                    button.setAttribute('aria-label', isDay ? 'التبديل إلى الوضع الليلي' : 'التبديل إلى الوضع النهاري');
+                    button.removeAttribute('title');
                 }
                 const colorMeta = document.querySelector('meta[name="theme-color"]');
                 if(colorMeta) colorMeta.content = isDay ? '#f7f9fc' : '#070b19';
@@ -330,8 +330,8 @@
         .desktop-tab-navigation .tab-btn { min-height:42px; padding-inline:13px; font-size:12px; }
         .desktop-tab-navigation .tab-btn.active { background:linear-gradient(135deg,rgba(212,177,95,.19),rgba(212,177,95,.07)); border-color:rgba(212,177,95,.3); color:#f8e6b7!important; }
         main .bg-brand-card { border-radius:var(--league-radius)!important; border-color:rgba(199,211,226,.1)!important; background:linear-gradient(145deg,rgba(17,32,52,.9),rgba(10,22,38,.88)); box-shadow:0 18px 44px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.025); backdrop-filter:blur(12px); }
-        button, .tab-btn, .mobile-nav-btn, .mobile-more-item { -webkit-tap-highlight-color:transparent; }
-        button:active, .mobile-more-item:active { transform:scale(.975); }
+        button, .tab-btn { -webkit-tap-highlight-color:transparent; }
+        button:active { transform:scale(.975); }
         h1,h2,h3 { letter-spacing:0; line-height:1.45; }
         #highlights-bar.league-hero-wrap { display:block; margin-bottom:18px; }
         .league-hero { position:relative; overflow:hidden; isolation:isolate; padding:clamp(16px,3vw,24px); border:1px solid rgba(222,190,111,.23); border-radius:28px; background:radial-gradient(ellipse at 88% 0%,rgba(213,177,93,.15),transparent 38%),linear-gradient(125deg,rgba(18,37,60,.97),rgba(8,20,36,.94) 56%,rgba(17,31,48,.98)); box-shadow:0 24px 60px rgba(0,0,0,.27),inset 0 1px 0 rgba(255,255,255,.055); backdrop-filter:blur(18px); }
@@ -379,8 +379,6 @@
         .match-status-upcoming { border-color:rgba(212,177,95,.2); background:rgba(212,177,95,.08); color:#e1c475; }
         .match-status-live { border-color:rgba(248,113,113,.25); background:rgba(127,29,29,.25); color:#ffaaa4; }
         .match-live-dot { width:6px; height:6px; border-radius:50%; background:#f87171; box-shadow:0 0 0 3px rgba(248,113,113,.13); animation:livePulse 1.4s ease-in-out infinite; }
-        .mobile-bottom-nav { display:none; }
-        .mobile-more-sheet { display:none; }
         .tab-btn .tab-unread-dot { align-self:center; }
         html[data-theme=day] body { background:radial-gradient(ellipse at 12% -12%,rgba(23,59,87,.09),transparent 34%),radial-gradient(ellipse at 95% 4%,rgba(202,164,75,.09),transparent 30%),linear-gradient(145deg,#f7f9fb 0%,#edf2f6 58%,#f4f6f8 100%); color:#26394a; }
         html[data-theme=day] header { background:rgba(250,252,254,.92)!important; border-color:rgba(23,59,87,.12)!important; box-shadow:0 12px 34px rgba(29,56,79,.08); }
@@ -404,35 +402,19 @@
         html[data-theme=day] .standings-row--champion td:first-child { box-shadow:inset -3px 0 #b58a2b; }
         html[data-theme=day] .standings-row--middle td:first-child { box-shadow:inset -3px 0 #568069; }
         html[data-theme=day] .standings-row--relegation td:first-child { box-shadow:inset -3px 0 #ad5a5a; }
-        .mobile-more-notice-dot { position:absolute; top:5px; right:calc(50% - 15px); width:7px; height:7px; border-radius:50%; background:#edca6d; box-shadow:0 0 0 3px rgba(237,202,109,.13); }
+        .desktop-tab-navigation { -webkit-overflow-scrolling:touch; overscroll-behavior-inline:contain; scrollbar-width:thin; scroll-behavior:smooth; }
+        .desktop-tab-navigation .tab-btn { flex:0 0 auto; min-height:42px; }
         @media (min-width:768px) { .desktop-nav-shell { display:block; } }
         @media (max-width:767px) {
-          body { padding-bottom:calc(82px + env(safe-area-inset-bottom))!important; }
+          body { padding-bottom:0!important; }
           main { padding-top:14px!important; }
-          .desktop-nav-shell { display:none!important; }
-          .mobile-bottom-nav { position:fixed; z-index:46; right:0; bottom:0; left:0; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:3px; padding:8px 8px calc(8px + env(safe-area-inset-bottom)); border-top:1px solid rgba(212,177,95,.18); background:rgba(7,17,32,.94); backdrop-filter:blur(22px) saturate(150%); box-shadow:0 -12px 36px rgba(0,0,0,.28); }
-          .mobile-nav-btn { position:relative; display:flex; min-width:0; min-height:52px; flex-direction:column; align-items:center; justify-content:center; gap:4px; padding:4px 1px; border:1px solid transparent; border-radius:15px; background:transparent; color:#91a0b3; font-size:9px; font-weight:800; transition:color .18s ease,background .18s ease,transform .18s ease; }
-          .mobile-nav-btn i { font-size:16px; }
-          .mobile-nav-btn.active { color:#f0d99d; background:linear-gradient(145deg,rgba(212,177,95,.16),rgba(212,177,95,.045)); border-color:rgba(212,177,95,.14); }
-          .mobile-nav-btn .tab-unread-dot { position:absolute; top:3px; right:calc(50% - 19px); width:6px; height:6px; }
-          .mobile-more-sheet { position:fixed; z-index:47; right:10px; bottom:calc(76px + env(safe-area-inset-bottom)); left:10px; display:block; padding:14px; border:1px solid rgba(212,177,95,.2); border-radius:22px; background:rgba(10,23,40,.97); box-shadow:0 22px 60px rgba(0,0,0,.4); backdrop-filter:blur(22px); animation:tabReveal .2s ease both; }
-          .mobile-more-sheet.hidden { display:none!important; }
-          .mobile-more-heading { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; padding:0 2px; color:#e7cd83; font-size:12px; font-weight:900; }
-          .mobile-more-close { display:grid; width:30px; height:30px; place-items:center; border:1px solid rgba(148,163,184,.14); border-radius:10px; background:rgba(255,255,255,.04); color:#c2ccda; }
-          .mobile-more-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
-          .mobile-more-item { position:relative; display:flex; min-width:0; min-height:58px; flex-direction:column; align-items:center; justify-content:center; gap:5px; padding:7px 3px; border:1px solid rgba(193,208,225,.09); border-radius:15px; background:rgba(255,255,255,.035); color:#d8e0e9; font-size:9px; font-weight:800; transition:background .18s ease,border-color .18s ease,transform .18s ease; }
-          .mobile-more-item i { color:#d8bd72; font-size:15px; }
-          .mobile-more-item .tab-unread-dot { position:absolute; top:5px; right:7px; width:6px; height:6px; }
-          html[data-theme=day] .mobile-bottom-nav { border-color:rgba(23,59,87,.13); background:rgba(250,252,254,.95); box-shadow:0 -10px 30px rgba(24,57,83,.12); }
-          html[data-theme=day] .mobile-nav-btn { color:#6c7d8b; }
-          html[data-theme=day] .mobile-nav-btn.active { color:#173b57; background:linear-gradient(145deg,rgba(23,59,87,.09),rgba(23,59,87,.035)); border-color:rgba(23,59,87,.11); }
-          html[data-theme=day] .mobile-more-sheet { border-color:rgba(23,59,87,.15); background:rgba(250,252,254,.98); box-shadow:0 20px 50px rgba(23,59,87,.17); }
-          html[data-theme=day] .mobile-more-heading { color:#173b57; }
-          html[data-theme=day] .mobile-more-item { color:#344b5e; border-color:rgba(23,59,87,.09); background:rgba(23,59,87,.035); }
-          html[data-theme=day] .mobile-more-item i { color:#8a6b23; }
+          .desktop-nav-shell { display:block!important; }
+          .desktop-tab-navigation { max-width:none; gap:4px; padding:7px 10px 9px; scrollbar-width:thin; }
+          .desktop-tab-navigation .tab-btn { min-height:40px; padding:8px 11px; border-radius:12px; font-size:10px; gap:6px; }
+          .desktop-tab-navigation .tab-btn i { font-size:11px; }
         }
         @media (min-width:768px) { .league-hero-grid { grid-template-columns:1fr 1fr 1.12fr; } .league-hero-leader { grid-column:auto; } }
-        @media (max-width:360px) { .league-hero { padding:13px; } .league-hero-stat { padding:10px; gap:8px; } .league-hero-icon { width:36px; height:36px; } .mobile-more-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media (max-width:360px) { .league-hero { padding:13px; } .league-hero-stat { padding:10px; gap:8px; } .league-hero-icon { width:36px; height:36px; } }
         @media (prefers-reduced-motion:reduce) { .league-live-badge i,.match-live-dot { animation:none!important; } }
         .standings-legend { display:flex; align-items:center; gap:10px; color:#9eacbd; font-size:9px; font-weight:800; }
         .standings-legend > span { display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
@@ -444,7 +426,9 @@
         html[data-theme=day] .legend-dot--last { background:#a95151; }
         @media (max-width:767px) { .standings-sort-note { display:none!important; } .standings-legend { gap:7px; } }
         #modal-auth, #modal-admin-panel { z-index:100!important; }
-        .desktop-tab-navigation .text-cyan-300, .desktop-tab-navigation .text-emerald-400, .desktop-tab-navigation .text-blue-400 { color:#c7ae69; }\n        html[data-theme=day] .desktop-tab-navigation .text-cyan-300, html[data-theme=day] .desktop-tab-navigation .text-emerald-400, html[data-theme=day] .desktop-tab-navigation .text-blue-400 { color:#173b57!important; }\n        .shorts-page { min-height:55vh; }
+        .desktop-tab-navigation .text-cyan-300, .desktop-tab-navigation .text-emerald-400, .desktop-tab-navigation .text-blue-400 { color:#c7ae69; }
+        html[data-theme=day] .desktop-tab-navigation .text-cyan-300, html[data-theme=day] .desktop-tab-navigation .text-emerald-400, html[data-theme=day] .desktop-tab-navigation .text-blue-400 { color:#173b57!important; }
+        .shorts-page { min-height:55vh; }
         .shorts-page-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
         .shorts-page-heading h2 { margin:2px 0 0; color:#f0d99d; font-size:22px; font-weight:900; } .shorts-page-heading p { margin:2px 0 0; color:#91a0b3; font-size:11px; }
         .shorts-eyebrow { display:inline-flex; align-items:center; gap:6px; color:#cfb46c; font-size:9px; font-weight:900; letter-spacing:.12em; } .shorts-viewer-badge { max-width:42%; overflow:hidden; padding:7px 11px; border:1px solid rgba(212,177,95,.18); border-radius:999px; color:#e3cd8b; font-size:10px; font-weight:800; text-overflow:ellipsis; white-space:nowrap; }
@@ -494,9 +478,26 @@
         html[data-theme=day] .quiz-page { background:radial-gradient(ellipse at 50% -20%,rgba(29,72,105,.1),transparent 45%),linear-gradient(145deg,#f7fafc,#eaf0f5); } html[data-theme=day] .quiz-hero h2,html[data-theme=day] .quiz-setup h3 { color:#173b57; } html[data-theme=day] .quiz-hero p,html[data-theme=day] .quiz-setup p { color:#657585; } html[data-theme=day] .quiz-setup,html[data-theme=day] .quiz-userbar { border-color:rgba(23,59,87,.12); background:rgba(23,59,87,.035); } html[data-theme=day] .quiz-question-card,html[data-theme=day] .quiz-ladder-card { border-color:rgba(23,59,87,.12); background:linear-gradient(155deg,#fff,#f3f6f9); } html[data-theme=day] .quiz-question-text { color:#173b57; } html[data-theme=day] .quiz-answer { border-color:rgba(23,59,87,.14); background:#f7f9fb; color:#294258; } html[data-theme=day] .quiz-answer:hover:not(:disabled) { background:#edf3f7; } html[data-theme=day] .quiz-answer.is-correct { color:#185338; background:#e9f7ef; } html[data-theme=day] .quiz-answer.is-wrong { color:#7b2630; background:#fff0f1; } html[data-theme=day] .quiz-hint,html[data-theme=day] .quiz-audience,html[data-theme=day] .quiz-feedback { color:#294258; background:rgba(23,59,87,.035); border-color:rgba(23,59,87,.12); } html[data-theme=day] .quiz-userbar { color:#596d7d; } html[data-theme=day] .quiz-userbar strong { color:#745a1e; } html[data-theme=day] .quiz-result { background:linear-gradient(145deg,#fff,#edf3f8); } html[data-theme=day] .quiz-result h3 { color:#173b57; } html[data-theme=day] .quiz-result p { color:#536879; } html[data-theme=day] .quiz-timer-pill { border-color:rgba(29,78,121,.18); background:rgba(29,78,121,.06); color:#1d4e79; } html[data-theme=day] .quiz-timer-pill.is-urgent { color:#b42332; border-color:rgba(180,35,50,.28); background:rgba(180,35,50,.08); }
         @media (max-width:700px) { .quiz-layout { grid-template-columns:1fr; } .quiz-prize-ladder { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); max-height:none; } .quiz-prize-step { justify-content:center; padding:6px 3px; } .quiz-prize-step span:first-child { display:none; } .quiz-ladder-card { order:2; } .quiz-question-card { order:1; } .quiz-question-head { gap:5px; } .quiz-step-pill,.quiz-prize-pill,.quiz-timer-pill { padding:6px 8px; font-size:9px; } }
         @media (max-width:767px) { .shorts-page { padding:12px!important; } .shorts-feed { height:min(72dvh,720px); min-height:400px; } .short-card { min-height:400px; } .shorts-name-gate { min-height:340px; } } @media (max-width:380px) { .shorts-feed { min-height:370px; } .short-card { min-height:370px; } .short-card-copy { left:70px; } }
-</style>
+        .desktop-tab-navigation { -webkit-overflow-scrolling:touch; overscroll-behavior-inline:contain; scrollbar-width:thin; scroll-behavior:smooth; }
+        .desktop-tab-navigation .tab-btn { flex:0 0 auto; min-height:42px; }
+        .theme-toggle { position:relative; width:64px; height:36px; padding:0; overflow:hidden; border:1px solid #52657e; border-radius:999px; background:linear-gradient(135deg,#14243b,#081321); box-shadow:inset 0 1px 2px rgba(0,0,0,.4),0 3px 10px rgba(0,0,0,.16); flex:0 0 auto; transition:border-color .25s ease,background .25s ease,transform .2s ease,box-shadow .25s ease; }
+        .theme-toggle:hover { border-color:#d3b66b; transform:translateY(-1px); box-shadow:0 5px 14px rgba(0,0,0,.22); }
+        .theme-toggle-track { position:absolute; inset:0; display:block; overflow:hidden; border-radius:inherit; }
+        .theme-toggle-thumb { position:absolute; top:3px; right:3px; left:auto; z-index:1; width:28px; height:28px; display:grid; place-items:center; overflow:hidden; border:1px solid rgba(255,255,255,.76); border-radius:50%; background:linear-gradient(145deg,#f5f8fc,#cbd8e6); color:#182a42; box-shadow:0 2px 6px rgba(0,0,0,.3); transform:none; transition:left .3s cubic-bezier(.2,.75,.25,1),right .3s cubic-bezier(.2,.75,.25,1),background .25s ease,color .25s ease,box-shadow .25s ease; }
+        .theme-toggle-thumb i { position:absolute; inset:0; width:14px; height:14px; display:grid; place-items:center; margin:auto; font-size:13px; line-height:1; transition:opacity .18s ease,transform .25s ease; }
+        .theme-toggle-thumb .fa-moon { opacity:1; transform:rotate(-12deg) scale(1); }
+        .theme-toggle-thumb .fa-sun { opacity:0; transform:rotate(-45deg) scale(.7); }
+        .theme-toggle-thumb::after { content:none!important; }
+        html[data-theme="day"] .theme-toggle { background:linear-gradient(135deg,#d7edf4,#98c6d9); border-color:#8eb6c6; box-shadow:inset 0 1px 2px rgba(23,59,87,.12),0 3px 10px rgba(23,59,87,.13); }
+        html[data-theme="day"] .theme-toggle-thumb { right:auto; left:3px; background:linear-gradient(145deg,#fff3ad,#f2cc4d); color:#24425b; box-shadow:0 2px 7px rgba(85,94,38,.25); }
+        html[data-theme="day"] .theme-toggle-thumb .fa-moon { opacity:0; transform:rotate(45deg) scale(.7); }
+        html[data-theme="day"] .theme-toggle-thumb .fa-sun { opacity:1; transform:rotate(0) scale(1); }
+        .theme-toggle:focus-visible, .desktop-tab-navigation .tab-btn:focus-visible { outline:2px solid #d9bd72; outline-offset:2px; }
+        @media (prefers-reduced-motion:reduce) { .theme-toggle,.theme-toggle-thumb,.theme-toggle-thumb i { transition:none!important; } }
+        @media (max-width:380px) { .theme-toggle { width:56px; height:32px; } .theme-toggle-thumb { top:2px; width:26px; height:26px; } }
+    </style>
 </head>
-<body class="pb-16 custom-scrollbar">
+<body class="custom-scrollbar">
 
     <!-- Header Navigation -->
     <header class="bg-brand-dark/95 backdrop-blur border-b border-slate-800 sticky top-0 z-50 shadow-md">
@@ -536,13 +537,9 @@
                     <i class="fa-solid fa-lock text-xs"></i>
                     <span>الأدمن</span>
                 </button>
-                <button id="theme-toggle" type="button" onclick="window.toggleAppTheme()" class="theme-toggle" aria-label="الوضع الليلي" aria-pressed="false" title="تبديل الوضع اللوني">
-            <span class="theme-toggle-track" aria-hidden="true">
-                <span class="theme-toggle-stars"><i></i><i></i><i></i><i></i><i></i></span>
-                <span class="theme-toggle-sun-rays"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-                <span class="theme-toggle-clouds"><i class="theme-toggle-cloud cloud-small"></i><i class="theme-toggle-cloud cloud-large"></i></span>
-                <span class="theme-toggle-thumb"></span>
-            </span>
+                <button id="theme-toggle" type="button" onclick="window.toggleAppTheme()" class="theme-toggle" aria-label="التبديل إلى الوضع النهاري" aria-pressed="false">
+            <span class="theme-toggle-track" aria-hidden="true"></span>
+            <span class="theme-toggle-thumb" aria-hidden="true"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></span>
                     <span class="sr-only">تبديل الوضع اللوني</span>
                 </button>
             </div>
@@ -588,10 +585,6 @@
 
         <!-- Highlights Bar -->
         <div id="highlights-bar" class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 mb-6"></div>
-
--400"></i> العقوبات
-            </button>
-        </div>
 
         <!-- Formations Tab -->
         <div id="view-formations" class="tab-content hidden">
@@ -712,7 +705,7 @@
 <div id="view-game" class="tab-content hidden">
  <section class="quiz-page bg-brand-card border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl">
   <header class="quiz-hero"><div><span class="quiz-eyebrow">دوري النخبة · تحدي المعرفة</span><h2>تحدي النخبة</h2><p>أسئلة متنوعة من بنك يتجاوز 7,500 سؤال، 15 ثانية لكل سؤال، وصعوبة تتدرج حتى المليون.</p></div><span class="quiz-brand-mark"><i class="fa-solid fa-trophy"></i></span></header>
-  <div id="game-player-setup" class="quiz-setup"><h3>جاهز للتحدي؟</h3><p>اكتب اسمك مرة واحدة؛ لك 10 جولات يوميًا، ويُحفظ تقدمك وترتيبك.</p><form onsubmit="window.registerPenaltyPlayer(event)" class="flex flex-col sm:flex-row gap-2"><input id="game-player-name-input" type="text" maxlength="32" required autocomplete="name" placeholder="اسم اللاعب" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white focus:border-amber-400 focus:outline-none"><button type="submit" class="rounded-xl bg-amber-400 px-5 py-2.5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300">ابدأ التحدي</button></form></div>
+  <div id="game-player-setup" class="quiz-setup"><h3>تحدي النخبة جاهز</h3><p>خذ وقتك قبل البدء؛ لا يبدأ المؤقت ولا تُسجّل الجولة حتى تضغط «ابدأ اللعبة». لكل سؤال 15 ثانية.</p><form id="game-player-name-form" onsubmit="window.registerPenaltyPlayer(event)" class="flex flex-col sm:flex-row gap-2"><input id="game-player-name-input" type="text" maxlength="32" required autocomplete="name" placeholder="اسم اللاعب" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white focus:border-amber-400 focus:outline-none"><button type="submit" class="rounded-xl bg-slate-700 px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-slate-600">حفظ الاسم</button></form><div id="game-player-ready" class="hidden items-center justify-between gap-3"><span class="text-sm text-gray-300">اللاعب: <strong id="game-ready-player-name" class="text-amber-300"></strong></span><button type="button" onclick="window.startLeagueQuiz()" class="rounded-xl bg-amber-400 px-5 py-2.5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300">ابدأ اللعبة</button></div></div>
   <div id="penalty-game-shell" class="hidden">
    <div class="quiz-userbar"><span>المتحدي: <strong id="game-player-name"></strong></span><span id="game-current-rank">ترتيبك في اللعبة: —</span><span id="game-daily-tries">المتبقي اليوم: 10/10</span><span>رصيدك: <strong id="game-current-points">0</strong></span></div>
    <div id="quiz-live-content" class="quiz-layout">
@@ -750,29 +743,6 @@
         </div>
 
     </main>
-
-<div id="mobile-more-sheet" class="mobile-more-sheet hidden" aria-hidden="true" role="menu" aria-label="بقية أقسام الدوري">
-  <div class="mobile-more-heading"><span>كل أقسام الدوري</span><button type="button" id="mobile-more-close" class="mobile-more-close" aria-label="إغلاق القائمة"><i class="fa-solid fa-xmark"></i></button></div>
-  <div class="mobile-more-grid">
-    <button type="button" class="mobile-more-item" data-tab="ads"><i class="fa-solid fa-bullhorn"></i><span>الإعلانات</span></button>
-<button type="button" class="mobile-more-item" data-tab="shorts"><i class="fa-solid fa-clapperboard"></i><span>Shorts</span></button>
-    <button type="button" class="mobile-more-item" data-tab="game-rankings"><i class="fa-solid fa-ranking-star"></i><span>ترتيبك في اللعبة</span></button>
-    <button type="button" class="mobile-more-item" data-tab="scorers"><i class="fa-solid fa-bullseye"></i><span>الهدافون</span></button>
-    <button type="button" class="mobile-more-item" data-tab="assists"><i class="fa-solid fa-wand-magic-sparkles"></i><span>الصناع</span></button>
-    <button type="button" class="mobile-more-item" data-tab="motm"><i class="fa-solid fa-star"></i><span>رجل الأسبوع</span></button>
-    <button type="button" class="mobile-more-item" data-tab="yellows"><span class="discipline-card yellow"></span><span>كروت صفراء</span></button>
-    <button type="button" class="mobile-more-item" data-tab="reds"><span class="discipline-card red"></span><span>كروت حمراء</span></button>
-    <button type="button" class="mobile-more-item" data-tab="penalties"><i class="fa-solid fa-triangle-exclamation"></i><span>العقوبات</span></button>
-  </div>
-</div>
-<nav id="mobile-bottom-nav" class="mobile-bottom-nav" aria-label="التنقل الرئيسي">
-  <button type="button" class="mobile-nav-btn" data-tab="standings" aria-label="الترتيب"><i class="fa-solid fa-list-ol"></i><span>الترتيب</span></button>
-  <button type="button" class="mobile-nav-btn" data-tab="matches" aria-label="المباريات"><i class="fa-solid fa-calendar-days"></i><span>المباريات</span></button>
-  <button type="button" class="mobile-nav-btn" data-tab="formations" aria-label="التشكيلات"><i class="fa-solid fa-shirt"></i><span>التشكيلات</span></button>
-  <button type="button" class="mobile-nav-btn" data-tab="game" aria-label="العب أنت"><i class="fa-solid fa-futbol"></i><span>العب أنت</span></button>
-  <button type="button" id="mobile-more-trigger" class="mobile-nav-btn mobile-more-trigger" aria-expanded="false" aria-controls="mobile-more-sheet"><i class="fa-solid fa-ellipsis"></i><span>المزيد</span></button>
-</nav>
-
 
     <div id="shorts-comments-modal" class="shorts-comments-modal hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="shorts-comments-title">
  <div class="shorts-comments-backdrop" data-close-short-comments></div>
@@ -1777,9 +1747,19 @@ window.renderHighlights = function() {
             const setup = document.getElementById('game-player-setup');
             const shell = document.getElementById('penalty-game-shell');
             const nameEl = document.getElementById('game-player-name');
-            if(setup) setup.classList.toggle('hidden', Boolean(gamePlayerName));
-            if(shell) shell.classList.toggle('hidden', !gamePlayerName);
+            const nameForm = document.getElementById('game-player-name-form');
+            const readyPanel = document.getElementById('game-player-ready');
+            const hasActiveOrFinishedRound = Boolean(leagueQuizState?.started);
+            if(setup) setup.classList.toggle('hidden', hasActiveOrFinishedRound);
+            if(shell) shell.classList.toggle('hidden', !hasActiveOrFinishedRound);
+            if(nameForm) nameForm.classList.toggle('hidden', Boolean(gamePlayerName));
+            if(readyPanel) {
+                readyPanel.classList.toggle('hidden', !gamePlayerName);
+                readyPanel.classList.toggle('flex', Boolean(gamePlayerName));
+            }
             if(nameEl) nameEl.textContent = gamePlayerName;
+            const readyName = document.getElementById('game-ready-player-name');
+            if(readyName) readyName.textContent = gamePlayerName;
             updatePenaltyGameInfo();
         }
 
@@ -1792,7 +1772,6 @@ window.renderHighlights = function() {
             try { gamePlayerNumber = localStorage.getItem(GAME_PLAYER_NUMBER_KEY) || ''; } catch (_) { gamePlayerNumber = ''; }
             try { localStorage.setItem(GAME_PLAYER_NAME_KEY, gamePlayerName); } catch (_) { alert('تعذر حفظ اسمك على هذا المتصفح.'); return; }
             refreshPenaltyPlayerUI();
-            window.startLeagueQuiz();
         }
 
         let rankMode = 'week';
@@ -2504,6 +2483,10 @@ window.renderHighlights = function() {
                 'حتى لقب {season}، ما حصيلة {winner} من بطولات {competition} في هذه القائمة؟','كم مرة رفع {winner} لقب {competition} حتى نهاية موسم {season}؟'
             ]
         };
+        const QUIZ_LEAGUE_CLUB_CANDIDATES = {
+            'الدوري الإسباني': ['فالنسيا','إشبيلية','فياريال','أتلتيك بلباو','جيرونا'],
+            'الدوري الألماني': ['باير ليفركوزن','شالكه','لايبزيغ','شتوتغارت','فيردر بريمن','آينتراخت فرانكفورت']
+        };
         const SAUDI_QUIZ_GROUPS = [
             ['الهلال','أ'],['النصر','أ'],['الأهلي','أ'],['القادسية','أ'],['الاتحاد','أ'],['التعاون','ب'],['الاتفاق','ب'],['الفتح','ب'],['الخليج','ب'],['الشباب','ب'],
             ['نيوم','ج'],['الحزم','ج'],['الفيحاء','ج'],['الخلود','ج'],['الرياض','د'],['أبها','د'],['الفيصلي','د'],['الدرعية','د']
@@ -2561,8 +2544,7 @@ window.renderHighlights = function() {
             };
             LEAGUE_QUIZ_RECORDS.forEach(record => {
                 const rows = byCompetition.get(record.competition) || [], index = rows.indexOf(record), top = record.topFive;
-                const crossLeagueClubs = top ? LEAGUE_QUIZ_RECORDS.filter(item => item.topFive && item.competition !== record.competition).map(item => item.winner) : [];
-                const winnerChoices = [...rows.map(item => item.winner), ...crossLeagueClubs];
+                const winnerChoices = [...rows.map(item => item.winner), ...(QUIZ_LEAGUE_CLUB_CANDIDATES[record.competition] || [])];
                 const counts = top ? { champion:15, neighbor:15, pair:14 } : record.winner === 'لم تُمنح الجائزة' ? { champion:6, neighbor:4, pair:3 } : { champion:6, neighbor:4, pair:3, count:3 };
                 Object.keys(counts).forEach(type => {
                     const prompts = type === 'neighbor' ? (index > 0 ? QUIZ_PROMPTS.neighbor : QUIZ_PROMPTS.following) : QUIZ_PROMPTS[type];
@@ -2814,7 +2796,6 @@ window.renderHighlights = function() {
         window.activatePenaltyGame = function() {
             try { gamePlayerName = localStorage.getItem(GAME_PLAYER_NAME_KEY) || gamePlayerName || ''; } catch (_) {}
             refreshPenaltyPlayerUI();
-            if (gamePlayerName && !leagueQuizState.started) window.startLeagueQuiz();
         };
         window.useLeagueQuizHelp = function(kind) {
             if (!leagueQuizState.started || leagueQuizState.finished || leagueQuizState.locked || leagueQuizState.helps[kind]) return;
@@ -3021,7 +3002,7 @@ window.renderHighlights = function() {
         const TAB_VISITED_STORAGE_PREFIX = 'eliteLeagueTabVisited_v1_';
         const visitedTabsThisSession = new Set();
         function updateTabNotificationDots() {
-            const buttons = [...document.querySelectorAll('.tab-btn[id^="tab-"]'), ...document.querySelectorAll('.mobile-nav-btn[data-tab], .mobile-more-item[data-tab]')];
+            const buttons = [...document.querySelectorAll('.tab-btn[id^="tab-"]')];
             const isVisited = tab => {
                 let visited = visitedTabsThisSession.has(tab);
                 try { visited = visited || localStorage.getItem(TAB_VISITED_STORAGE_PREFIX + tab) === "true"; } catch (_) {}
@@ -3039,13 +3020,6 @@ window.renderHighlights = function() {
                     button.appendChild(dot);
                 }
             });
-            const moreTrigger = document.getElementById("mobile-more-trigger");
-            if(moreTrigger) {
-                const hasUnread = [...document.querySelectorAll(".mobile-more-item[data-tab]")].some(button => !isVisited(button.dataset.tab));
-                let dot = moreTrigger.querySelector(".mobile-more-notice-dot");
-                if(hasUnread && !dot) { dot = document.createElement("span"); dot.className = "mobile-more-notice-dot"; dot.setAttribute("aria-hidden", "true"); moreTrigger.appendChild(dot); }
-                if(!hasUnread) dot?.remove();
-            }
         }
 
         function markTabVisited(tab) {
@@ -3053,41 +3027,6 @@ window.renderHighlights = function() {
             try { localStorage.setItem(TAB_VISITED_STORAGE_PREFIX + tab, 'true'); } catch (_) {}
             updateTabNotificationDots();
         }
-
-        function setMobileMoreOpen(open) {
-            const panel = document.getElementById("mobile-more-sheet");
-            const trigger = document.getElementById("mobile-more-trigger");
-            if(!panel || !trigger) return;
-            panel.classList.toggle("hidden", !open);
-            panel.setAttribute("aria-hidden", String(!open));
-            trigger.setAttribute("aria-expanded", String(open));
-        }
-
-        function syncMobileNavigation(tab) {
-            const primaryTabs = ["standings", "matches", "formations", "game"];
-            document.querySelectorAll(".mobile-nav-btn[data-tab]").forEach(button => {
-                const active = button.dataset.tab === tab;
-                button.classList.toggle("active", active);
-                button.setAttribute("aria-current", active ? "page" : "false");
-            });
-            const moreTrigger = document.getElementById("mobile-more-trigger");
-            if(moreTrigger) {
-                const active = !primaryTabs.includes(tab);
-                moreTrigger.classList.toggle("active", active);
-                moreTrigger.setAttribute("aria-current", active ? "page" : "false");
-            }
-            setMobileMoreOpen(false);
-        }
-
-        document.getElementById("mobile-more-trigger")?.addEventListener("click", () => {
-            const panel = document.getElementById("mobile-more-sheet");
-            setMobileMoreOpen(Boolean(panel?.classList.contains("hidden")));
-        });
-        document.getElementById("mobile-more-close")?.addEventListener("click", () => setMobileMoreOpen(false));
-        document.querySelectorAll(".mobile-nav-btn[data-tab]").forEach(button => button.addEventListener("click", () => window.switchTab(button.dataset.tab)));
-        document.querySelectorAll(".mobile-more-item[data-tab]").forEach(button => button.addEventListener("click", () => window.switchTab(button.dataset.tab)));
-        document.addEventListener("click", event => { if(!event.target.closest("#mobile-bottom-nav, #mobile-more-sheet")) setMobileMoreOpen(false); });
-        document.addEventListener("keydown", event => { if(event.key === "Escape") setMobileMoreOpen(false); });
 
         const SHORTS_NAME_KEY = 'eliteLeagueShortsName_v1';
         const SHORTS_VISITOR_KEY = 'eliteLeagueShortsVisitor_v1';
@@ -3428,7 +3367,6 @@ window.renderHighlights = function() {
                 view.classList.remove('hidden');
                 markTabVisited(tab);
             }
-            syncMobileNavigation(tab);
             window.renderAllViews();
             if(tab === 'shorts') window.activateShortsView(); else window.pauseShortsFeed();
             if(tab === 'game') window.activatePenaltyGame();
@@ -4063,7 +4001,6 @@ window.renderHighlights = function() {
         bindPenaltyGameControls();
         refreshPenaltyPlayerUI();
         markTabVisited('standings');
-        syncMobileNavigation('standings');
         updateTabNotificationDots();
         showLatestUpdatesOnEntry();
     </script>
