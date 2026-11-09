@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>دوري النخبة - Elite League</title>
     
     <!-- PWA Manifest & App Icons -->
@@ -478,6 +478,45 @@
         html[data-theme=day] .quiz-page { background:radial-gradient(ellipse at 50% -20%,rgba(29,72,105,.1),transparent 45%),linear-gradient(145deg,#f7fafc,#eaf0f5); } html[data-theme=day] .quiz-hero h2,html[data-theme=day] .quiz-setup h3 { color:#173b57; } html[data-theme=day] .quiz-hero p,html[data-theme=day] .quiz-setup p { color:#657585; } html[data-theme=day] .quiz-setup,html[data-theme=day] .quiz-userbar { border-color:rgba(23,59,87,.12); background:rgba(23,59,87,.035); } html[data-theme=day] .quiz-question-card,html[data-theme=day] .quiz-ladder-card { border-color:rgba(23,59,87,.12); background:linear-gradient(155deg,#fff,#f3f6f9); } html[data-theme=day] .quiz-question-text { color:#173b57; } html[data-theme=day] .quiz-answer { border-color:rgba(23,59,87,.14); background:#f7f9fb; color:#294258; } html[data-theme=day] .quiz-answer:hover:not(:disabled) { background:#edf3f7; } html[data-theme=day] .quiz-answer.is-correct { color:#185338; background:#e9f7ef; } html[data-theme=day] .quiz-answer.is-wrong { color:#7b2630; background:#fff0f1; } html[data-theme=day] .quiz-hint,html[data-theme=day] .quiz-audience,html[data-theme=day] .quiz-feedback { color:#294258; background:rgba(23,59,87,.035); border-color:rgba(23,59,87,.12); } html[data-theme=day] .quiz-userbar { color:#596d7d; } html[data-theme=day] .quiz-userbar strong { color:#745a1e; } html[data-theme=day] .quiz-result { background:linear-gradient(145deg,#fff,#edf3f8); } html[data-theme=day] .quiz-result h3 { color:#173b57; } html[data-theme=day] .quiz-result p { color:#536879; } html[data-theme=day] .quiz-timer-pill { border-color:rgba(29,78,121,.18); background:rgba(29,78,121,.06); color:#1d4e79; } html[data-theme=day] .quiz-timer-pill.is-urgent { color:#b42332; border-color:rgba(180,35,50,.28); background:rgba(180,35,50,.08); }
         @media (max-width:700px) { .quiz-layout { grid-template-columns:1fr; } .quiz-prize-ladder { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); max-height:none; } .quiz-prize-step { justify-content:center; padding:6px 3px; } .quiz-prize-step span:first-child { display:none; } .quiz-ladder-card { order:2; } .quiz-question-card { order:1; } .quiz-question-head { gap:5px; } .quiz-step-pill,.quiz-prize-pill,.quiz-timer-pill { padding:6px 8px; font-size:9px; } }
         @media (max-width:767px) { .short-youtube-frame { max-height:calc(72dvh - 120px); min-height:270px; } .shorts-page { padding:12px!important; } .shorts-feed { height:min(72dvh,720px); min-height:400px; } .short-card { min-height:400px; } .shorts-name-gate { min-height:340px; } } @media (max-width:380px) { .shorts-feed { min-height:370px; } .short-card { min-height:370px; } .short-card-copy { left:70px; } }
+        @media (max-width:767px) {
+          body.shorts-mode { height:100dvh; overflow:hidden; overscroll-behavior:none; }
+          body.shorts-mode > header { position:fixed; inset:0 0 auto; z-index:50; border:0; background:transparent; box-shadow:none; pointer-events:none; }
+          body.shorts-mode > header > .max-w-6xl { display:none!important; }
+          body.shorts-mode > header > .desktop-nav-shell { display:block!important; border:0; background:linear-gradient(180deg,rgba(4,10,18,.94),rgba(4,10,18,.68)); backdrop-filter:blur(14px); pointer-events:auto; }
+          body.shorts-mode .desktop-tab-navigation { max-width:none; padding:calc(5px + env(safe-area-inset-top)) 10px 7px; gap:4px; }
+          body.shorts-mode .desktop-tab-navigation .tab-btn { min-height:38px; padding:7px 10px; }
+          body.shorts-mode main { width:100%; max-width:none!important; margin:0!important; padding:0!important; }
+          body.shorts-mode #highlights-bar { display:none!important; }
+          body.shorts-mode #view-shorts:not(.hidden) { position:fixed; inset:0; z-index:40; display:block!important; margin:0; padding:0; }
+          body.shorts-mode .shorts-page { position:relative; display:flex; width:100%; height:100dvh; min-height:100dvh; flex-direction:column; overflow:hidden; border:0!important; border-radius:0!important; background:#05080e!important; padding:0!important; box-shadow:none!important; }
+          body.shorts-mode .shorts-page-heading { display:none; }
+          body.shorts-mode .shorts-name-gate:not(.hidden) { position:absolute; z-index:5; top:calc(58px + env(safe-area-inset-top)); right:12px; left:12px; display:flex; min-height:0; padding:10px; border:1px solid rgba(230,207,138,.25); border-radius:14px; background:rgba(5,13,24,.9); text-align:right; backdrop-filter:blur(12px); }
+          body.shorts-mode .shorts-name-gate:not(.hidden) h3 { color:#f4f6f8; font-size:12px; }
+          body.shorts-mode .shorts-name-gate:not(.hidden) p { margin:3px 0 8px; color:#c1cad4; font-size:9px; }
+          body.shorts-mode .shorts-name-gate:not(.hidden) .shorts-name-form input { padding:9px 10px; }
+          body.shorts-mode .shorts-feed-shell { width:100%; height:100%; min-height:0; flex:1; }
+          body.shorts-mode .shorts-feed { width:100%; height:100%; min-height:0; border-radius:0; scrollbar-width:none; }
+          body.shorts-mode .short-card { width:100%; height:100%; min-height:100%; border:0; border-radius:0; }
+          body.shorts-mode .short-card-top { top:calc(60px + env(safe-area-inset-top)); }
+          body.shorts-mode .short-card-actions { bottom:calc(20px + env(safe-area-inset-bottom)); }
+          body.shorts-mode .short-card-copy { bottom:calc(20px + env(safe-area-inset-bottom)); }
+          body.shorts-mode .short-card-hint { bottom:calc(7px + env(safe-area-inset-bottom)); }
+          body.shorts-mode .short-card.is-youtube { position:relative; display:block; height:100%; min-height:100%; }
+          body.shorts-mode .short-card.is-youtube::after { display:block; }
+          body.shorts-mode .short-youtube-frame { position:absolute; inset:0; width:100%; height:100%; min-height:0; max-height:none; aspect-ratio:auto; }
+          body.shorts-mode .short-youtube-frame iframe { width:100%; height:100%; }
+          body.shorts-mode .short-youtube-meta { position:absolute; inset:0; display:block; padding:0; pointer-events:none; }
+          body.shorts-mode .short-youtube-heading { position:absolute; top:calc(60px + env(safe-area-inset-top)); right:12px; left:12px; }
+          body.shorts-mode .short-youtube-copy { position:absolute; right:16px; bottom:calc(20px + env(safe-area-inset-bottom)); left:78px; }
+          body.shorts-mode .short-card.is-youtube .short-card-actions { position:absolute; left:12px; bottom:calc(20px + env(safe-area-inset-bottom)); flex-direction:column; align-items:center; gap:12px; pointer-events:auto; }
+          body.shorts-mode .short-card.is-youtube .short-action-button { flex-direction:column; gap:4px; }
+          body.shorts-mode .short-card.is-youtube .short-action-button i { width:42px; height:42px; background:rgba(5,12,20,.38); }
+          body.shorts-mode .short-card.is-youtube [data-short-sound] { display:grid; }
+          body.shorts-mode .short-card.is-youtube .short-card-hint { position:absolute; right:50%; bottom:calc(7px + env(safe-area-inset-bottom)); margin:0; transform:translateX(50%); color:rgba(255,255,255,.72); }
+        }
+        .short-audio-start { position:absolute; z-index:5; top:50%; left:50%; display:none; align-items:center; gap:9px; transform:translate(-50%,-50%); border:1px solid rgba(255,255,255,.28); border-radius:999px; background:rgba(7,14,22,.78); padding:12px 16px; color:#fff; font-size:12px; font-weight:900; backdrop-filter:blur(12px); }
+        .short-card.is-audio-blocked .short-audio-start { display:flex; }
+        .short-card.is-youtube [data-short-sound] { display:grid; }
         .desktop-tab-navigation { -webkit-overflow-scrolling:touch; overscroll-behavior-inline:contain; scrollbar-width:thin; scroll-behavior:smooth; }
         .desktop-tab-navigation .tab-btn { flex:0 0 auto; min-height:42px; }
         .theme-toggle { position:relative; width:64px; height:36px; padding:0; overflow:hidden; border:1px solid #52657e; border-radius:999px; background:linear-gradient(135deg,#14243b,#081321); box-shadow:inset 0 1px 2px rgba(0,0,0,.4),0 3px 10px rgba(0,0,0,.16); flex:0 0 auto; transition:border-color .25s ease,background .25s ease,transform .2s ease,box-shadow .25s ease; }
@@ -3037,6 +3076,7 @@ window.renderHighlights = function() {
         let shortsLikeCounts = {};
         let shortsObserver = null;
         let shortsCommentsVideoId = '';
+        let shortsSoundEnabled = true;
         const shortsPendingLikes = new Set();
 
         function shortsVisitorId() {
@@ -3087,6 +3127,50 @@ window.renderHighlights = function() {
                 }
             });
         }
+        function updateShortSoundButtons() {
+            document.querySelectorAll('#shorts-feed [data-short-sound]').forEach(button => {
+                button.innerHTML = `<i class="fa-solid ${shortsSoundEnabled ? 'fa-volume-high' : 'fa-volume-xmark'}"></i>`;
+                button.setAttribute('aria-label', shortsSoundEnabled ? 'كتم الصوت' : 'تشغيل الصوت');
+                button.setAttribute('aria-pressed', shortsSoundEnabled ? 'true' : 'false');
+            });
+        }
+        function sendShortYoutubeCommand(frame, command) {
+            if (!frame?.contentWindow || !frame.dataset.loadedYoutubeId) return;
+            try { frame.contentWindow.postMessage(JSON.stringify({ event: 'command', func: command, args: [] }), 'https://www.youtube-nocookie.com'); } catch (_) {}
+        }
+        function loadShortYoutubeCard(card) {
+            const frame = card?.querySelector('[data-short-youtube]');
+            const videoId = card?.dataset.youtubeId;
+            if (!frame || !videoId) return;
+            if (frame.dataset.loadedYoutubeId !== videoId) {
+                const origin = encodeURIComponent(location.origin);
+                frame.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?playsinline=1&autoplay=1&mute=' + (shortsSoundEnabled ? '0' : '1') + '&controls=1&loop=1&playlist=' + videoId + '&rel=0&enablejsapi=1&origin=' + origin;
+                frame.dataset.loadedYoutubeId = videoId;
+            } else {
+                sendShortYoutubeCommand(frame, 'playVideo');
+                sendShortYoutubeCommand(frame, shortsSoundEnabled ? 'unMute' : 'mute');
+            }
+            card.classList.remove('is-paused', 'is-audio-blocked');
+        }
+        function playShortVideo(video) {
+            const card = video?.closest('[data-short-card]');
+            if (!card) return;
+            prepareShortVideo(video);
+            video.muted = !shortsSoundEnabled;
+            video.play().then(() => {
+                card.classList.remove('is-paused', 'is-audio-blocked');
+            }).catch(async () => {
+                if (!shortsSoundEnabled) { card.classList.add('is-paused'); return; }
+                video.muted = true;
+                try {
+                    await video.play();
+                    card.classList.add('is-audio-blocked');
+                    card.classList.remove('is-paused');
+                } catch (_) {
+                    card.classList.add('is-paused', 'is-audio-blocked');
+                }
+            });
+        }
         function getYoutubeVideoId(item) {
             const candidate = String(item?.youtubeVideoId || item?.url || '').trim();
             if (/^[a-zA-Z0-9_-]{11}$/.test(candidate)) return candidate;
@@ -3118,35 +3202,37 @@ window.renderHighlights = function() {
                 const title = escapeHtml(item.title || 'مقطع الدوري');
                 const description = escapeHtml(item.description || '');
                 const escapedId = escapeHtml(id);
-                const actions = '<div class="short-card-actions"><button type="button" class="short-action-button" data-short-like="' + escapedId + '" aria-label="إعجاب" aria-pressed="false"><i class="fa-solid fa-heart"></i><span data-short-likes="' + escapedId + '">' + (Number(shortsLikeCounts[id]) || 0) + '</span></button><button type="button" class="short-action-button" data-short-comments="' + escapedId + '" aria-label="التعليقات"><i class="fa-regular fa-comment-dots"></i><span>تعليق</span></button><button type="button" class="short-card-audio" data-short-sound aria-label="تشغيل الصوت"><i class="fa-solid fa-volume-xmark"></i></button></div>';
+                const actions = '<div class="short-card-actions"><button type="button" class="short-action-button" data-short-like="' + escapedId + '" aria-label="إعجاب" aria-pressed="false"><i class="fa-solid fa-heart"></i><span data-short-likes="' + escapedId + '">' + (Number(shortsLikeCounts[id]) || 0) + '</span></button><button type="button" class="short-action-button" data-short-comments="' + escapedId + '" aria-label="التعليقات"><i class="fa-regular fa-comment-dots"></i><span>تعليق</span></button><button type="button" class="short-card-audio" data-short-sound aria-label="كتم الصوت"><i class="fa-solid fa-volume-high"></i></button></div>';
+                const audioPrompt = '<button type="button" class="short-audio-start" data-short-audio-start aria-label="تشغيل الصوت"><i class="fa-solid fa-volume-high"></i><span>اضغط لتشغيل الصوت</span></button>';
                 const uploader = '<div class="short-uploader"><span class="short-uploader-avatar"><i class="fa-solid fa-futbol"></i></span><span class="short-uploader-copy"><strong>elno5ba-league</strong><span>الحساب الرسمي · دوري النخبة</span></span><span class="shorts-verified" aria-label="حساب الدوري"><i class="fa-solid fa-check"></i></span></div>';
                 if (youtubeId) {
                     return '<article class="short-card is-youtube is-paused" data-short-card data-short-id="' + escapedId + '" data-youtube-id="' + youtubeId + '">' +
-                        '<div class="short-youtube-frame"><iframe data-short-youtube title="' + title + ' · elno5ba-league" src="about:blank" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
+                        '<div class="short-youtube-frame"><iframe data-short-youtube title="' + title + ' · elno5ba-league" src="about:blank" loading="lazy" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
                         '<div class="short-youtube-meta"><div class="short-youtube-heading">' + uploader + '<span class="short-card-index">' + (index + 1) + ' / ' + shortsVideos.length + '</span></div><div class="short-youtube-copy"><strong>' + title + '</strong>' + (description ? '<p>' + description + '</p>' : '') + '</div>' + actions + '</div>' +
+                        audioPrompt +
                         '<span class="short-card-hint">اسحب للأعلى للمقطع التالي</span></article>';
                 }
                 return '<article class="short-card is-paused" data-short-card data-short-id="' + escapedId + '">' +
-                    '<video class="short-card-video" src="' + escapeHtml(url) + '" playsinline webkit-playsinline loop muted preload="none" aria-label="' + title + '" data-short-video></video>' +
+                    '<video class="short-card-video" src="' + escapeHtml(url) + '" playsinline webkit-playsinline loop preload="none" aria-label="' + title + '" data-short-video></video>' +
                     '<div class="short-buffering" aria-live="polite"><span class="short-buffering-spinner"></span><span>جارٍ تحميل المقطع…</span></div><div class="short-card-video-error">تعذر تشغيل هذا الفيديو. جرّب صيغة MP4 بترميز H.264 أو WebM.</div>' +
                     '<div class="short-card-top">' + uploader + '<span class="short-card-index">' + (index + 1) + ' / ' + shortsVideos.length + '</span></div>' +
                     '<button type="button" class="short-play-indicator" data-short-toggle aria-label="تشغيل المقطع"><i class="fa-solid fa-play"></i></button>' +
                     '<div class="short-card-copy"><span class="shorts-eyebrow">مقطع من دوري النخبة</span><h3>' + title + '</h3>' + (description ? '<p>' + description + '</p>' : '') + '</div>' +
                     actions +
+                    audioPrompt +
                     '<span class="short-card-hint">اسحب للأعلى للمقطع التالي</span></article>';
             }).join('');
             feed.querySelectorAll('[data-short-card]').forEach(card => updateShortLikeUi(card.dataset.shortId));
+            updateShortSoundButtons();
             if ('IntersectionObserver' in window) {
                 shortsObserver = new IntersectionObserver(entries => entries.forEach(entry => {
                     const card = entry.target;
                     const isActive = entry.isIntersecting && entry.intersectionRatio >= 0.65 && !document.getElementById('view-shorts')?.classList.contains('hidden');
+                    card.classList.toggle('is-current', isActive);
                     const frame = card.querySelector('[data-short-youtube]');
                     if (frame) {
-                        if (isActive) {
-                            const videoId = card.dataset.youtubeId;
-                            if (frame.dataset.loadedYoutubeId !== videoId) { frame.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?playsinline=1&autoplay=1&mute=1&controls=1&loop=1&playlist=' + videoId + '&rel=0'; frame.dataset.loadedYoutubeId = videoId; }
-                            card.classList.remove('is-paused');
-                        } else {
+                        if (isActive) loadShortYoutubeCard(card);
+                        else {
                             if (frame.src !== 'about:blank') frame.src = 'about:blank'; frame.dataset.loadedYoutubeId = '';
                             card.classList.add('is-paused');
                         }
@@ -3154,10 +3240,8 @@ window.renderHighlights = function() {
                     }
                     const video = card.querySelector('[data-short-video]');
                     if (!video) return;
-                    if (isActive) {
-                        prepareShortVideo(video);
-                        video.play().then(() => card.classList.remove('is-paused')).catch(() => card.classList.add('is-paused'));
-                    } else { video.pause(); card.classList.add('is-paused'); }
+                    if (isActive) playShortVideo(video);
+                    else { video.pause(); card.classList.add('is-paused'); }
                 }), { root: feed, threshold: [0, 0.65, 1] });
                 feed.querySelectorAll('[data-short-card]').forEach(card => {
                     const video = card.querySelector('[data-short-video]');
@@ -3177,10 +3261,22 @@ window.renderHighlights = function() {
             document.querySelectorAll('#shorts-feed [data-short-youtube]').forEach(frame => { if (frame.src !== 'about:blank') frame.src = 'about:blank'; frame.dataset.loadedYoutubeId = ''; });
         }
         window.renderShortsView = renderShortsNameGate;
-        window.activateShortsView = function() {
+        window.activateShortsView = function(options = {}) {
             renderShortsNameGate();
             if (!shortsObserver) return;
             document.querySelectorAll('#shorts-feed [data-short-card]').forEach(card => shortsObserver.observe(card));
+            const feed = document.getElementById('shorts-feed');
+            const bounds = feed?.getBoundingClientRect();
+            const active = bounds && [...feed.querySelectorAll('[data-short-card]')].find(card => {
+                const rect = card.getBoundingClientRect();
+                return Math.max(0, Math.min(rect.bottom, bounds.bottom) - Math.max(rect.top, bounds.top)) / Math.max(1, rect.height) >= 0.65;
+            });
+            if (active && options.userGesture) {
+                active.classList.add('is-current');
+                const video = active.querySelector('[data-short-video]');
+                if (video) playShortVideo(video);
+                else loadShortYoutubeCard(active);
+            }
             requestAnimationFrame(() => {
                 const feed = document.getElementById('shorts-feed');
                 if (!feed || document.getElementById('view-shorts')?.classList.contains('hidden')) return;
@@ -3412,7 +3508,7 @@ window.renderHighlights = function() {
                 const input = document.getElementById('shorts-viewer-name-input'), name = input?.value.trim();
                 if (!name || name.length > 32) { input?.focus(); return; }
                 try { localStorage.setItem(SHORTS_NAME_KEY, name); } catch (_) { alert('تعذر حفظ الاسم في هذا المتصفح.'); return; }
-                shortsVisitorId(); renderShortsNameGate();
+                shortsVisitorId(); window.activateShortsView({ userGesture: true });
             });
             document.getElementById('shorts-feed')?.addEventListener('click', async event => {
                 const likeButton = event.target.closest('[data-short-like]');
@@ -3436,12 +3532,43 @@ window.renderHighlights = function() {
                 const comments = event.target.closest('[data-short-comments]');
                 if (comments) { openShortComments(comments.dataset.shortComments); return; }
                 const sound = event.target.closest('[data-short-sound]');
-                if (sound) { const video = sound.closest('[data-short-card]')?.querySelector('[data-short-video]'); if (video) { video.muted = !video.muted; sound.innerHTML = `<i class="fa-solid ${video.muted ? 'fa-volume-xmark' : 'fa-volume-high'}"></i>`; } }
+                if (sound) {
+                    shortsSoundEnabled = !shortsSoundEnabled;
+                    document.querySelectorAll('#shorts-feed [data-short-card]').forEach(card => {
+                        const video = card.querySelector('[data-short-video]');
+                        if (video) {
+                            video.muted = !shortsSoundEnabled;
+                            if (shortsSoundEnabled && card.classList.contains('is-current')) playShortVideo(video);
+                        }
+                        const frame = card.querySelector('[data-short-youtube]');
+                        if (frame?.dataset.loadedYoutubeId) {
+                            sendShortYoutubeCommand(frame, shortsSoundEnabled ? 'unMute' : 'mute');
+                            if (shortsSoundEnabled) sendShortYoutubeCommand(frame, 'playVideo');
+                        }
+                    });
+                    updateShortSoundButtons();
+                    return;
+                }
+                const audioStart = event.target.closest('[data-short-audio-start]');
+                if (audioStart) {
+                    shortsSoundEnabled = true;
+                    const card = audioStart.closest('[data-short-card]');
+                    const video = card?.querySelector('[data-short-video]');
+                    const frame = card?.querySelector('[data-short-youtube]');
+                    if (video) { video.muted = false; playShortVideo(video); }
+                    if (frame?.dataset.loadedYoutubeId) {
+                        sendShortYoutubeCommand(frame, 'unMute');
+                        sendShortYoutubeCommand(frame, 'playVideo');
+                        card.classList.remove('is-audio-blocked', 'is-paused');
+                    }
+                    updateShortSoundButtons();
+                    return;
+                }
                 const toggle = event.target.closest('[data-short-toggle]');
                 const video = toggle?.closest('[data-short-card]')?.querySelector('[data-short-video]') || event.target.closest('[data-short-video]');
                 if (video) {
                     const card = video.closest('[data-short-card]');
-                    if (video.paused) { prepareShortVideo(video); video.play().then(() => { card.classList.remove('is-paused'); toggle && (toggle.innerHTML = '<i class="fa-solid fa-pause"></i>'); }).catch(() => {}); }
+                    if (video.paused) { playShortVideo(video); toggle && (toggle.innerHTML = '<i class="fa-solid fa-pause"></i>'); }
                     else { video.pause(); card.classList.add('is-paused'); if (toggle) toggle.innerHTML = '<i class="fa-solid fa-play"></i>'; }
                 }
             });
@@ -3450,7 +3577,7 @@ window.renderHighlights = function() {
                 if (activeShortUploadController) { const status = document.getElementById('short-video-upload-status'); if (status) status.textContent = 'جارٍ إلغاء الرفع…'; activeShortUploadController.abort(); }
             });
             document.getElementById('admin-shorts-list')?.addEventListener('click', event => { const button = event.target.closest('[data-delete-short]'); if (button) deleteShort(button.dataset.deleteShort); });
-            const closeComments = () => { const modal = document.getElementById('shorts-comments-modal'); modal?.classList.add('hidden'); modal?.setAttribute('aria-hidden', 'true'); shortsCommentsVideoId = ''; if (!document.getElementById('view-shorts')?.classList.contains('hidden')) window.activateShortsView(); };
+            const closeComments = () => { const modal = document.getElementById('shorts-comments-modal'); modal?.classList.add('hidden'); modal?.setAttribute('aria-hidden', 'true'); shortsCommentsVideoId = ''; if (!document.getElementById('view-shorts')?.classList.contains('hidden')) window.activateShortsView({ userGesture: true }); };
             document.getElementById('shorts-comments-close')?.addEventListener('click', closeComments);
             document.querySelector('[data-close-short-comments]')?.addEventListener('click', closeComments);
             document.getElementById('shorts-comment-form')?.addEventListener('submit', async event => {
@@ -3472,6 +3599,7 @@ window.renderHighlights = function() {
 
         window.switchTab = function(tab) {
             if (tab !== 'game') endLeagueQuizForLeaving();
+            document.body.classList.toggle('shorts-mode', tab === 'shorts');
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'text-white'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.add('text-gray-400'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
@@ -3485,7 +3613,7 @@ window.renderHighlights = function() {
                 markTabVisited(tab);
             }
             window.renderAllViews();
-            if(tab === 'shorts') window.activateShortsView(); else window.pauseShortsFeed();
+            if(tab === 'shorts') window.activateShortsView({ userGesture: true }); else window.pauseShortsFeed();
             if(tab === 'game') window.activatePenaltyGame();
         }
 
