@@ -436,7 +436,7 @@
         .shorts-gate-icon { display:grid; width:60px; height:60px; place-items:center; margin-bottom:14px; border:1px solid rgba(212,177,95,.2); border-radius:20px; background:rgba(212,177,95,.09); color:#e5cd85; font-size:23px; } .shorts-name-form { display:flex; width:min(100%,390px); gap:8px; }
         .shorts-name-form input,.shorts-comment-form textarea { min-width:0; flex:1; border:1px solid rgba(148,163,184,.2); border-radius:14px; background:rgba(4,13,26,.7); padding:12px; color:#fff; font-size:12px; outline:none; } .shorts-name-form button { display:flex; align-items:center; gap:8px; border:0; border-radius:14px; background:linear-gradient(135deg,#e4c877,#bd9945); padding:0 15px; color:#142033; font-size:12px; font-weight:900; }
         .shorts-feed-shell { display:flex; justify-content:center; } .shorts-feed { width:min(100%,460px); height:min(76dvh,780px); min-height:440px; overflow-y:auto; overscroll-behavior:contain; scroll-snap-type:y mandatory; scrollbar-width:thin; scrollbar-color:rgba(212,177,95,.3) transparent; border-radius:26px; }
-        .short-card { position:relative; isolation:isolate; width:100%; height:100%; min-height:440px; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; border:1px solid rgba(220,232,244,.13); border-radius:26px; background:#05080e; color:#fff; } .short-card-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#05080e; } .short-buffering { display:none; position:absolute; z-index:2; inset:0; place-items:center; align-content:center; gap:10px; background:rgba(3,8,16,.36); color:#f3e5b4; font-size:11px; font-weight:800; pointer-events:none; } .short-card.is-buffering .short-buffering { display:grid; } .short-buffering-spinner { width:29px; height:29px; border:3px solid rgba(243,229,180,.25); border-top-color:#e4c877; border-radius:50%; animation:shortBufferSpin .8s linear infinite; } @keyframes shortBufferSpin { to { transform:rotate(360deg); } } .short-card-video-error { display:none; position:absolute; z-index:3; inset:auto 18px 46% ; border:1px solid rgba(248,113,113,.35); border-radius:14px; background:rgba(10,15,23,.88); padding:12px; color:#fecaca; text-align:center; font-size:11px; font-weight:800; line-height:1.7; } .short-card.has-video-error .short-card-video-error { display:block; }
+        .short-card.is-youtube { display:flex; height:auto; min-height:0; flex-direction:column; overflow:hidden; background:#080d16; } .short-card.is-youtube::after { display:none; } .short-youtube-frame { position:relative; width:100%; aspect-ratio:9/16; max-height:calc(76dvh - 130px); min-height:300px; background:#000; } .short-youtube-frame iframe { display:block; width:100%; height:100%; border:0; background:#000; } .short-youtube-meta { display:flex; flex-direction:column; gap:10px; padding:12px; } .short-youtube-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; } .short-youtube-copy { min-width:0; color:#fff; } .short-youtube-copy strong { display:block; overflow:hidden; font-size:13px; font-weight:900; text-overflow:ellipsis; white-space:nowrap; } .short-youtube-copy p { display:-webkit-box; overflow:hidden; margin:4px 0 0; color:#aab6c6; font-size:10px; line-height:1.6; -webkit-box-orient:vertical; -webkit-line-clamp:2; } .short-card.is-youtube [data-short-sound] { display:none; } .short-card.is-youtube .short-card-actions { position:static; flex-direction:row; align-items:center; gap:16px; } .short-card.is-youtube .short-action-button { flex-direction:row; gap:6px; color:#e9edf4; text-shadow:none; } .short-card.is-youtube .short-action-button i { width:34px; height:34px; background:rgba(255,255,255,.06); } .short-card.is-youtube .short-card-hint { position:static; align-self:center; margin:0 0 8px; transform:none; color:#7d8ba0; text-shadow:none; } .shorts-name-gate:not(.hidden) { min-height:0; align-items:flex-start; justify-content:flex-start; padding:0 0 12px; text-align:right; } .shorts-name-gate:not(.hidden) .shorts-gate-icon { display:none; } .shorts-name-gate:not(.hidden) h3 { font-size:13px; } .shorts-name-gate:not(.hidden) p { margin:3px 0 8px; }        .short-card { position:relative; isolation:isolate; width:100%; height:100%; min-height:440px; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always; border:1px solid rgba(220,232,244,.13); border-radius:26px; background:#05080e; color:#fff; } .short-card-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#05080e; } .short-buffering { display:none; position:absolute; z-index:2; inset:0; place-items:center; align-content:center; gap:10px; background:rgba(3,8,16,.36); color:#f3e5b4; font-size:11px; font-weight:800; pointer-events:none; } .short-card.is-buffering .short-buffering { display:grid; } .short-buffering-spinner { width:29px; height:29px; border:3px solid rgba(243,229,180,.25); border-top-color:#e4c877; border-radius:50%; animation:shortBufferSpin .8s linear infinite; } @keyframes shortBufferSpin { to { transform:rotate(360deg); } } .short-card-video-error { display:none; position:absolute; z-index:3; inset:auto 18px 46% ; border:1px solid rgba(248,113,113,.35); border-radius:14px; background:rgba(10,15,23,.88); padding:12px; color:#fecaca; text-align:center; font-size:11px; font-weight:800; line-height:1.7; } .short-card.has-video-error .short-card-video-error { display:block; }
         .short-card::after { content:""; position:absolute; z-index:1; inset:30% 0 0; pointer-events:none; background:linear-gradient(180deg,transparent,rgba(0,0,0,.04) 35%,rgba(0,0,0,.76)); }
         .short-card-top { position:absolute; z-index:2; top:12px; right:12px; left:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; pointer-events:none; } .short-card-index { border:1px solid rgba(255,255,255,.2); border-radius:999px; background:rgba(7,14,22,.44); padding:6px 9px; color:#fff; font-size:9px; font-weight:900; }
         .short-uploader { display:flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,.18); border-radius:999px; background:rgba(7,14,22,.5); padding:5px 10px 5px 6px; color:#fff; backdrop-filter:blur(12px); }
@@ -477,7 +477,7 @@
         .quiz-userbar { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; border:1px solid rgba(220,232,244,.1); border-radius:14px; background:rgba(255,255,255,.035); padding:10px 13px; color:#aab7c5; font-size:10px; } .quiz-userbar strong { color:#f3d77f; } .quiz-result { margin:20px auto 4px; max-width:520px; border:1px solid rgba(216,187,105,.25); border-radius:22px; background:linear-gradient(145deg,#132a43,#091729); padding:25px 18px; text-align:center; animation:tabReveal .32s ease both; } .quiz-result h3 { margin:0; color:#e6c96d; font-size:22px; font-weight:950; } .quiz-result p { color:#bcc8d4; font-size:12px; line-height:1.8; } .quiz-result-prize { display:block; margin:10px 0 16px; color:#f3d77f; font-size:28px; font-weight:950; }
         html[data-theme=day] .quiz-page { background:radial-gradient(ellipse at 50% -20%,rgba(29,72,105,.1),transparent 45%),linear-gradient(145deg,#f7fafc,#eaf0f5); } html[data-theme=day] .quiz-hero h2,html[data-theme=day] .quiz-setup h3 { color:#173b57; } html[data-theme=day] .quiz-hero p,html[data-theme=day] .quiz-setup p { color:#657585; } html[data-theme=day] .quiz-setup,html[data-theme=day] .quiz-userbar { border-color:rgba(23,59,87,.12); background:rgba(23,59,87,.035); } html[data-theme=day] .quiz-question-card,html[data-theme=day] .quiz-ladder-card { border-color:rgba(23,59,87,.12); background:linear-gradient(155deg,#fff,#f3f6f9); } html[data-theme=day] .quiz-question-text { color:#173b57; } html[data-theme=day] .quiz-answer { border-color:rgba(23,59,87,.14); background:#f7f9fb; color:#294258; } html[data-theme=day] .quiz-answer:hover:not(:disabled) { background:#edf3f7; } html[data-theme=day] .quiz-answer.is-correct { color:#185338; background:#e9f7ef; } html[data-theme=day] .quiz-answer.is-wrong { color:#7b2630; background:#fff0f1; } html[data-theme=day] .quiz-hint,html[data-theme=day] .quiz-audience,html[data-theme=day] .quiz-feedback { color:#294258; background:rgba(23,59,87,.035); border-color:rgba(23,59,87,.12); } html[data-theme=day] .quiz-userbar { color:#596d7d; } html[data-theme=day] .quiz-userbar strong { color:#745a1e; } html[data-theme=day] .quiz-result { background:linear-gradient(145deg,#fff,#edf3f8); } html[data-theme=day] .quiz-result h3 { color:#173b57; } html[data-theme=day] .quiz-result p { color:#536879; } html[data-theme=day] .quiz-timer-pill { border-color:rgba(29,78,121,.18); background:rgba(29,78,121,.06); color:#1d4e79; } html[data-theme=day] .quiz-timer-pill.is-urgent { color:#b42332; border-color:rgba(180,35,50,.28); background:rgba(180,35,50,.08); }
         @media (max-width:700px) { .quiz-layout { grid-template-columns:1fr; } .quiz-prize-ladder { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); max-height:none; } .quiz-prize-step { justify-content:center; padding:6px 3px; } .quiz-prize-step span:first-child { display:none; } .quiz-ladder-card { order:2; } .quiz-question-card { order:1; } .quiz-question-head { gap:5px; } .quiz-step-pill,.quiz-prize-pill,.quiz-timer-pill { padding:6px 8px; font-size:9px; } }
-        @media (max-width:767px) { .shorts-page { padding:12px!important; } .shorts-feed { height:min(72dvh,720px); min-height:400px; } .short-card { min-height:400px; } .shorts-name-gate { min-height:340px; } } @media (max-width:380px) { .shorts-feed { min-height:370px; } .short-card { min-height:370px; } .short-card-copy { left:70px; } }
+        @media (max-width:767px) { .short-youtube-frame { max-height:calc(72dvh - 120px); min-height:270px; } .shorts-page { padding:12px!important; } .shorts-feed { height:min(72dvh,720px); min-height:400px; } .short-card { min-height:400px; } .shorts-name-gate { min-height:340px; } } @media (max-width:380px) { .shorts-feed { min-height:370px; } .short-card { min-height:370px; } .short-card-copy { left:70px; } }
         .desktop-tab-navigation { -webkit-overflow-scrolling:touch; overscroll-behavior-inline:contain; scrollbar-width:thin; scroll-behavior:smooth; }
         .desktop-tab-navigation .tab-btn { flex:0 0 auto; min-height:42px; }
         .theme-toggle { position:relative; width:64px; height:36px; padding:0; overflow:hidden; border:1px solid #52657e; border-radius:999px; background:linear-gradient(135deg,#14243b,#081321); box-shadow:inset 0 1px 2px rgba(0,0,0,.4),0 3px 10px rgba(0,0,0,.16); flex:0 0 auto; transition:border-color .25s ease,background .25s ease,transform .2s ease,box-shadow .25s ease; }
@@ -698,7 +698,7 @@
         <div id="view-shorts" class="tab-content hidden">
  <section class="shorts-page bg-brand-card border border-slate-800 rounded-3xl p-3 sm:p-5 shadow-xl">
   <div class="shorts-page-heading"><div><span class="shorts-eyebrow"><i class="fa-solid fa-clapperboard"></i> دوري النخبة</span><h2>Shorts</h2><p>مقاطع قصيرة من أجواء الدوري</p></div><span id="shorts-viewer-badge" class="shorts-viewer-badge hidden"></span></div>
-  <div id="shorts-name-gate" class="shorts-name-gate hidden"><div class="shorts-gate-icon"><i class="fa-solid fa-user-pen"></i></div><h3>اكتب اسمك للمتابعة</h3><p>سيظهر اسمك مع تعليقاتك، ويُحفظ على هذا المتصفح.</p><form id="shorts-name-form" class="shorts-name-form"><input id="shorts-viewer-name-input" type="text" maxlength="32" autocomplete="name" required placeholder="اسمك" aria-label="اسم المشاهد"><button type="submit">متابعة <i class="fa-solid fa-arrow-left"></i></button></form></div>
+  <div id="shorts-name-gate" class="shorts-name-gate hidden"><div class="shorts-gate-icon"><i class="fa-solid fa-user-pen"></i></div><h3>اكتب اسمك للإعجاب أو التعليق</h3><p>يمكنك مشاهدة المقاطع مباشرة؛ الاسم مطلوب للتفاعل فقط ويُحفظ على هذا المتصفح.</p><form id="shorts-name-form" class="shorts-name-form"><input id="shorts-viewer-name-input" type="text" maxlength="32" autocomplete="name" required placeholder="اسمك" aria-label="اسم المشاهد"><button type="submit">متابعة <i class="fa-solid fa-arrow-left"></i></button></form></div>
   <div id="shorts-feed-shell" class="shorts-feed-shell hidden"><div id="shorts-feed" class="shorts-feed" aria-label="مقاطع Shorts"></div><div id="shorts-empty-state" class="shorts-empty-state hidden"><i class="fa-solid fa-video-slash"></i><strong>لا توجد مقاطع بعد</strong><span>ستظهر مقاطع الدوري هنا عند نشرها.</span></div></div>
  </section>
 </div>
@@ -3058,8 +3058,8 @@ window.renderHighlights = function() {
             const badge = document.getElementById('shorts-viewer-badge');
             if (badge) { badge.textContent = name; badge.classList.toggle('hidden', !name); }
             gate?.classList.toggle('hidden', Boolean(name));
-            shell?.classList.toggle('hidden', !name);
-            if (name) renderShortsFeed();
+            shell?.classList.remove('hidden');
+            renderShortsFeed();
         }
         function updateShortLikeUi(id) {
             const liked = shortsLikedIds().has(id);
@@ -3087,6 +3087,16 @@ window.renderHighlights = function() {
                 }
             });
         }
+        function getYoutubeVideoId(item) {
+            const candidate = String(item?.youtubeVideoId || item?.url || '').trim();
+            if (/^[a-zA-Z0-9_-]{11}$/.test(candidate)) return candidate;
+            try {
+                const parsed = new URL(candidate);
+                if (!/(^|\.)((youtube\.com)|(youtube-nocookie\.com)|(youtu\.be))$/i.test(parsed.hostname.replace(/^www\./i, ''))) return '';
+                const value = parsed.searchParams.get('v') || parsed.pathname.match(/\/(?:shorts|embed|live)\/([a-zA-Z0-9_-]{11})/)?.[1] || parsed.pathname.match(/^\/([a-zA-Z0-9_-]{11})\/?$/)?.[1] || '';
+                return /^[a-zA-Z0-9_-]{11}$/.test(value) ? value : '';
+            } catch (_) { return ''; }
+        }
         function renderShortsFeed() {
             const feed = document.getElementById('shorts-feed');
             const shell = document.getElementById('shorts-feed-shell');
@@ -3094,8 +3104,6 @@ window.renderHighlights = function() {
             if (!feed || !shell || !empty) return;
             if (shortsObserver) shortsObserver.disconnect();
             shortsObserver = null;
-            const name = (() => { try { return localStorage.getItem(SHORTS_NAME_KEY) || ''; } catch (_) { return ''; } })();
-            if (!name) { shell.classList.add('hidden'); return; }
             shell.classList.remove('hidden');
             if (!shortsVideos.length) {
                 feed.classList.add('hidden'); empty.classList.remove('hidden'); feed.innerHTML = ''; return;
@@ -3103,26 +3111,53 @@ window.renderHighlights = function() {
             empty.classList.add('hidden'); feed.classList.remove('hidden');
             feed.innerHTML = shortsVideos.map((item, index) => {
                 const id = String(item.id || '');
-                const url = safeHttpsUrl(item.url);
-                if (!id || !url) return '';
-                return `<article class="short-card is-paused" data-short-card data-short-id="${escapeHtml(id)}">
-                    <video class="short-card-video" src="${escapeHtml(url)}" playsinline webkit-playsinline loop muted preload="none" aria-label="${escapeHtml(item.title || 'مقطع دوري')}" data-short-video></video>
-                    <div class="short-buffering" aria-live="polite"><span class="short-buffering-spinner"></span><span>جارٍ تحميل المقطع…</span></div><div class="short-card-video-error">تعذر تشغيل هذا الفيديو. جرّب صيغة MP4 بترميز H.264 أو WebM.</div>
-                    <div class="short-card-top"><div class="short-uploader"><span class="short-uploader-avatar"><i class="fa-solid fa-futbol"></i></span><span class="short-uploader-copy"><strong>elno5ba-league</strong><span>الحساب الرسمي · دوري النخبة</span></span><span class="shorts-verified" aria-label="حساب الدوري"><i class="fa-solid fa-check"></i></span></div><span class="short-card-index">${index + 1} / ${shortsVideos.length}</span></div>
-                    <button type="button" class="short-play-indicator" data-short-toggle aria-label="تشغيل المقطع"><i class="fa-solid fa-play"></i></button>
-                    <div class="short-card-copy"><span class="shorts-eyebrow">مقطع من دوري النخبة</span><h3>${escapeHtml(item.title || 'مقطع الدوري')}</h3>${item.description ? `<p>${escapeHtml(item.description)}</p>` : ''}</div>
-                    <div class="short-card-actions"><button type="button" class="short-action-button" data-short-like="${escapeHtml(id)}" aria-label="إعجاب" aria-pressed="false"><i class="fa-solid fa-heart"></i><span data-short-likes="${escapeHtml(id)}">${Number(shortsLikeCounts[id]) || 0}</span></button><button type="button" class="short-action-button" data-short-comments="${escapeHtml(id)}" aria-label="التعليقات"><i class="fa-regular fa-comment-dots"></i><span>تعليق</span></button><button type="button" class="short-card-audio" data-short-sound aria-label="تشغيل الصوت"><i class="fa-solid fa-volume-xmark"></i></button></div>
-                    <span class="short-card-hint">اسحب للأعلى للمقطع التالي</span></article>`;
+                const isYoutube = item.storageProvider === 'youtube';
+                const youtubeId = isYoutube ? getYoutubeVideoId(item) : '';
+                const url = isYoutube ? '' : safeHttpsUrl(item.url);
+                if (!id || (!youtubeId && !url)) return '';
+                const title = escapeHtml(item.title || 'مقطع الدوري');
+                const description = escapeHtml(item.description || '');
+                const escapedId = escapeHtml(id);
+                const actions = '<div class="short-card-actions"><button type="button" class="short-action-button" data-short-like="' + escapedId + '" aria-label="إعجاب" aria-pressed="false"><i class="fa-solid fa-heart"></i><span data-short-likes="' + escapedId + '">' + (Number(shortsLikeCounts[id]) || 0) + '</span></button><button type="button" class="short-action-button" data-short-comments="' + escapedId + '" aria-label="التعليقات"><i class="fa-regular fa-comment-dots"></i><span>تعليق</span></button><button type="button" class="short-card-audio" data-short-sound aria-label="تشغيل الصوت"><i class="fa-solid fa-volume-xmark"></i></button></div>';
+                const uploader = '<div class="short-uploader"><span class="short-uploader-avatar"><i class="fa-solid fa-futbol"></i></span><span class="short-uploader-copy"><strong>elno5ba-league</strong><span>الحساب الرسمي · دوري النخبة</span></span><span class="shorts-verified" aria-label="حساب الدوري"><i class="fa-solid fa-check"></i></span></div>';
+                if (youtubeId) {
+                    return '<article class="short-card is-youtube is-paused" data-short-card data-short-id="' + escapedId + '" data-youtube-id="' + youtubeId + '">' +
+                        '<div class="short-youtube-frame"><iframe data-short-youtube title="' + title + ' · elno5ba-league" src="about:blank" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>' +
+                        '<div class="short-youtube-meta"><div class="short-youtube-heading">' + uploader + '<span class="short-card-index">' + (index + 1) + ' / ' + shortsVideos.length + '</span></div><div class="short-youtube-copy"><strong>' + title + '</strong>' + (description ? '<p>' + description + '</p>' : '') + '</div>' + actions + '</div>' +
+                        '<span class="short-card-hint">اسحب للأعلى للمقطع التالي</span></article>';
+                }
+                return '<article class="short-card is-paused" data-short-card data-short-id="' + escapedId + '">' +
+                    '<video class="short-card-video" src="' + escapeHtml(url) + '" playsinline webkit-playsinline loop muted preload="none" aria-label="' + title + '" data-short-video></video>' +
+                    '<div class="short-buffering" aria-live="polite"><span class="short-buffering-spinner"></span><span>جارٍ تحميل المقطع…</span></div><div class="short-card-video-error">تعذر تشغيل هذا الفيديو. جرّب صيغة MP4 بترميز H.264 أو WebM.</div>' +
+                    '<div class="short-card-top">' + uploader + '<span class="short-card-index">' + (index + 1) + ' / ' + shortsVideos.length + '</span></div>' +
+                    '<button type="button" class="short-play-indicator" data-short-toggle aria-label="تشغيل المقطع"><i class="fa-solid fa-play"></i></button>' +
+                    '<div class="short-card-copy"><span class="shorts-eyebrow">مقطع من دوري النخبة</span><h3>' + title + '</h3>' + (description ? '<p>' + description + '</p>' : '') + '</div>' +
+                    actions +
+                    '<span class="short-card-hint">اسحب للأعلى للمقطع التالي</span></article>';
             }).join('');
             feed.querySelectorAll('[data-short-card]').forEach(card => updateShortLikeUi(card.dataset.shortId));
             if ('IntersectionObserver' in window) {
                 shortsObserver = new IntersectionObserver(entries => entries.forEach(entry => {
-                    const video = entry.target.querySelector('[data-short-video]');
+                    const card = entry.target;
+                    const isActive = entry.isIntersecting && entry.intersectionRatio >= 0.65 && !document.getElementById('view-shorts')?.classList.contains('hidden');
+                    const frame = card.querySelector('[data-short-youtube]');
+                    if (frame) {
+                        if (isActive) {
+                            const videoId = card.dataset.youtubeId;
+                            if (frame.dataset.loadedYoutubeId !== videoId) { frame.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?playsinline=1&autoplay=1&mute=1&controls=1&loop=1&playlist=' + videoId + '&rel=0'; frame.dataset.loadedYoutubeId = videoId; }
+                            card.classList.remove('is-paused');
+                        } else {
+                            if (frame.src !== 'about:blank') frame.src = 'about:blank'; frame.dataset.loadedYoutubeId = '';
+                            card.classList.add('is-paused');
+                        }
+                        return;
+                    }
+                    const video = card.querySelector('[data-short-video]');
                     if (!video) return;
-                    if (entry.isIntersecting && entry.intersectionRatio >= 0.65 && !document.getElementById('view-shorts')?.classList.contains('hidden')) {
+                    if (isActive) {
                         prepareShortVideo(video);
-                        video.play().then(() => entry.target.classList.remove('is-paused')).catch(() => entry.target.classList.add('is-paused'));
-                    } else { video.pause(); entry.target.classList.add('is-paused'); }
+                        video.play().then(() => card.classList.remove('is-paused')).catch(() => card.classList.add('is-paused'));
+                    } else { video.pause(); card.classList.add('is-paused'); }
                 }), { root: feed, threshold: [0, 0.65, 1] });
                 feed.querySelectorAll('[data-short-card]').forEach(card => {
                     const video = card.querySelector('[data-short-video]');
@@ -3137,22 +3172,24 @@ window.renderHighlights = function() {
                 });
             }
         }
-        function pauseShortsFeed() { document.querySelectorAll('#shorts-feed [data-short-video]').forEach(video => video.pause()); }
+        function pauseShortsFeed() {
+            document.querySelectorAll('#shorts-feed [data-short-video]').forEach(video => video.pause());
+            document.querySelectorAll('#shorts-feed [data-short-youtube]').forEach(frame => { if (frame.src !== 'about:blank') frame.src = 'about:blank'; frame.dataset.loadedYoutubeId = ''; });
+        }
         window.renderShortsView = renderShortsNameGate;
         window.activateShortsView = function() {
             renderShortsNameGate();
-            if (shortsObserver) document.querySelectorAll('#shorts-feed [data-short-card]').forEach(card => shortsObserver.observe(card));
+            if (!shortsObserver) return;
+            document.querySelectorAll('#shorts-feed [data-short-card]').forEach(card => shortsObserver.observe(card));
             requestAnimationFrame(() => {
                 const feed = document.getElementById('shorts-feed');
                 if (!feed || document.getElementById('view-shorts')?.classList.contains('hidden')) return;
                 const bounds = feed.getBoundingClientRect();
                 const active = [...feed.querySelectorAll('[data-short-card]')].find(card => { const rect = card.getBoundingClientRect(); return Math.max(0, Math.min(rect.bottom, bounds.bottom) - Math.max(rect.top, bounds.top)) / Math.max(1, rect.height) >= 0.65; });
-                const video = active?.querySelector('[data-short-video]');
-                if (video) { prepareShortVideo(video); video.play().then(() => active.classList.remove('is-paused')).catch(() => active.classList.add('is-paused')); }
+                if (active) shortsObserver.observe(active);
             });
         };
         window.pauseShortsFeed = pauseShortsFeed;
-
         window.renderAdminShorts = function() {
             const list = document.getElementById('admin-shorts-list');
             if (!list) return;
@@ -3163,6 +3200,44 @@ window.renderHighlights = function() {
             const type = /^video\/(mp4|webm)$/.test(file.type) ? file.type : /\.mp4$/i.test(file.name) ? 'video/mp4' : /\.webm$/i.test(file.name) ? 'video/webm' : '';
             if (!type) throw new Error('اختر فيديو بصيغة MP4 أو WebM.');
             return type;
+        }
+        function shortsRequestHeaders() {
+            return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminSessionPassword };
+        }
+        function uploadShortByXhr(url, method, file, headers, signal, onProgress) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                const abort = () => xhr.abort();
+                xhr.open(method, url, true);
+                Object.entries(headers || {}).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+                let stalledTimer = 0, stalledTimeout = false;
+                const resetStalledTimer = () => { if (stalledTimer) window.clearTimeout(stalledTimer); stalledTimer = window.setTimeout(() => { stalledTimeout = true; xhr.abort(); }, 180000); };
+                xhr.upload.onprogress = event => { resetStalledTimer(); if (event.lengthComputable) onProgress(event.loaded, event.total); };
+                xhr.onerror = () => reject(new Error('تعذر الاتصال بخدمة التخزين.'));
+                xhr.onabort = () => reject(stalledTimeout ? new Error('توقف الرفع بلا تقدم لمدة 3 دقائق.') : new DOMException('Upload aborted', 'AbortError'));
+                xhr.onload = () => {
+                    let data = {};
+                    try { data = JSON.parse(xhr.responseText || '{}'); } catch (_) {}
+                    if (xhr.status >= 200 && xhr.status < 300) resolve(data);
+                    else reject(new Error(data.error?.message || data.message || data.code || 'رفضت خدمة التخزين رفع الفيديو (' + xhr.status + ').'));
+                };
+                if (signal?.aborted) { xhr.abort(); return; }
+                signal?.addEventListener('abort', abort, { once: true });
+                xhr.onloadend = () => { if (stalledTimer) window.clearTimeout(stalledTimer); signal?.removeEventListener('abort', abort); };
+                resetStalledTimer();
+                xhr.send(file);
+            });
+        }
+        async function shortsInitRequest(path, payload, signal) {
+            const response = await fetch(path, { method: 'POST', headers: shortsRequestHeaders(), body: JSON.stringify(payload), cache: 'no-store', signal });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.ready === false) throw new Error(data.error || 'خدمة التخزين غير جاهزة.');
+            return data;
+        }
+        function setShortUploadProgress(status, progressBar, provider, loaded, total) {
+            const percent = Math.max(0, Math.min(100, Math.round(loaded / Math.max(1, total) * 100)));
+            if (progressBar) progressBar.style.width = percent + '%';
+            status.textContent = 'جارٍ الرفع إلى ' + provider + ' ' + percent + '% · ' + (loaded / 1024 / 1024).toFixed(1) + '/' + (total / 1024 / 1024).toFixed(1) + ' MB';
         }
         async function publishShort(event) {
             event.preventDefault();
@@ -3176,7 +3251,7 @@ window.renderHighlights = function() {
             if (!title || !file) { status.textContent = 'أدخل عنوانًا واختر الفيديو.'; return; }
             if (!navigator.onLine) { status.textContent = 'تحقق من اتصال الإنترنت ثم أعد المحاولة.'; return; }
             if (file.size > 1024 * 1024 * 1024) { status.textContent = 'حجم الفيديو يتجاوز الحد المسموح (1 GB).'; return; }
-            let watchdog = 0, blob = null;
+            let watchdog = 0, lastProgressAt = Date.now(), published = null, providerErrors = [];
             const controller = new AbortController();
             activeShortUploadController = controller;
             button.disabled = true; shortUploadStalled = false;
@@ -3185,56 +3260,92 @@ window.renderHighlights = function() {
             cancelButton?.classList.remove('hidden');
             try {
                 const contentType = validateShortVideo(file);
-                const readyResponse = await fetch('/api/shorts-upload', { cache: 'no-store' });
-                const ready = await readyResponse.json().catch(() => ({}));
-                if (!readyResponse.ok || ready.ready !== true) {
-                    if (readyResponse.status === 404) throw new Error('ملفات رفع Shorts غير منشورة على Vercel بعد.');
-                    throw new Error(ready.error || 'تخزين الفيديو غير مربوط بمشروع Vercel بعد.');
-                }
                 const id = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-                const ext = contentType === 'video/webm' ? 'webm' : 'mp4';
-                const pathname = 'league-shorts/' + id + '.' + ext;
-                let lastProgressAt = Date.now();
-                watchdog = window.setInterval(() => {
-                    if (Date.now() - lastProgressAt > 180000 && activeShortUploadController === controller) {
-                        shortUploadStalled = true;
-                        status.textContent = 'توقف الرفع 3 دقائق بلا تقدم. تحقق من اتصالك ثم أعد المحاولة.';
-                        controller.abort();
+
+                const progress = (provider, loaded, total) => { lastProgressAt = Date.now(); setShortUploadProgress(status, progressBar, provider, loaded, total); };
+
+                try {
+                    status.textContent = 'نجرب الرفع إلى YouTube…';
+                    const session = await shortsInitRequest('/api/shorts-youtube-init', { title, description, contentType, size: file.size }, controller.signal);
+                    const response = await uploadShortByXhr(session.sessionUrl, 'PUT', file, { 'Content-Type': contentType }, controller.signal, (loaded, total) => progress('YouTube', loaded, total));
+                    const youtubeVideoId = String(response.id || '');
+                    if (!/^[a-zA-Z0-9_-]{11}$/.test(youtubeVideoId)) throw new Error('اكتمل الرفع لكن YouTube لم يُرجع معرّف الفيديو.');
+                    published = { url: 'https://www.youtube.com/watch?v=' + youtubeVideoId, youtubeVideoId, storageProvider: 'youtube' };
+                } catch (error) {
+                    if (controller.signal.aborted) throw error;
+                    providerErrors.push('YouTube: ' + (error?.message || 'فشل الرفع'));
+                    status.textContent = 'تعذر YouTube؛ ننتقل إلى Backblaze…';
+                }
+
+                if (!published) {
+                    try {
+                        status.textContent = 'نجرب الرفع إلى Backblaze…';
+                        const session = await shortsInitRequest('/api/shorts-backblaze-init', { id, contentType }, controller.signal);
+                        const response = await uploadShortByXhr(session.uploadUrl, 'POST', file, {
+                            'Authorization': session.authorizationToken,
+                            'X-Bz-File-Name': encodeURIComponent(session.fileName),
+                            'X-Bz-Content-Sha1': 'do_not_verify',
+                            'Content-Type': contentType
+                        }, controller.signal, (loaded, total) => progress('Backblaze', loaded, total));
+                        published = { url: session.publicUrl, storageProvider: 'backblaze-b2', b2FileId: response.fileId, b2FileName: response.fileName || session.fileName };
+                    } catch (error) {
+                        if (controller.signal.aborted) throw error;
+                        providerErrors.push('Backblaze: ' + (error?.message || 'فشل الرفع'));
+                        status.textContent = 'تعذر Backblaze؛ ننتقل إلى Blob…';
                     }
-                }, 5000);
-                const { upload: uploadVercelBlob } = await import('https://esm.sh/@vercel/blob@2.8.2/client?bundle');
-                blob = await uploadVercelBlob(pathname, file, {
-                    access: 'public', handleUploadUrl: '/api/shorts-upload', contentType,
-                    clientPayload: JSON.stringify({ adminPassword: adminSessionPassword }),
-                    multipart: file.size > 100 * 1024 * 1024,
-                    abortSignal: controller.signal,
-                    onUploadProgress: ({ loaded, total, percentage }) => {
+                }
+
+                if (!published) {
+                    try {
+                        status.textContent = 'نجرب الرفع إلى Vercel Blob…';
+                        const ext = contentType === 'video/webm' ? 'webm' : 'mp4';
+                        const pathname = 'league-shorts/' + id + '.' + ext;
                         lastProgressAt = Date.now();
-                        const percent = Math.max(0, Math.min(100, Math.round(percentage || (loaded / Math.max(1, total)) * 100)));
-                        if (progressBar) progressBar.style.width = percent + '%';
-                        status.textContent = 'جارٍ الرفع ' + percent + '% · ' + (loaded / 1024 / 1024).toFixed(1) + '/' + (total / 1024 / 1024).toFixed(1) + ' MB';
+                        watchdog = window.setInterval(() => {
+                            if (Date.now() - lastProgressAt > 180000 && activeShortUploadController === controller) {
+                                shortUploadStalled = true;
+                                status.textContent = 'توقف الرفع 3 دقائق بلا تقدم. أوقفته تلقائيًا.';
+                                controller.abort();
+                            }
+                        }, 5000);
+                        const { upload: uploadVercelBlob } = await import('https://esm.sh/@vercel/blob@2.8.2/client?bundle');
+                        const blob = await uploadVercelBlob(pathname, file, {
+                            access: 'public', handleUploadUrl: '/api/shorts-upload', contentType,
+                            clientPayload: JSON.stringify({ adminPassword: adminSessionPassword }),
+                            multipart: file.size > 100 * 1024 * 1024,
+                            abortSignal: controller.signal,
+                            onUploadProgress: ({ loaded, total, percentage }) => {
+                                lastProgressAt = Date.now();
+                                const percentLoaded = Number(loaded) || 0, percentTotal = Number(total) || file.size;
+                                const percent = Math.max(0, Math.min(100, Math.round(percentage || percentLoaded / Math.max(1, percentTotal) * 100)));
+                                if (progressBar) progressBar.style.width = percent + '%';
+                                status.textContent = 'جارٍ الرفع إلى Blob ' + percent + '% · ' + (percentLoaded / 1024 / 1024).toFixed(1) + '/' + (percentTotal / 1024 / 1024).toFixed(1) + ' MB';
+                            }
+                        });
+                        published = { url: blob.url, storageProvider: 'vercel-blob', blobPathname: blob.pathname };
+                    } catch (error) {
+                        if (controller.signal.aborted) throw error;
+                        providerErrors.push('Blob: ' + (error?.message || 'فشل الرفع'));
                     }
-                });
+                }
+
+                if (!published) throw new Error(providerErrors.join(' · ') || 'لم ينجح الرفع إلى أي خدمة.');
                 if (watchdog) { window.clearInterval(watchdog); watchdog = 0; }
                 status.textContent = 'اكتمل الرفع؛ جارٍ نشر المقطع للمشاهدين…';
                 await set(ref(db, 'league_shorts/videos/' + id), {
-                    id, title, description, url: blob.url,
-                    storageProvider: 'vercel-blob', blobPathname: blob.pathname,
+                    id, title, description, ...published,
                     size: file.size, createdAt: Date.now()
                 });
                 form.reset();
-                status.textContent = 'تم نشر المقطع للمشاهدين بنجاح.';
+                status.textContent = 'تم النشر بنجاح عبر ' + (published.storageProvider === 'youtube' ? 'YouTube' : published.storageProvider === 'backblaze-b2' ? 'Backblaze' : 'Vercel Blob') + '.';
             } catch (error) {
                 if (watchdog) window.clearInterval(watchdog);
                 if (shortUploadStalled) status.textContent = 'توقف الرفع تلقائيًا لعدم وجود تقدم. أعد المحاولة.';
                 else if (controller.signal.aborted) status.textContent = 'تم إلغاء الرفع.';
                 else if (error?.status === 401 || /مصادقة الأدمن|admin|unauthori[sz]ed/i.test(error?.message || '')) status.textContent = 'تعذر التحقق من دخول الأدمن.';
-                else if (/BLOB_READ_WRITE_TOKEN|اربط Vercel Blob|تخزين الفيديو غير مربوط/i.test(error?.message || '')) status.textContent = 'اربط Blob بمشروع Vercel مرة واحدة ثم أعد النشر.';
+                else if (/BLOB_READ_WRITE_TOKEN|تخزين الفيديو غير مربوط/i.test(error?.message || '')) status.textContent = 'تعذر الرفع إلى الخدمات المتاحة. أضف إعدادات التخزين ثم أعد النشر.';
                 else if (navigator.onLine === false) status.textContent = 'انقطع الاتصال؛ حاول مجددًا عند استقرار الشبكة.';
                 else status.textContent = error?.message || 'تعذر رفع الفيديو. حاول مجددًا.';
-                if (blob?.pathname) {
-                    try { await fetch('/api/shorts-delete', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminSessionPassword }, body: JSON.stringify({ pathname: blob.pathname }) }); } catch (_) {}
-                }
             } finally {
                 if (watchdog) window.clearInterval(watchdog);
                 activeShortUploadController = null;
@@ -3247,9 +3358,13 @@ window.renderHighlights = function() {
             const item = shortsVideos.find(video => video.id === id);
             try {
                 if (item?.storageProvider === 'vercel-blob' && item.blobPathname) {
-                    const response = await fetch('/api/shorts-delete', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminSessionPassword }, body: JSON.stringify({ pathname: item.blobPathname }) });
+                    const response = await fetch('/api/shorts-delete', { method: 'POST', headers: shortsRequestHeaders(), body: JSON.stringify({ pathname: item.blobPathname }) });
                     const result = await response.json().catch(() => ({}));
                     if (!response.ok) throw new Error(result.error || 'تعذر حذف ملف الفيديو من التخزين.');
+                } else if (item?.storageProvider === 'backblaze-b2' && item.b2FileId && item.b2FileName) {
+                    const response = await fetch('/api/shorts-delete', { method: 'POST', headers: shortsRequestHeaders(), body: JSON.stringify({ provider: 'backblaze-b2', fileId: item.b2FileId, fileName: item.b2FileName }) });
+                    const result = await response.json().catch(() => ({}));
+                    if (!response.ok) throw new Error(result.error || 'تعذر حذف الفيديو من Backblaze.');
                 } else if (item?.storagePath) {
                     try { await deleteObject(storageRef(storage, item.storagePath)); } catch (error) { if (error?.code !== 'storage/object-not-found') throw error; }
                 }
@@ -3259,7 +3374,7 @@ window.renderHighlights = function() {
         function openShortComments(id) {
             const modal = document.getElementById('shorts-comments-modal');
             let viewerName = ''; try { viewerName = localStorage.getItem(SHORTS_NAME_KEY) || ''; } catch (_) {}
-            if (!viewerName) { renderShortsNameGate(); return; }
+            if (!viewerName) { renderShortsNameGate(); const nameInput = document.getElementById('shorts-viewer-name-input'); nameInput?.focus(); nameInput?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
             shortsCommentsVideoId = id; pauseShortsFeed(); modal?.classList.remove('hidden'); modal?.setAttribute('aria-hidden', 'false');
             loadShortComments(id);
         }
@@ -3303,6 +3418,8 @@ window.renderHighlights = function() {
                 const likeButton = event.target.closest('[data-short-like]');
                 if (likeButton) {
                     const id = likeButton.dataset.shortLike;
+                    let viewerName = ''; try { viewerName = localStorage.getItem(SHORTS_NAME_KEY) || ''; } catch (_) {}
+                    if (!viewerName) { const nameInput = document.getElementById('shorts-viewer-name-input'); nameInput?.focus(); nameInput?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
                     if (shortsPendingLikes.has(id)) return;
                     shortsPendingLikes.add(id); likeButton.disabled = true;
                     const localLikes = shortsLikedIds(), wasLiked = localLikes.has(id), visitor = shortsVisitorId();
