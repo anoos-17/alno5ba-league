@@ -1,29 +1,37 @@
 import { del } from '@vercel/blob';
-import { timingSafeEqual } from 'node:crypto';
-
-function safePasswordMatch(supplied, expected) {
-  if (typeof supplied !== 'string' || typeof expected !== 'string') return false;
-  const a = Buffer.from(supplied);
-  const b = Buffer.from(expected);
-  return a.length === b.length && timingSafeEqual(a, b);
-}
+import { authorizeBackblaze, getBody, isAdmin, sendJson } from './_shared.js';
 
 export default async function handler(req, res) {
-  res.setHeader('Cache-Control', 'no-store, max-age=0');
-  if (req.method !== 'POST') return res.status(405).json({ error: 'طريقة الطلب غير مدعومة.' });
-  const expected = '121212';
-  const authorization = typeof req.headers.authorization === 'string' ? req.headers.authorization : '';
-  const supplied = authorization.startsWith('Bearer ') ? authorization.slice(7) : '';
-  if (!expected || !safePasswordMatch(supplied, expected)) return res.status(401).json({ error: 'مصادقة الأدمن غير صحيحة.' });
+  if (req.method !== 'POST') return sendJson(res, 405, { error: 'طريقة الطلب غير مدعومة.' });
+  const body = getBody(req);
+  if (!isAdmin(req, body)) return sendJson(res, 401, { error: 'مصادقة الأدمن غير صحيحة.' });
 
-  const pathname = typeof req.body?.pathname === 'string' ? req.body.pathname : '';
-  if (!/^league-shorts\/[a-z0-9._-]+\.(mp4|webm)(-[a-z0-9]+)?$/i.test(pathname)) {
-    return res.status(400).json({ error: 'مسار الملف غير صالح.' });
-  }
   try {
+    if (body.provider === 'backblaze-b2') {
+      const fileId = String(body.fileId || '');
+      const fileName = String(body.fileName || '');
+      if (!/^[a-zA-Z0-9_-]{10,}$/.test(fileId) || !/^league-shorts\/[a-z0-9._-]+\.(mp4|webm)$/i.test(fileName)) {
+        return sendJson(res, 400, { error: 'بيانات ملف Backblaze غير صالحة.' });
+      }
+      const auth = await authorizeBackblaze();
+      const response = await fetch(auth.apiUrl.replace(/\/$/, '') + '/b2api/v3/b2_delete_file_version', {
+        method: 'POST',
+        headers: { Authorization: auth.authorizationToken, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileId, fileName }),
+        cache: 'no-store'
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.message || data.code || 'تعذر حذف ملف Backblaze.');
+      return sendJson(res, 200, { ok: true });
+    }
+
+    const pathname = typeof body.pathname === 'string' ? body.pathname : '';
+    if (!/^league-shorts\/[a-z0-9._-]+\.(mp4|webm)(-[a-z0-9]+)?$/i.test(pathname)) {
+      return sendJson(res, 400, { error: 'مسار الملف غير صالح.' });
+    }
     await del(pathname);
-    return res.status(200).json({ ok: true });
+    return sendJson(res, 200, { ok: true });
   } catch (error) {
-    return res.status(500).json({ error: error?.message || 'تعذر حذف الفيديو.' });
+    return sendJson(res, 500, { error: error?.message || 'تعذر حذف الفيديو.' });
   }
 }
