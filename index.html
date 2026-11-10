@@ -3359,7 +3359,19 @@ window.renderHighlights = function() {
                 const id = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
                 status.textContent = 'جارٍ بدء الرفع إلى YouTube…';
                 const session = await shortsInitRequest('/api/shorts-youtube-init', { title, description, contentType, size: file.size }, controller.signal);
-                const response = await uploadShortByXhr(session.sessionUrl, 'PUT', file, { 'Content-Type': contentType }, controller.signal, (loaded, total) => setShortUploadProgress(status, progressBar, 'YouTube', loaded, total));
+                let response;
+                try {
+                    response = await uploadShortByXhr(session.sessionUrl, 'PUT', file, { 'Content-Type': contentType }, controller.signal, (loaded, total) => setShortUploadProgress(status, progressBar, 'YouTube', loaded, total));
+                } catch (uploadError) {
+                    if (controller.signal.aborted) throw uploadError;
+                    status.textContent = 'اكتمل إرسال الملف؛ جارٍ التحقق من YouTube…';
+                    const confirmation = await shortsInitRequest('/api/shorts-youtube-status', { sessionUrl: session.sessionUrl, size: file.size }, controller.signal);
+                    if (!confirmation.complete) {
+                        const received = Math.round((Number(confirmation.receivedBytes) || 0) / Math.max(1, file.size) * 100);
+                        throw new Error(`تعذر استلام تأكيد YouTube بعد إرسال ${received}% من الملف. أعد المحاولة.`);
+                    }
+                    response = { id: confirmation.videoId };
+                }
                 const youtubeVideoId = String(response.id || '');
                 if (!/^[a-zA-Z0-9_-]{11}$/.test(youtubeVideoId)) throw new Error('اكتمل الرفع لكن YouTube لم يُرجع معرّف الفيديو.');
                 published = { url: 'https://www.youtube.com/watch?v=' + youtubeVideoId, youtubeVideoId, storageProvider: 'youtube' };
