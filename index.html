@@ -3347,103 +3347,36 @@ window.renderHighlights = function() {
             if (!title || !file) { status.textContent = 'أدخل عنوانًا واختر الفيديو.'; return; }
             if (!navigator.onLine) { status.textContent = 'تحقق من اتصال الإنترنت ثم أعد المحاولة.'; return; }
             if (file.size > 1024 * 1024 * 1024) { status.textContent = 'حجم الفيديو يتجاوز الحد المسموح (1 GB).'; return; }
-            let watchdog = 0, lastProgressAt = Date.now(), published = null, providerErrors = [];
+            let published = null;
             const controller = new AbortController();
             activeShortUploadController = controller;
             button.disabled = true; shortUploadStalled = false;
             if (progressBar) progressBar.style.width = '0%';
-            status.textContent = 'جارٍ تجهيز رفع ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' MB)…';
+            status.textContent = 'جارٍ تجهيز الرفع إلى YouTube…';
             cancelButton?.classList.remove('hidden');
             try {
                 const contentType = validateShortVideo(file);
                 const id = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-
-                const progress = (provider, loaded, total) => { lastProgressAt = Date.now(); setShortUploadProgress(status, progressBar, provider, loaded, total); };
-
-                try {
-                    status.textContent = 'نجرب الرفع إلى YouTube…';
-                    const session = await shortsInitRequest('/api/shorts-youtube-init', { title, description, contentType, size: file.size }, controller.signal);
-                    const response = await uploadShortByXhr(session.sessionUrl, 'PUT', file, { 'Content-Type': contentType }, controller.signal, (loaded, total) => progress('YouTube', loaded, total));
-                    const youtubeVideoId = String(response.id || '');
-                    if (!/^[a-zA-Z0-9_-]{11}$/.test(youtubeVideoId)) throw new Error('اكتمل الرفع لكن YouTube لم يُرجع معرّف الفيديو.');
-                    published = { url: 'https://www.youtube.com/watch?v=' + youtubeVideoId, youtubeVideoId, storageProvider: 'youtube' };
-                } catch (error) {
-                    if (controller.signal.aborted) throw error;
-                    providerErrors.push('YouTube: ' + (error?.message || 'فشل الرفع'));
-                    status.textContent = 'تعذر YouTube؛ ننتقل إلى Backblaze…';
-                }
-
-                if (!published) {
-                    try {
-                        status.textContent = 'نجرب الرفع إلى Backblaze…';
-                        const session = await shortsInitRequest('/api/shorts-backblaze-init', { id, contentType }, controller.signal);
-                        const response = await uploadShortByXhr(session.uploadUrl, 'POST', file, {
-                            'Authorization': session.authorizationToken,
-                            'X-Bz-File-Name': encodeURIComponent(session.fileName),
-                            'X-Bz-Content-Sha1': 'do_not_verify',
-                            'Content-Type': contentType
-                        }, controller.signal, (loaded, total) => progress('Backblaze', loaded, total));
-                        published = { url: session.publicUrl, storageProvider: 'backblaze-b2', b2FileId: response.fileId, b2FileName: response.fileName || session.fileName };
-                    } catch (error) {
-                        if (controller.signal.aborted) throw error;
-                        providerErrors.push('Backblaze: ' + (error?.message || 'فشل الرفع'));
-                        status.textContent = 'تعذر Backblaze؛ ننتقل إلى Blob…';
-                    }
-                }
-
-                if (!published) {
-                    try {
-                        status.textContent = 'نجرب الرفع إلى Vercel Blob…';
-                        const ext = contentType === 'video/webm' ? 'webm' : 'mp4';
-                        const pathname = 'league-shorts/' + id + '.' + ext;
-                        lastProgressAt = Date.now();
-                        watchdog = window.setInterval(() => {
-                            if (Date.now() - lastProgressAt > 180000 && activeShortUploadController === controller) {
-                                shortUploadStalled = true;
-                                status.textContent = 'توقف الرفع 3 دقائق بلا تقدم. أوقفته تلقائيًا.';
-                                controller.abort();
-                            }
-                        }, 5000);
-                        const { upload: uploadVercelBlob } = await import('https://esm.sh/@vercel/blob@2.8.2/client?bundle');
-                        const blob = await uploadVercelBlob(pathname, file, {
-                            access: 'public', handleUploadUrl: '/api/shorts-upload', contentType,
-                            clientPayload: JSON.stringify({ adminPassword: adminSessionPassword }),
-                            multipart: file.size > 100 * 1024 * 1024,
-                            abortSignal: controller.signal,
-                            onUploadProgress: ({ loaded, total, percentage }) => {
-                                lastProgressAt = Date.now();
-                                const percentLoaded = Number(loaded) || 0, percentTotal = Number(total) || file.size;
-                                const percent = Math.max(0, Math.min(100, Math.round(percentage || percentLoaded / Math.max(1, percentTotal) * 100)));
-                                if (progressBar) progressBar.style.width = percent + '%';
-                                status.textContent = 'جارٍ الرفع إلى Blob ' + percent + '% · ' + (percentLoaded / 1024 / 1024).toFixed(1) + '/' + (percentTotal / 1024 / 1024).toFixed(1) + ' MB';
-                            }
-                        });
-                        published = { url: blob.url, storageProvider: 'vercel-blob', blobPathname: blob.pathname };
-                    } catch (error) {
-                        if (controller.signal.aborted) throw error;
-                        providerErrors.push('Blob: ' + (error?.message || 'فشل الرفع'));
-                    }
-                }
-
-                if (!published) throw new Error(providerErrors.join(' · ') || 'لم ينجح الرفع إلى أي خدمة.');
-                if (watchdog) { window.clearInterval(watchdog); watchdog = 0; }
+                status.textContent = 'جارٍ بدء الرفع إلى YouTube…';
+                const session = await shortsInitRequest('/api/shorts-youtube-init', { title, description, contentType, size: file.size }, controller.signal);
+                const response = await uploadShortByXhr(session.sessionUrl, 'PUT', file, { 'Content-Type': contentType }, controller.signal, (loaded, total) => setShortUploadProgress(status, progressBar, 'YouTube', loaded, total));
+                const youtubeVideoId = String(response.id || '');
+                if (!/^[a-zA-Z0-9_-]{11}$/.test(youtubeVideoId)) throw new Error('اكتمل الرفع لكن YouTube لم يُرجع معرّف الفيديو.');
+                published = { url: 'https://www.youtube.com/watch?v=' + youtubeVideoId, youtubeVideoId, storageProvider: 'youtube' };
                 status.textContent = 'اكتمل الرفع؛ جارٍ نشر المقطع للمشاهدين…';
                 await set(ref(db, 'league_shorts/videos/' + id), {
                     id, title, description, ...published,
                     size: file.size, createdAt: Date.now()
                 });
                 form.reset();
-                status.textContent = 'تم النشر بنجاح عبر ' + (published.storageProvider === 'youtube' ? 'YouTube' : published.storageProvider === 'backblaze-b2' ? 'Backblaze' : 'Vercel Blob') + '.';
+                status.textContent = 'تم نشر الفيديو على YouTube بنجاح.';
             } catch (error) {
-                if (watchdog) window.clearInterval(watchdog);
                 if (shortUploadStalled) status.textContent = 'توقف الرفع تلقائيًا لعدم وجود تقدم. أعد المحاولة.';
                 else if (controller.signal.aborted) status.textContent = 'تم إلغاء الرفع.';
                 else if (error?.status === 401 || /مصادقة الأدمن|admin|unauthori[sz]ed/i.test(error?.message || '')) status.textContent = 'تعذر التحقق من دخول الأدمن.';
-                else if (/BLOB_READ_WRITE_TOKEN|تخزين الفيديو غير مربوط/i.test(error?.message || '')) status.textContent = 'تعذر الرفع إلى الخدمات المتاحة. أضف إعدادات التخزين ثم أعد النشر.';
                 else if (navigator.onLine === false) status.textContent = 'انقطع الاتصال؛ حاول مجددًا عند استقرار الشبكة.';
-                else status.textContent = error?.message || 'تعذر رفع الفيديو. حاول مجددًا.';
+                else status.textContent = 'فشل رفع YouTube: ' + (error?.message || 'خطأ غير معروف');
             } finally {
-                if (watchdog) window.clearInterval(watchdog);
                 activeShortUploadController = null;
                 button.disabled = false;
                 cancelButton?.classList.add('hidden');
