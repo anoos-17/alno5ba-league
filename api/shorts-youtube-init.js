@@ -3,6 +3,9 @@ import { failMethod, getBody, isAdmin, sendJson } from './_shared.js';
 function youtubeReady() {
   return Boolean(process.env.YOUTUBE_CLIENT_ID && process.env.YOUTUBE_CLIENT_SECRET && process.env.YOUTUBE_REFRESH_TOKEN);
 }
+function safeDiagnostic(value) {
+  return String(value || '').replace(/[\r\n\t]+/g, ' ').slice(0, 300);
+}
 async function getAccessToken() {
   const form = new URLSearchParams({
     client_id: process.env.YOUTUBE_CLIENT_ID,
@@ -18,7 +21,10 @@ async function getAccessToken() {
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok || !data.access_token) {
-    throw new Error(data.error_description || data.error || 'تعذر تجديد صلاحية YouTube.');
+    const code = safeDiagnostic(data.error || 'oauth_token_error');
+    const detail = safeDiagnostic(data.error_description || 'Google لم يُرجع رمز دخول.');
+    console.error('[shorts-youtube-init] OAuth token request rejected', { status: response.status, code, detail });
+    throw new Error(`OAuth ${code} (${response.status}): ${detail}`);
   }
   return data.access_token;
 }
@@ -35,8 +41,10 @@ export default async function handler(req, res) {
   if (!title || !size || !/^video\/(mp4|webm)$/.test(contentType)) {
     return sendJson(res, 400, { error: 'بيانات الفيديو غير صالحة.' });
   }
+  let stage = 'oauth';
   try {
     const accessToken = await getAccessToken();
+    stage = 'youtube_upload_init';
     const response = await fetch('https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status', {
       method: 'POST',
       headers: {
@@ -53,13 +61,18 @@ export default async function handler(req, res) {
     });
     if (!response.ok) {
       const data = await response.json().catch(() => ({}));
-      const reason = data?.error?.errors?.[0]?.reason || data?.error?.message || 'YouTube رفض بدء الرفع.';
-      return sendJson(res, response.status === 403 ? 503 : response.status, { error: String(reason).slice(0, 220) });
+      const reason = safeDiagnostic(data?.error?.errors?.[0]?.reason || data?.error?.status || 'youtube_api_error');
+      const detail = safeDiagnostic(data?.error?.message || 'لم يُرجع YouTube تفاصيل إضافية.');
+      console.error('[shorts-youtube-init] YouTube API rejected resumable upload', { status: response.status, reason, detail });
+      const status = response.status === 403 ? 503 : response.status;
+      return sendJson(res, status, { error: `YouTube API ${response.status} (${reason}): ${detail}`, code: reason, upstreamStatus: response.status });
     }
     const sessionUrl = response.headers.get('location');
     if (!sessionUrl) return sendJson(res, 502, { error: 'لم يُرجع YouTube رابط جلسة الرفع.' });
     return sendJson(res, 200, { ready: true, sessionUrl });
   } catch (error) {
-    return sendJson(res, 503, { error: error?.message || 'تعذر بدء الرفع إلى YouTube.' });
+    const detail = safeDiagnostic(error?.message || 'تعذر بدء الرفع إلى YouTube.');
+    console.error('[shorts-youtube-init] Request failed', { stage, detail });
+    return sendJson(res, 503, { error: `${stage}: ${detail}`, stage });
   }
 }
