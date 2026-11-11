@@ -373,7 +373,13 @@
         .match-round-heading { padding:9px 12px; border:1px solid rgba(212,177,95,.16); border-radius:14px; background:linear-gradient(100deg,rgba(212,177,95,.07),rgba(255,255,255,.015)); }
         .match-card { border-radius:18px!important; border-color:rgba(197,211,228,.1)!important; background:linear-gradient(145deg,rgba(18,33,53,.88),rgba(10,22,38,.88))!important; box-shadow:0 12px 28px rgba(0,0,0,.14); transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease; }
         .match-card:hover { transform:translateY(-2px); border-color:rgba(212,177,95,.23)!important; box-shadow:0 16px 32px rgba(0,0,0,.22); }
-        .match-score { min-width:60px; text-align:center; }
+        .match-score { min-width:76px; padding:7px 12px!important; text-align:center; border-radius:13px!important; font-variant-numeric:tabular-nums; letter-spacing:.04em; }
+        .match-team { display:flex; min-width:0; flex:1; align-items:center; justify-content:center; color:#f7f8fa; text-align:center; }
+        .match-team-name { max-width:100%; overflow:hidden; font-size:clamp(11px,2vw,14px); font-weight:900; text-overflow:ellipsis; white-space:nowrap; }
+        .match-score-panel { display:flex; min-width:106px; flex-direction:column; align-items:center; gap:7px; padding:4px 8px; }
+        .match-card--finished { border-top:2px solid rgba(67,160,121,.48)!important; }
+        .match-card--live { border-top:2px solid rgba(248,113,113,.65)!important; }
+        .match-card--upcoming { border-top:2px solid rgba(212,177,95,.4)!important; }
         .match-status-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border:1px solid transparent; border-radius:999px; font-size:10px; font-weight:900; }
         .match-status-finished { border-color:rgba(67,160,121,.2); background:rgba(67,160,121,.09); color:#85c5a4; }
         .match-status-upcoming { border-color:rgba(212,177,95,.2); background:rgba(212,177,95,.08); color:#e1c475; }
@@ -395,6 +401,7 @@
         html[data-theme=day] .league-hero-arrow, html[data-theme=day] .hero-vs { color:#8b6b25; }
         html[data-theme=day] .match-card { background:linear-gradient(145deg,#fff,#f5f8fb)!important; border-color:rgba(23,59,87,.11)!important; box-shadow:0 10px 26px rgba(23,59,87,.07); }
         html[data-theme=day] .match-card:hover { border-color:rgba(23,59,87,.22)!important; box-shadow:0 14px 30px rgba(23,59,87,.1); }
+        html[data-theme=day] .match-team { color:#173b57; }
         html[data-theme=day] .match-score { background:#f0f4f7!important; border-color:rgba(23,59,87,.1)!important; }
         html[data-theme=day] .match-status-finished { color:#3e7059; background:rgba(67,139,102,.08); }
         html[data-theme=day] .match-status-upcoming { color:#806220; background:rgba(212,177,95,.12); }
@@ -534,6 +541,46 @@
         .theme-toggle:focus-visible, .desktop-tab-navigation .tab-btn:focus-visible { outline:2px solid #d9bd72; outline-offset:2px; }
         @media (prefers-reduced-motion:reduce) { .theme-toggle,.theme-toggle-thumb,.theme-toggle-thumb i { transition:none!important; } }
         @media (max-width:380px) { .theme-toggle { width:56px; height:32px; } .theme-toggle-thumb { top:2px; width:26px; height:26px; } }
+    /* Theme toggle: premium day/night scene switch */
+        .theme-toggle{position:relative;direction:ltr;flex:0 0 auto;width:8em;height:4em;padding:0;font-size:10px;border:0;border-radius:999px;background:transparent;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,filter .3s ease;filter:drop-shadow(0 .15em .35em rgba(0,0,0,.35))}
+        .theme-toggle:hover{filter:drop-shadow(0 .2em .5em rgba(0,0,0,.45)) brightness(1.06)}.theme-toggle:active{transform:scale(.96)}
+        .theme-toggle:focus-visible,.desktop-tab-navigation .tab-btn:focus-visible{outline:2px solid #d9bd72;outline-offset:3px}
+        .theme-toggle-track{position:absolute;inset:0;display:block;overflow:hidden;border-radius:inherit;box-shadow:inset 0 .22em .5em rgba(0,0,0,.5),inset 0 -.1em .3em rgba(255,255,255,.06),0 0 0 .1em rgba(255,255,255,.12)}
+        .tt-sky{position:absolute;inset:0;transition:opacity .6s ease}
+        .tt-sky-night{background:linear-gradient(160deg,#0d1630 0,#16224a 55%,#232f61 100%)}
+        .tt-sky-day{opacity:0;background:linear-gradient(180deg,#4a9fe0 0,#7cc2f2 55%,#b4e0fa 100%);box-shadow:inset 0 .22em .5em rgba(0,50,110,.3)}
+        .tt-stars{position:absolute;inset:0;transition:opacity .4s ease,transform .6s ease}
+        .tt-stars i{position:absolute;display:block;width:.3em;height:.3em;border-radius:50%;background:#fff;box-shadow:0 0 .3em rgba(200,215,255,.7);animation:ttTw 3s ease-in-out infinite alternate}
+        .tt-stars i:nth-child(1){left:.9em;top:.9em}.tt-stars i:nth-child(2){left:2.1em;top:2.7em;width:.22em;height:.22em;animation-delay:.8s}
+        .tt-stars i:nth-child(3){left:3.2em;top:.8em;width:.24em;height:.24em;animation-delay:1.4s}.tt-stars i:nth-child(4){left:1.5em;top:1.7em;width:.2em;height:.2em;animation-delay:.4s}
+        .tt-stars i:nth-child(5){left:3.1em;top:2.9em;width:.2em;height:.2em;animation-delay:1.9s}
+        .tt-stars svg{position:absolute;left:2.2em;top:1.2em;width:.8em;height:.8em;fill:#fff;opacity:.9;animation:ttTw 2.4s ease-in-out infinite alternate}
+        .tt-clouds{position:absolute;inset:0;opacity:0;transform:translateY(1.8em);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.75,.25,1);filter:drop-shadow(0 .12em .18em rgba(25,90,150,.3))}
+        .tt-cloud{position:absolute;display:block;height:.8em;border-radius:9em;background:linear-gradient(#fff,#eaf5fc);animation:ttDr 8s ease-in-out infinite alternate}
+        .tt-cloud::before,.tt-cloud::after{content:"";position:absolute;border-radius:50%;background:inherit}
+        .tt-cloud::before{left:.45em;bottom:.3em;width:1em;height:1em}.tt-cloud::after{right:.4em;bottom:.3em;width:.75em;height:.75em}
+        .tt-cloud.c1{right:.6em;bottom:.4em;width:2.6em}
+        .tt-cloud.c2{right:3em;bottom:.35em;width:1.8em;height:.65em;opacity:.9;animation-duration:10s;animation-direction:alternate-reverse}
+        .tt-cloud.c2::before{width:.8em;height:.8em;bottom:.2em}.tt-cloud.c2::after{width:.6em;height:.6em;bottom:.2em}
+        .tt-cloud.c3{right:1.4em;top:.5em;width:1.5em;height:.55em;opacity:.7;animation-duration:12s}
+        .tt-cloud.c3::before{width:.65em;height:.65em;bottom:.15em}.tt-cloud.c3::after{width:.5em;height:.5em;bottom:.15em}
+        .theme-toggle-thumb{position:absolute;top:.4em;left:.4em;z-index:1;width:3.2em;height:3.2em;border-radius:50%;transform:translateX(4em);transition:transform .6s cubic-bezier(.3,1.3,.4,1);box-shadow:0 0 0 .55em rgba(205,215,255,.08),0 0 0 1.15em rgba(205,215,255,.055),0 0 0 1.8em rgba(205,215,255,.035)}
+        .tt-sun,.tt-moon{position:absolute;inset:0;border-radius:50%;transition:opacity .4s ease,transform .7s cubic-bezier(.3,1.2,.4,1)}
+        .tt-sun{opacity:0;transform:rotate(-100deg) scale(.4);background:radial-gradient(circle at 34% 28%,#fff6c4 0,#ffd95a 40%,#f5a421 100%);box-shadow:inset -.25em -.3em .5em rgba(210,110,0,.4),inset .1em .15em .25em rgba(255,255,255,.6),0 .1em .5em rgba(245,150,20,.45)}
+        .tt-moon{background:radial-gradient(circle at 34% 28%,#fbf9ef 0,#e6e6e2 42%,#b6bdd0 100%);box-shadow:inset -.3em -.3em .5em rgba(90,102,140,.45),inset .1em .15em .25em rgba(255,255,255,.7),0 0 .8em rgba(190,205,255,.35)}
+        .tt-moon::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 64% 30%,rgba(110,120,160,.42) 0 .3em,transparent .34em),radial-gradient(circle at 30% 60%,rgba(110,120,160,.36) 0 .42em,transparent .46em),radial-gradient(circle at 66% 72%,rgba(110,120,160,.32) 0 .24em,transparent .28em)}
+        html[data-theme="day"] .theme-toggle{filter:drop-shadow(0 .15em .35em rgba(23,70,120,.3))}
+        html[data-theme="day"] .theme-toggle-track{box-shadow:inset 0 .2em .45em rgba(0,50,110,.3),0 0 0 .1em rgba(255,255,255,.7)}
+        html[data-theme="day"] .tt-sky-night{opacity:0}html[data-theme="day"] .tt-sky-day{opacity:1}
+        html[data-theme="day"] .tt-stars{opacity:0;transform:translateY(-1.4em)}
+        html[data-theme="day"] .tt-clouds{opacity:1;transform:none}
+        html[data-theme="day"] .theme-toggle-thumb{transform:translateX(0);box-shadow:0 0 0 .55em rgba(255,255,255,.2),0 0 0 1.15em rgba(255,255,255,.12),0 0 0 1.8em rgba(255,255,255,.07)}
+        html[data-theme="day"] .tt-sun{opacity:1;transform:none}
+        html[data-theme="day"] .tt-moon{opacity:0;transform:rotate(80deg) scale(.4)}
+        @keyframes ttTw{from{opacity:.4;transform:scale(.75)}to{opacity:1;transform:scale(1.1)}}
+        @keyframes ttDr{from{transform:translateX(-.3em)}to{transform:translateX(.3em)}}
+        @media (max-width:640px){.theme-toggle{font-size:8px}}
+        @media (prefers-reduced-motion:reduce){.theme-toggle *,.theme-toggle{animation:none!important;transition:none!important}}
     </style>
 </head>
 <body class="custom-scrollbar">
@@ -543,21 +590,7 @@
         <div class="max-w-6xl mx-auto px-4 py-2.5 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden shadow-lg shadow-amber-500/10 border border-slate-700/60 shrink-0 bg-slate-900 flex items-center justify-center">
-                    <svg id="league-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-full h-full object-cover">
-                        <defs>
-                            <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0d2232"/><stop offset="100%" stop-color="#040710"/></linearGradient>
-                            <linearGradient id="bronzeGrad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f3a97b"/><stop offset="100%" stop-color="#6e3e26"/></linearGradient>
-                            <linearGradient id="textGrad2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient>
-                        </defs>
-                        <rect class="brand-logo-background" width="512" height="512" fill="url(#bgGrad2)"/>
-                        <circle cx="256" cy="190" r="120" fill="none" stroke="url(#bronzeGrad2)" stroke-width="5"/>
-                        <path d="M190 120 H322 L300 225 C300 250 280 270 256 270 C232 270 212 250 212 225 Z" fill="url(#bronzeGrad2)"/>
-                        <circle class="brand-logo-core" cx="256" cy="180" r="28" fill="#081325" stroke="#38bdf8" stroke-width="3"/>
-                        <polygon class="brand-logo-ball" points="256,158 268,168 263,184 249,184 244,168" fill="#ffffff"/>
-                        <rect class="brand-logo-plaque" x="206" y="288" width="100" height="18" rx="4" fill="#1e293b" stroke="url(#bronzeGrad2)" stroke-width="3"/>
-                        <text x="256" y="365" font-family="Cairo, sans-serif" font-size="48" font-weight="900" fill="url(#textGrad2)" text-anchor="middle">دوري</text>
-                        <text x="256" y="430" font-family="Cairo, sans-serif" font-size="58" font-weight="900" fill="url(#textGrad2)" text-anchor="middle">النخبة</text>
-                    </svg>
+                    <img id="league-logo-svg" src="/league-brand.webp" alt="شعار دوري النخبة" width="48" height="48" class="w-full h-full object-cover">
                 </div>
                 <div>
                     <h1 class="text-base sm:text-xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-200 leading-tight">
@@ -577,8 +610,8 @@
                     <span>الأدمن</span>
                 </button>
                 <button id="theme-toggle" type="button" onclick="window.toggleAppTheme()" class="theme-toggle" aria-label="التبديل إلى الوضع النهاري" aria-pressed="false">
-            <span class="theme-toggle-track" aria-hidden="true"></span>
-            <span class="theme-toggle-thumb" aria-hidden="true"><i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i></span>
+            <span class="theme-toggle-track" aria-hidden="true"><span class="tt-sky tt-sky-night"></span><span class="tt-sky tt-sky-day"></span><span class="tt-stars"><i></i><i></i><i></i><i></i><i></i><svg viewBox="0 0 24 24"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z"/></svg></span><span class="tt-clouds"><span class="tt-cloud c3"></span><span class="tt-cloud c2"></span><span class="tt-cloud c1"></span></span></span>
+            <span class="theme-toggle-thumb" aria-hidden="true"><span class="tt-sun"></span><span class="tt-moon"></span></span>
                     <span class="sr-only">تبديل الوضع اللوني</span>
                 </button>
             </div>
@@ -903,7 +936,14 @@
                     </div>
                     <div class="flex justify-between items-center gap-2">
                         <h3 id="admin-formation-title" class="font-bold text-xs sm:text-sm text-cyan-300">قائمة اللاعبين</h3>
-                        <span class="text-[10px] text-gray-400">9 خانات • 1 + 3 + 3 + 2</span>
+                        <span id="admin-formation-hint" class="text-[10px] text-gray-400">9 خانات • 1 + 3 + 3 + 2</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs font-bold text-gray-300 mb-1">عدد اللاعبين في التشكيلة</span>
+                        <div class="grid grid-cols-2 gap-2" role="group" aria-label="عدد اللاعبين">
+                            <button type="button" id="admin-size-9" onclick="window.setAdminFormationSize(9)" class="rounded-xl border border-slate-700 bg-brand-dark py-2 text-xs font-bold text-gray-300">9 لاعبين<span class="block text-[10px] font-normal opacity-70">1 + 3 + 3 + 2</span></button>
+                            <button type="button" id="admin-size-10" onclick="window.setAdminFormationSize(10)" class="rounded-xl border border-slate-700 bg-brand-dark py-2 text-xs font-bold text-gray-300">10 لاعبين<span class="block text-[10px] font-normal opacity-70">1 + 4 + 3 + 2</span></button>
+                        </div>
                     </div>
                     <p class="text-[11px] text-gray-400">اكتب الاسم الثنائي والرقم في الخانات المحددة، ثم احفظ التعديلات.</p>
                     <div id="admin-formation-players-list" class="space-y-3"></div>
@@ -1044,7 +1084,7 @@
 
         function getRosterPlayerNames() {
             const names = new Map();
-            (window.appData?.formations || []).forEach(formation => (formation.players || []).forEach(player => {
+            (window.appData?.formations || []).forEach(formation => (formation.players || []).slice(0, Number(formation?.size) === 10 ? 10 : 9).forEach(player => {
                 const name = String(player?.name || '').trim();
                 const key = normalizeArabicPlayerName(name);
                 if(key && !names.has(key)) names.set(key, name);
@@ -1185,9 +1225,10 @@
             { label: 'حارس المرمى', short: 'حارس' },
             { label: 'مدافع 1', short: 'دفاع 1' }, { label: 'مدافع 2', short: 'دفاع 2' }, { label: 'مدافع 3', short: 'دفاع 3' },
             { label: 'وسط 1', short: 'وسط 1' }, { label: 'وسط 2', short: 'وسط 2' }, { label: 'وسط 3', short: 'وسط 3' },
-            { label: 'مهاجم 1', short: 'هجوم 1' }, { label: 'مهاجم 2', short: 'هجوم 2' }
+            { label: 'مهاجم 1', short: 'هجوم 1' }, { label: 'مهاجم 2', short: 'هجوم 2' }, { label: 'مدافع 4', short: 'دفاع 4' }
         ];
-        const LINEUP_ROWS = [[7, 8], [4, 5, 6], [1, 2, 3], [0]];
+        const lineupSize = formation => Number(formation?.size) === 10 ? 10 : 9;
+        const lineupRows = size => size === 10 ? [[7, 8], [4, 5, 6], [1, 2, 3, 9], [0]] : [[7, 8], [4, 5, 6], [1, 2, 3], [0]];
         const TEAM_KIT_PALETTE = [
             { color: '#7c3aed', ink: '#ffffff', accent: '#c4b5fd' }, { color: '#059669', ink: '#ffffff', accent: '#a7f3d0' },
             { color: '#db2777', ink: '#ffffff', accent: '#fbcfe8' }, { color: '#d97706', ink: '#111827', accent: '#fde68a' },
@@ -1423,6 +1464,9 @@ window.renderHighlights = function() {
 
  const isFinished=m.status==='finished';
  const isLive=['live','inProgress','ongoing'].includes(String(m.status||'').toLowerCase());
+ card.classList.add(isFinished ? 'match-card--finished' : isLive ? 'match-card--live' : 'match-card--upcoming');
+ const homeTeamName = m.homeTeam || 'الفريق الأول';
+ const awayTeamName = m.awayTeam || 'الفريق الثاني';
  const statusBadge=isLive
   ? '<span class="match-status-badge match-status-live"><i class="match-live-dot"></i>مباشر</span>'
   : isFinished
@@ -1436,7 +1480,7 @@ window.renderHighlights = function() {
                 let homeEventsHtml = '';
                 let awayEventsHtml = '';
 
-                if (m.events && Array.isArray(m.events)) {
+                if (isFinished && m.events && Array.isArray(m.events)) {
                     m.events.forEach(ev => {
                         const ownGoal = ev.goalType === 'ownGoal';
                         const goalPlayerClass = ownGoal ? 'text-red-400' : 'text-gray-200';
@@ -1487,13 +1531,13 @@ window.renderHighlights = function() {
                 }
 
                 card.innerHTML = `
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="flex-1 text-right font-extrabold text-white text-xs sm:text-sm truncate">${escapeHtml(m.homeTeam || 'الفريق الأول')}</div>
-                        <div class="flex flex-col items-center gap-1 shrink-0 px-2">
+                    <div class="flex items-center justify-between gap-2 sm:gap-4 py-1.5">
+                        <div class="match-team"><span class="match-team-name">${escapeHtml(homeTeamName)}</span></div>
+                        <div class="match-score-panel shrink-0">
                             ${scoreDisplay}
                             ${statusBadge}
                         </div>
-                        <div class="flex-1 text-left font-extrabold text-white text-xs sm:text-sm truncate">${escapeHtml(m.awayTeam || 'الفريق الثاني')}</div>
+                        <div class="match-team"><span class="match-team-name">${escapeHtml(awayTeamName)}</span></div>
                     </div>
                     ${isFinished && (homeEventsHtml || awayEventsHtml) ? `
                         <div class="border-t border-slate-800/80 pt-2.5 mt-2 grid grid-cols-2 gap-4">
@@ -1521,22 +1565,24 @@ window.renderHighlights = function() {
             if(!teams.some(team => String(team.id) === String(activeFormationTeamId))) activeFormationTeamId = String(teams[0].id);
             teams.forEach((team, index) => {
                 const formation = (window.appData.formations || []).find(item => String(item.teamId) === String(team.id) || (!item.teamId && item.teamName === team.name));
-                const lineup = Array.isArray(formation?.players) ? formation.players.slice(0, 9) : [];
+                const size = lineupSize(formation);
+                const lineup = Array.isArray(formation?.players) ? formation.players.slice(0, size) : [];
                 const playerCount = lineup.filter(player => String(player?.name || '').trim()).length;
                 const kit = getTeamKit(team);
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.setAttribute('aria-pressed', String(String(team.id) === String(activeFormationTeamId)));
                 button.className = `text-right bg-brand-dark/75 border ${String(team.id) === String(activeFormationTeamId) ? 'border-amber-300/60 shadow-lg shadow-amber-950/20' : 'border-slate-800 hover:border-slate-600'} rounded-2xl p-3 transition-all duration-300 hover:-translate-y-0.5`;
-                button.innerHTML = `<div class="flex items-center justify-between gap-3"><div class="flex items-center gap-3 min-w-0"><span class="w-8 h-8 rounded-xl border border-white/10 shadow-inner" style="background:linear-gradient(145deg,${kit.color} 0 76%,${kit.accent} 76% 100%)"></span><span class="font-bold text-white truncate">${escapeHtml(team.name)}</span></div><i class="fa-solid fa-chevron-left text-[10px] text-gray-500"></i></div><div class="mt-2 text-[10px] text-gray-400">${playerCount} من 9 لاعبين</div>`;
+                button.innerHTML = `<div class="flex items-center justify-between gap-3"><div class="flex items-center gap-3 min-w-0"><span class="w-8 h-8 rounded-xl border border-white/10 shadow-inner" style="background:linear-gradient(145deg,${kit.color} 0 76%,${kit.accent} 76% 100%)"></span><span class="font-bold text-white truncate">${escapeHtml(team.name)}</span></div><i class="fa-solid fa-chevron-left text-[10px] text-gray-500"></i></div><div class="mt-2 text-[10px] text-gray-400">${playerCount} من ${size} لاعبين</div>`;
                 button.addEventListener('click', () => { activeFormationTeamId = String(team.id); window.renderFormationsView(); });
                 teamsContainer.appendChild(button);
             });
 
             const selectedTeam = teams.find(team => String(team.id) === String(activeFormationTeamId));
             const formation = (window.appData.formations || []).find(item => String(item.teamId) === String(selectedTeam.id) || (!item.teamId && item.teamName === selectedTeam.name));
-            const players = Array.isArray(formation?.players) ? formation.players.slice(0, 9) : [];
-            while(players.length < 9) players.push({ name: '', number: '' });
+            const size = lineupSize(formation);
+            const players = Array.isArray(formation?.players) ? formation.players.slice(0, size) : [];
+            while(players.length < size) players.push({ name: '', number: '' });
             const kit = getTeamKit(selectedTeam);
             const buildShirtSvg = (uid, kit, cap) => {
                 const body = 'M40 9 Q60 24 80 9 L103 17 L118 44 L101 55 L91 45 L91 108 Q60 115 29 108 L29 45 L19 55 L2 44 L17 17 Z';
@@ -1555,8 +1601,8 @@ window.renderHighlights = function() {
                 const accessibleLabel = `${isCaptain ? 'الكابتن، ' : ''}${playerLabel}`;
                 return `<div class="pitch-player"><div class="pitch-shirt" role="img" aria-label="${escapeHtml(accessibleLabel)}" style="--shirt-color:${kit.color};--shirt-ink:${kit.ink}"><svg viewBox="0 0 120 120" aria-hidden="true">${buildShirtSvg(index, kit, isCaptain)}</svg><span class="shirt-number">${escapeHtml(number)}</span></div><span class="player-tag ${name ? '' : 'is-empty'}">${escapeHtml(name || LINEUP_SLOTS[index].label)}</span></div>`;
             };
-            const rowsHtml = LINEUP_ROWS.map((row, index) => `<div class="pitch-row" aria-label="${index === 0 ? 'خط الهجوم' : index === 1 ? 'خط الوسط' : index === 2 ? 'خط الدفاع' : 'حارس المرمى'}">${row.map(renderShirt).join('')}</div>`).join('');
-            pitchContainer.innerHTML = `<div class="mb-3 flex flex-wrap items-center justify-between gap-2"><div><h3 class="font-extrabold text-white">${escapeHtml(selectedTeam.name)}</h3><p class="text-[11px] text-gray-400 mt-0.5">التشكيلة الأساسية • 9 لاعبين</p></div><span class="rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1 text-[10px] text-gray-300">حارس + 3 دفاع + 3 وسط + 2 هجوم</span></div><div class="football-pitch" role="group" aria-label="ملعب وتشكيلة ${escapeHtml(selectedTeam.name)}"><svg class="pitch-lines" viewBox="0 0 100 130" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".5"><rect x="3" y="3" width="94" height="124" rx="1"/><line x1="3" y1="65" x2="97" y2="65"/><circle cx="50" cy="65" r="9"/><rect x="24" y="3" width="52" height="20"/><rect x="38" y="3" width="24" height="8"/><path d="M40 23 A10 10 0 0 0 60 23"/><rect x="24" y="107" width="52" height="20"/><rect x="38" y="119" width="24" height="8"/><path d="M40 107 A10 10 0 0 1 60 107"/></g></svg><div class="pitch-rows">${rowsHtml}</div></div>`;
+            const rowsHtml = lineupRows(size).map((row, index) => `<div class="pitch-row" aria-label="${index === 0 ? 'خط الهجوم' : index === 1 ? 'خط الوسط' : index === 2 ? 'خط الدفاع' : 'حارس المرمى'}">${row.map(renderShirt).join('')}</div>`).join('');
+            pitchContainer.innerHTML = `<div class="mb-3 flex flex-wrap items-center justify-between gap-2"><div><h3 class="font-extrabold text-white">${escapeHtml(selectedTeam.name)}</h3><p class="text-[11px] text-gray-400 mt-0.5">التشكيلة الأساسية • ${size} لاعبين</p></div><span class="rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1 text-[10px] text-gray-300">${size === 10 ? 'حارس + 4 دفاع + 3 وسط + 2 هجوم' : 'حارس + 3 دفاع + 3 وسط + 2 هجوم'}</span></div><div class="football-pitch" role="group" aria-label="ملعب وتشكيلة ${escapeHtml(selectedTeam.name)}"><svg class="pitch-lines" viewBox="0 0 100 130" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="rgba(255,255,255,.5)" stroke-width=".5"><rect x="3" y="3" width="94" height="124" rx="1"/><line x1="3" y1="65" x2="97" y2="65"/><circle cx="50" cy="65" r="9"/><rect x="24" y="3" width="52" height="20"/><rect x="38" y="3" width="24" height="8"/><path d="M40 23 A10 10 0 0 0 60 23"/><rect x="24" y="107" width="52" height="20"/><rect x="38" y="119" width="24" height="8"/><path d="M40 107 A10 10 0 0 1 60 107"/></g></svg><div class="pitch-rows">${rowsHtml}</div></div>`;
         }
 
         window.renderAdvertisements = function() {
@@ -3144,7 +3190,7 @@ window.renderHighlights = function() {
             if (!frame || !videoId) return;
             if (frame.dataset.loadedYoutubeId !== videoId) {
                 const origin = encodeURIComponent(location.origin);
-                frame.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?playsinline=1&autoplay=1&mute=' + (shortsSoundEnabled ? '0' : '1') + '&controls=1&loop=1&playlist=' + videoId + '&rel=0&enablejsapi=1&origin=' + origin;
+                frame.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?playsinline=1&autoplay=1&mute=' + (shortsSoundEnabled ? '0' : '1') + '&controls=0&modestbranding=1&loop=1&playlist=' + videoId + '&rel=0&enablejsapi=1&origin=' + origin;
                 frame.dataset.loadedYoutubeId = videoId;
             } else {
                 sendShortYoutubeCommand(frame, 'playVideo');
@@ -3846,6 +3892,22 @@ window.renderHighlights = function() {
             window.renderAdminFormations();
         }
 
+        window.setAdminFormationSize = function(size) {
+            if(!isAdminAuthenticated) return;
+            const team = (window.appData.teams || []).find(item => String(item.id) === String(activeAdminFormationTeamId));
+            if(!team) return;
+            const formation = getFormationForTeam(team.id);
+            const next = Number(size) === 10 ? 10 : 9;
+            if(lineupSize(formation) === next) return;
+            if(next === 9) {
+                const extra = formation.players[9];
+                if(extra && String(extra.name || '').trim() && !confirm('سيتم إخفاء المدافع الرابع من التشكيلة. هل تريد المتابعة؟')) return;
+                if(Number(formation.captainSlot) === 9) formation.captainSlot = null;
+            }
+            formation.size = next;
+            window.renderAdminFormations();
+        }
+
         window.renderAdminFormations = function() {
             const select = document.getElementById('admin-formation-team');
             const container = document.getElementById('admin-formation-players-list');
@@ -3866,17 +3928,20 @@ window.renderHighlights = function() {
             const formation = getFormationForTeam(team.id);
             title.textContent = `تشكيلة ${team.name}`;
             container.innerHTML = '';
-            while(formation.players.length < 9) formation.players.push({ name: '', number: '' });
-            for(let index = 0; index < 9; index++) {
+            const size = lineupSize(formation);
+            [9, 10].forEach(n => { const b = document.getElementById('admin-size-' + n); if(!b) return; const on = n === size; b.setAttribute('aria-pressed', String(on)); b.className = 'rounded-xl border py-2 text-xs font-bold transition ' + (on ? 'border-amber-400 bg-amber-500/15 text-amber-300' : 'border-slate-700 bg-brand-dark text-gray-300'); });
+            const hint = document.getElementById('admin-formation-hint'); if(hint) hint.textContent = size === 10 ? '10 خانات • 1 + 4 + 3 + 2' : '9 خانات • 1 + 3 + 3 + 2';
+            while(formation.players.length < size) formation.players.push({ name: '', number: '' });
+            for(let index = 0; index < size; index++) {
                 if(!formation.players[index] || typeof formation.players[index] !== 'object') formation.players[index] = { name: '', number: '' };
                 formation.players[index].slotIndex = index;
             }
             if(formation.captainSlot != null) {
                 const captainIndex = Number(formation.captainSlot);
-                if(!Number.isInteger(captainIndex) || captainIndex < 0 || captainIndex > 8 || !String(formation.players[captainIndex]?.name || '').trim()) formation.captainSlot = null;
+                if(!Number.isInteger(captainIndex) || captainIndex < 0 || captainIndex >= size || !String(formation.players[captainIndex]?.name || '').trim()) formation.captainSlot = null;
                 else formation.captainSlot = captainIndex;
             }
-            LINEUP_ROWS.forEach(indices => {
+            lineupRows(size).forEach(indices => {
                 const row = document.createElement('div');
                 row.className = 'admin-lineup-row';
                 indices.forEach(index => {
