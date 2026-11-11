@@ -548,7 +548,7 @@
         .theme-toggle-track{position:absolute;inset:0;display:block;overflow:hidden;border-radius:inherit;box-shadow:inset 0 .22em .5em rgba(0,0,0,.5),inset 0 -.1em .3em rgba(255,255,255,.06),0 0 0 .1em rgba(255,255,255,.12)}
         .tt-sky{position:absolute;inset:0;transition:opacity .6s ease}
         .tt-sky-night{background:linear-gradient(160deg,#0d1630 0,#16224a 55%,#232f61 100%)}
-        .tt-sky-day{opacity:0;background:linear-gradient(180deg,#4a9fe0 0,#7cc2f2 55%,#b4e0fa 100%);box-shadow:inset 0 .22em .5em rgba(0,50,110,.3)}
+        .tt-sky-day{opacity:0;background:linear-gradient(180deg,#6f9fb5 0,#9dbdcc 55%,#ccdae2 100%);box-shadow:inset 0 .22em .5em rgba(23,59,87,.18)}
         .tt-stars{position:absolute;inset:0;transition:opacity .4s ease,transform .6s ease}
         .tt-stars i{position:absolute;display:block;width:.3em;height:.3em;border-radius:50%;background:#fff;box-shadow:0 0 .3em rgba(200,215,255,.7);animation:ttTw 3s ease-in-out infinite alternate}
         .tt-stars i:nth-child(1){left:.9em;top:.9em}.tt-stars i:nth-child(2){left:2.1em;top:2.7em;width:.22em;height:.22em;animation-delay:.8s}
@@ -581,6 +581,49 @@
         @keyframes ttDr{from{transform:translateX(-.3em)}to{transform:translateX(.3em)}}
         @media (max-width:640px){.theme-toggle{font-size:8px}}
         @media (prefers-reduced-motion:reduce){.theme-toggle *,.theme-toggle{animation:none!important;transition:none!important}}
+        /* Day mode: calm ivory surfaces, deep navy text, and restrained gold accents */
+        html[data-theme="day"] { color-scheme:light; --day-ink:#18344d; --day-copy:#31485d; --day-muted:#60758a; --day-border:#d9e3ec; --day-surface:#ffffff; --day-canvas:#f2f6fa; --day-navy:#173b57; --day-gold:#9b772b; }
+        html[data-theme="day"] body { color:var(--day-copy)!important; background:radial-gradient(ellipse at 9% 0%,rgba(23,59,87,.055),transparent 34%),linear-gradient(150deg,#f6f8fb 0%,#edf2f7 56%,#f5f7fa 100%)!important; }
+        html[data-theme="day"] header { background:rgba(255,255,255,.96)!important; border-color:var(--day-border)!important; box-shadow:0 8px 24px rgba(23,59,87,.08)!important; }
+        html[data-theme="day"] main .bg-brand-card, html[data-theme="day"] .league-hero, html[data-theme="day"] .ranked-entry { color:var(--day-copy); border-color:var(--day-border)!important; background:linear-gradient(145deg,#fff 0%,#f8fafc 100%)!important; box-shadow:0 10px 28px rgba(23,59,87,.065),inset 0 1px 0 #fff!important; }
+        html[data-theme="day"] [class*="bg-brand-dark/"], html[data-theme="day"] [class~="bg-brand-dark"], html[data-theme="day"] [class*="bg-slate-950/"], html[data-theme="day"] [class~="bg-slate-950"] { background-color:#f5f8fb!important; }
+        html[data-theme="day"] [class*="bg-slate-900/"], html[data-theme="day"] [class~="bg-slate-900"] { background-color:#edf2f6!important; }
+        html[data-theme="day"] [class*="bg-slate-800/"], html[data-theme="day"] [class~="bg-slate-800"] { background-color:#e8eef3!important; }
+        html[data-theme="day"] [class*="bg-slate-700/"], html[data-theme="day"] [class~="bg-slate-700"] { background-color:#dfe7ee!important; }
+        html[data-theme="day"] [class~="text-white"], html[data-theme="day"] .text-white { color:var(--day-ink)!important; }
+        html[data-theme="day"] [class~="text-gray-100"], html[data-theme="day"] [class~="text-gray-200"], html[data-theme="day"] [class~="text-slate-100"], html[data-theme="day"] [class~="text-slate-200"] { color:#263e53!important; }
+        html[data-theme="day"] [class~="text-gray-300"], html[data-theme="day"] [class~="text-slate-300"] { color:#40586d!important; }
+        html[data-theme="day"] [class~="text-gray-400"], html[data-theme="day"] [class~="text-slate-400"], html[data-theme="day"] [class~="text-slate-500"] { color:#60758a!important; }
+        html[data-theme="day"] [class~="text-gray-500"], html[data-theme="day"] [class~="text-slate-600"], html[data-theme="day"] [class~="text-slate-700"] { color:#718397!important; }
+        html[data-theme="day"] [class~="text-amber-200"], html[data-theme="day"] [class~="text-amber-300"], html[data-theme="day"] [class~="text-amber-400"], html[data-theme="day"] [class~="text-amber-600"], html[data-theme="day"] [class~="text-yellow-400"], html[data-theme="day"] [class~="text-cyan-300"], html[data-theme="day"] [class~="text-blue-300"], html[data-theme="day"] [class~="text-blue-400"], html[data-theme="day"] [class~="text-purple-300"], html[data-theme="day"] [class~="text-violet-300"] { color:var(--day-navy)!important; }
+        html[data-theme="day"] [class~="text-emerald-400"], html[data-theme="day"] [class~="text-green-400"] { color:#397354!important; }
+        html[data-theme="day"] [class~="text-red-300"], html[data-theme="day"] [class~="text-red-400"] { color:#a64040!important; }
+        html[data-theme="day"] [class~="border-slate-900"], html[data-theme="day"] [class*="border-slate-900/"], html[data-theme="day"] [class~="border-slate-800"], html[data-theme="day"] [class*="border-slate-800/"], html[data-theme="day"] [class~="border-slate-700"], html[data-theme="day"] [class*="border-slate-700/"], html[data-theme="day"] [class~="border-slate-600"] { border-color:var(--day-border)!important; }
+        html[data-theme="day"] [class*="bg-amber-500/"] { background-color:rgba(23,59,87,.075)!important; }
+        html[data-theme="day"] button[class~="bg-amber-500"], html[data-theme="day"] button[class~="bg-amber-600"] { background:#c8a85c!important; color:#142b40!important; }
+        html[data-theme="day"] button[class~="bg-amber-500"]:hover, html[data-theme="day"] button[class~="bg-amber-600"]:hover { background:#b99748!important; }
+        html[data-theme="day"] .tab-btn { color:#566b7e!important; }
+        html[data-theme="day"] .tab-btn:hover, html[data-theme="day"] .tab-btn.active { color:var(--day-navy)!important; }
+        html[data-theme="day"] .tab-btn.active { border-color:rgba(23,59,87,.18)!important; background:#e5edf4!important; box-shadow:0 3px 10px rgba(23,59,87,.08)!important; }
+        html[data-theme="day"] input:not([type="checkbox"]):not([type="radio"]), html[data-theme="day"] textarea, html[data-theme="day"] select { border-color:#cbd8e3!important; background-color:#fff!important; color:var(--day-ink)!important; }
+        html[data-theme="day"] input::placeholder, html[data-theme="day"] textarea::placeholder { color:#8292a1!important; opacity:1; }
+        html[data-theme="day"] .shorts-name-form input, html[data-theme="day"] .shorts-comment-form textarea { border-color:#d3dee8!important; background:#fff!important; color:var(--day-ink)!important; }
+        html[data-theme="day"] .shorts-name-form input::placeholder, html[data-theme="day"] .shorts-comment-form textarea::placeholder { color:#8292a1!important; }
+        html[data-theme="day"] .league-hero-label, html[data-theme="day"] .league-hero-season, html[data-theme="day"] .league-hero-copy small { color:var(--day-muted)!important; }
+        html[data-theme="day"] .league-hero-copy strong, html[data-theme="day"] .league-hero-kicker, html[data-theme="day"] header h1 { color:var(--day-navy)!important; -webkit-text-fill-color:var(--day-navy)!important; }
+        html[data-theme="day"] .match-round-heading, html[data-theme="day"] .match-round-summary, html[data-theme="day"] .league-hero-arrow, html[data-theme="day"] .hero-vs { color:var(--day-gold)!important; }
+        html[data-theme="day"] .match-round-heading span:last-child { color:#687b8b!important; }
+        html[data-theme="day"] .match-card { border-color:var(--day-border)!important; background:linear-gradient(145deg,#fff,#f7f9fc)!important; box-shadow:0 7px 18px rgba(23,59,87,.055)!important; }
+        html[data-theme="day"] .match-team, html[data-theme="day"] .match-team-name { color:var(--day-ink)!important; }
+        html[data-theme="day"] .match-score { border-color:#d9e3ec!important; background:#edf2f6!important; color:var(--day-navy)!important; }
+        html[data-theme="day"] .match-status-finished { color:#397354!important; background:#edf6f0!important; border-color:#d2e6d8!important; }
+        html[data-theme="day"] .match-status-upcoming { color:#80621f!important; background:#f8f3e7!important; border-color:#ebe0bf!important; }
+        html[data-theme="day"] .match-status-live { color:#a64040!important; background:#fff0ef!important; border-color:#f1d0cd!important; }
+        html[data-theme="day"] .shorts-page-heading h2, html[data-theme="day"] .shorts-eyebrow { color:var(--day-navy)!important; }
+        html[data-theme="day"] .shorts-page-heading p { color:var(--day-muted)!important; }
+        html[data-theme="day"] .shorts-viewer-badge { color:var(--day-navy)!important; border-color:#d6e0e9!important; background:#fff!important; }
+        html[data-theme="day"] .theme-toggle { border-color:#d6e0e9!important; }
+        @media (prefers-reduced-motion:reduce) { html[data-theme="day"] *,html[data-theme="day"] *::before,html[data-theme="day"] *::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; } }
     </style>
 </head>
 <body class="custom-scrollbar">
@@ -826,13 +869,12 @@
 <div id="welcome-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-[60]" role="dialog" aria-modal="true" aria-labelledby="latest-updates-title">
         <div class="w-full max-w-md rounded-3xl border border-amber-300/20 bg-gradient-to-br from-slate-900 to-brand-card p-6 sm:p-8 text-center shadow-2xl shadow-black/40">
             <section class="latest-updates" aria-labelledby="latest-updates-title">
-                <h2 id="latest-updates-title" class="latest-updates-heading">تحديث التطبيق</h2>
+                <h2 id="latest-updates-title" class="latest-updates-heading">آخر التحديثات</h2>
                 <ul class="latest-updates-list">
-                    <li>تحدي المعلومات في العب أنت</li>
-                    <li>ترتيبك في اللعبة</li>
-                    <li>تعديل الأشكال في المباريات</li>
-                    <li>تعديل شكل التشكيلات</li>
-                    <li>إضافة مقاطع Shorts للدوري</li>
+                    <li>تعديل التشكيلات</li>
+                    <li>إصلاح مشكلة الفيديوهات</li>
+                    <li>تعديل الشكل في المباريات</li>
+                    <li>تعديل الوضع النهاري</li>
                 </ul>
             </section>
             <button type="button" onclick="window.dismissWelcome()" class="welcome-accept mt-6 w-full rounded-xl bg-amber-400 px-5 py-3 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300">موافق</button>
